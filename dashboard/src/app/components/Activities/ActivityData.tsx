@@ -10,7 +10,7 @@ interface Props {
 
 export default function ActivityData({ goal, setGoal }: Props) {
     return (
-        <div className="h-screen w-4/5 flex flex-col items-center overflow-y-auto mt-[9vh]">
+        <div className="h-screen w-4/5 flex flex-col items-center overflow-y-auto pt-[9vh]">
             {goal != "" && (
                 <Stack>
                     <h1 className="tracking-widest text-2xl w-full items-center uppercase">
