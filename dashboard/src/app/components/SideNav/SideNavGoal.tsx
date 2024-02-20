@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface Props {
-    goal: string | null;
-    iconImg: string | null;
-    alt: string | null;
+    goal: string;
+    iconImg: string;
+    alt: string;
     setGoal: Function;
-    curGoal: string | null;
-    goalImg: string | null;
+    curGoal: string;
+    goalImg: string;
+    centerText: string;
+    setCenterText: Function;
+    mousePointer: string;
+    setMousePointer: Function;
+    goalColor: string;
+    open: Function;
+    close: Function;
+    setSideNavColor: Function;
 }
 export default function SideNavGoal({
     goal,
@@ -16,23 +24,38 @@ export default function SideNavGoal({
     setGoal,
     curGoal,
     goalImg,
+    centerText,
+    setCenterText,
+    mousePointer,
+    setMousePointer,
+    goalColor,
+    setOpened,
+    opened,
+    setSideNavColor,
 }: Props) {
-    const [centerText, setCenterText] = useState("ml-5");
     let iconSrc = "/images/" + iconImg;
     let goalSrc = "/images/" + goalImg;
 
-    function handleGoal() {
-        if (curGoal != goal) {
-            setGoal(goal);
+    useEffect(() => {
+        // console.log(opened);
+        if (!opened) {
+            console.log(goal);
             setCenterText("justify-center");
+            setMousePointer("cursor-auto");
+            setSideNavColor("bg-" + goalColor);
         } else {
-            setGoal("");
-            setCenterText("mt-3 ml-5");
+            // console.log("hey");
+            setOpened(true);
         }
-    }
+    }, [opened]);
 
     return (
-        <div className="flex flex-col" onClick={handleGoal}>
+        <div
+            className={
+                "flex flex-col underline decoration-4 underline-offset-4 decoration-" +
+                goalColor
+            }
+        >
             {curGoal != "" && (
                 <div className="w-4/5 m-auto mt-4 mb-2">
                     <Image src={goalSrc} width={300} height={20} />
@@ -48,7 +71,14 @@ export default function SideNavGoal({
                         alt={alt}
                     />
                 </div>
-                <h2 className="cursor-pointer ml-2 my-3 uppercase text-lg">
+                <h2
+                    className={"ml-2 my-3 uppercase text-lg " + mousePointer}
+                    onClick={(e) => {
+                        setOpened(false);
+                        setGoal(goal);
+                        setSideNavColor("bg-" + goalColor);
+                    }}
+                >
                     {goal}
                 </h2>
             </div>

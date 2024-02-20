@@ -1,22 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import SideNavGoal from "./SideNavGoal";
 import { Checkbox, Group, RangeSlider, Button } from "@mantine/core";
 
 interface Props {
-    goal: string | null;
+    goal: string;
     setGoal: Function;
+    setBgColor: Function;
 }
 
-export default function SideNav({ goal, setGoal }: Props) {
+export default function SideNav({ goal, setGoal, setBgColor }: Props) {
+    const [centerText, setCenterText] = useState("mt-3 ml-5");
+    const [mousePointer, setMousePointer] = useState("cursor-pointer");
+    const [sideNavColor, setSideNavColor] = useState("");
+    const [opened, setOpened] = useState(true);
+    const [outerStyle, setOuterStyle] = useState(
+        "flex flex-col items-center bg-white p-4 h-fit w-1/4 fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md",
+    );
+    const [goalText, setGoalText] = useState("Select a Goal");
+
+    useEffect(() => {
+        if (opened) {
+            setOuterStyle(
+                "flex flex-col items-center bg-white p-4 h-fit w-1/4 fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md",
+            );
+            setBgColor("bg-zinc-100");
+            setGoalText("Select a Goal");
+        } else {
+            setOuterStyle(
+                "h-screen w-1/5 flex flex-col items-center overflow-y-auto " +
+                    sideNavColor,
+            );
+            setBgColor("bg-white");
+            setGoalText("Goal");
+        }
+    }, [opened]);
+
     return (
-        <div className="h-screen w-1/5 flex flex-col items-center bg-sleep overflow-y-auto">
+        <div className={outerStyle}>
             <div className="w-full flex flex-col items-center">
                 <h1
                     className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center"
-                    style={{ color: "#54b6a6" }}
+                    // style={{ color: "#54b6a6" }}
                 >
-                    Goal
+                    {goalText}
                 </h1>
                 <div className="w-full">
                     {(goal == "" || goal == "Sleep") && (
@@ -27,6 +54,14 @@ export default function SideNav({ goal, setGoal }: Props) {
                             setGoal={setGoal}
                             curGoal={goal}
                             goalImg="sleep.png"
+                            centerText={centerText}
+                            setCenterText={setCenterText}
+                            mousePointer={mousePointer}
+                            setMousePointer={setMousePointer}
+                            goalColor="sleep"
+                            setOpened={setOpened}
+                            opened={opened}
+                            setSideNavColor={setSideNavColor}
                         />
                     )}
                     {(goal == "" || goal == "Physical Health") && (
@@ -37,6 +72,14 @@ export default function SideNav({ goal, setGoal }: Props) {
                             setGoal={setGoal}
                             curGoal={goal}
                             goalImg="sleep.png"
+                            centerText={centerText}
+                            setCenterText={setCenterText}
+                            mousePointer={mousePointer}
+                            setMousePointer={setMousePointer}
+                            goalColor="physical"
+                            setOpened={setOpened}
+                            opened={opened}
+                            setSideNavColor={setSideNavColor}
                         />
                     )}
                     {(goal == "" || goal == "Emotional Health") && (
@@ -47,6 +90,14 @@ export default function SideNav({ goal, setGoal }: Props) {
                             setGoal={setGoal}
                             curGoal={goal}
                             goalImg="sleep.png"
+                            centerText={centerText}
+                            setCenterText={setCenterText}
+                            mousePointer={mousePointer}
+                            setMousePointer={setMousePointer}
+                            goalColor="emotional"
+                            setOpened={setOpened}
+                            opened={opened}
+                            setSideNavColor={setSideNavColor}
                         />
                     )}
                     {(goal == "" || goal == "Productivity") && (
@@ -57,6 +108,14 @@ export default function SideNav({ goal, setGoal }: Props) {
                             setGoal={setGoal}
                             curGoal={goal}
                             goalImg="sleep.png"
+                            centerText={centerText}
+                            setCenterText={setCenterText}
+                            mousePointer={mousePointer}
+                            setMousePointer={setMousePointer}
+                            goalColor="productivity"
+                            setOpened={setOpened}
+                            opened={opened}
+                            setSideNavColor={setSideNavColor}
                         />
                     )}
                     {(goal == "" || goal == "Social Wellness") && (
@@ -67,10 +126,26 @@ export default function SideNav({ goal, setGoal }: Props) {
                             setGoal={setGoal}
                             curGoal={goal}
                             goalImg="sleep.png"
+                            centerText={centerText}
+                            setCenterText={setCenterText}
+                            mousePointer={mousePointer}
+                            setMousePointer={setMousePointer}
+                            goalColor="social"
+                            setOpened={setOpened}
+                            opened={opened}
+                            setSideNavColor={setSideNavColor}
                         />
                     )}
                     {goal != "" && (
-                        <div className="text-center cursor-pointer italic text-xs mb-3">
+                        <div
+                            className="text-center cursor-pointer italic text-xs mb-3"
+                            onClick={() => {
+                                setCenterText("mt-3 ml-5");
+                                setGoal("");
+                                setMousePointer("cursor-pointer");
+                                setOpened(true);
+                            }}
+                        >
                             Select another goal{" "}
                         </div>
                     )}
@@ -193,18 +268,4 @@ export default function SideNav({ goal, setGoal }: Props) {
             </div>
         </div>
     );
-}
-
-{
-    /*<div>"Age Range:"
-                        "Gender M/F/Other"
-                        "Sexuality:"
-                        "Race"
-                        "Living"
-                        "Safety enough"
-                        "Wearable"
-                        "Marital Status"
-                        "Health Conditions n=> 50"
-                        "Chronic pain"
-                        </div>*/
 }

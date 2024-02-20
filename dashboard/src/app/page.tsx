@@ -7,11 +7,12 @@ import ActivityData from "./components/Activities/ActivityData";
 
 export default function Home() {
   const [goal, setGoal] = useState<string>("");
+  const [bgColor, setBgColor] = useState<string>("bg-zinc-100 opacity-2");
 
   return (
     <MantineProvider>
-      <div className="flex">
-        <SideNav goal={goal} setGoal={setGoal} />
+      <div className={"flex " + bgColor}>
+        <SideNav goal={goal} setGoal={setGoal} setBgColor={setBgColor} />
         <ActivityData goal={goal} setGoal={setGoal} />
       </div>
     </MantineProvider>

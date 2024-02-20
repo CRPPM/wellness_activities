@@ -15,6 +15,10 @@ const config: Config = {
       },
       colors: {
         sleep: "#B4DFD8",
+        physical: "#F9F5E3",
+        emotional: "#E4EFFF",
+        productivity: "#E8DACE",
+        social: "#FFCBB4",
       },
     },
   },
