@@ -15,14 +15,14 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
     const [sideNavColor, setSideNavColor] = useState("");
     const [opened, setOpened] = useState(true);
     const [outerStyle, setOuterStyle] = useState(
-        "flex flex-col items-center bg-white p-4 h-fit w-1/4 fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md",
+        "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
     );
     const [goalText, setGoalText] = useState("Select a Goal");
 
     useEffect(() => {
         if (opened) {
             setOuterStyle(
-                "flex flex-col items-center bg-white p-4 h-fit w-1/4 fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md",
+                "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
             );
             setBgColor("bg-zinc-100");
             setGoalText("Select a Goal");
@@ -41,7 +41,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
             <div className="w-full flex flex-col items-center">
                 <h1
                     className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center"
-                    // style={{ color: "#54b6a6" }}
+                    style={{ color: goalText == "Goal" ? "#54b6a6" : "black" }}
                 >
                     {goalText}
                 </h1>
@@ -60,7 +60,6 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             setMousePointer={setMousePointer}
                             goalColor="sleep"
                             setOpened={setOpened}
-                            opened={opened}
                             setSideNavColor={setSideNavColor}
                         />
                     )}
@@ -78,7 +77,6 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             setMousePointer={setMousePointer}
                             goalColor="physical"
                             setOpened={setOpened}
-                            opened={opened}
                             setSideNavColor={setSideNavColor}
                         />
                     )}
@@ -96,7 +94,6 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             setMousePointer={setMousePointer}
                             goalColor="emotional"
                             setOpened={setOpened}
-                            opened={opened}
                             setSideNavColor={setSideNavColor}
                         />
                     )}
@@ -114,7 +111,6 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             setMousePointer={setMousePointer}
                             goalColor="productivity"
                             setOpened={setOpened}
-                            opened={opened}
                             setSideNavColor={setSideNavColor}
                         />
                     )}
@@ -132,7 +128,6 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             setMousePointer={setMousePointer}
                             goalColor="social"
                             setOpened={setOpened}
-                            opened={opened}
                             setSideNavColor={setSideNavColor}
                         />
                     )}

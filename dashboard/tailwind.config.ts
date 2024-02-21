@@ -20,6 +20,9 @@ const config: Config = {
         productivity: "#E8DACE",
         social: "#FFCBB4",
       },
+      boxShadow: {
+        custom: "5px 5px 10px rgb(0 0 0 / 10%)",
+      },
     },
   },
   plugins: [],

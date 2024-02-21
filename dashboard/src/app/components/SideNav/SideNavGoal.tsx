@@ -13,8 +13,7 @@ interface Props {
     mousePointer: string;
     setMousePointer: Function;
     goalColor: string;
-    open: Function;
-    close: Function;
+    setOpened: Function;
     setSideNavColor: Function;
 }
 export default function SideNavGoal({
@@ -30,30 +29,34 @@ export default function SideNavGoal({
     setMousePointer,
     goalColor,
     setOpened,
-    opened,
     setSideNavColor,
 }: Props) {
     let iconSrc = "/images/" + iconImg;
     let goalSrc = "/images/" + goalImg;
 
-    useEffect(() => {
-        // console.log(opened);
-        if (!opened) {
-            console.log(goal);
-            setCenterText("justify-center");
-            setMousePointer("cursor-auto");
-            setSideNavColor("bg-" + goalColor);
-        } else {
-            // console.log("hey");
-            setOpened(true);
-        }
-    }, [opened]);
+    // Tailwind cannot understand string interpolation or concatenation
+    // https://tailwindcss.com/docs/content-configuration#dynamic-class-names
+    const colorBackgrounds = {
+        sleep: "bg-sleep",
+        physical: "bg-physical",
+        emotional: "bg-emotional",
+        productivity: "bg-productivity",
+        social: "bg-social",
+    };
+
+    const colorUnderlines = {
+        sleep: "decoration-sleep",
+        physical: "decoration-physical",
+        emotional: "decoration-emotional",
+        productivity: "decoration-productivity",
+        social: "decoration-social",
+    };
 
     return (
         <div
             className={
-                "flex flex-col underline decoration-4 underline-offset-4 decoration-" +
-                goalColor
+                "flex flex-col underline decoration-4 underline-offset-4 " +
+                colorUnderlines[goalColor]
             }
         >
             {curGoal != "" && (
@@ -76,7 +79,9 @@ export default function SideNavGoal({
                     onClick={(e) => {
                         setOpened(false);
                         setGoal(goal);
-                        setSideNavColor("bg-" + goalColor);
+                        setSideNavColor(colorBackgrounds[goalColor]);
+                        setCenterText("justify-center");
+                        setMousePointer("cursor-auto");
                     }}
                 >
                     {goal}
