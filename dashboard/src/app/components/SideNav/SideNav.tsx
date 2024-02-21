@@ -18,6 +18,14 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
         "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
     );
 
+    const titleeColors = {
+        Sleep: "text-sleepText",
+        "Physical Health": "text-physicalText",
+        "Emotional Health": "text-emotionalText",
+        Productivity: "text-productivityText",
+        "Social Wellness": "text-socialText",
+    };
+
     useEffect(() => {
         if (opened) {
             setOuterStyle(
@@ -69,7 +77,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             alt="physical health icon"
                             setGoal={setGoal}
                             curGoal={goal}
-                            goalImg="sleep.png"
+                            goalImg="physical_health.png"
                             centerText={centerText}
                             setCenterText={setCenterText}
                             mousePointer={mousePointer}
@@ -86,7 +94,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             alt="emotional health icon"
                             setGoal={setGoal}
                             curGoal={goal}
-                            goalImg="sleep.png"
+                            goalImg="emotional_health.png"
                             centerText={centerText}
                             setCenterText={setCenterText}
                             mousePointer={mousePointer}
@@ -147,8 +155,10 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                 {goal != "" && (
                     <div className="w-full">
                         <h1
-                            className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center"
-                            style={{ color: "#54b6a6" }}
+                            className={
+                                "mt-5 tracking-widest text-2xl w-full items-center uppercase text-center " +
+                                titleColors[goal]
+                            }
                         >
                             Filters
                         </h1>
