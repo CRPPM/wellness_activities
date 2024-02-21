@@ -34,7 +34,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
             setBgColor("bg-zinc-100");
         } else {
             setOuterStyle(
-                "h-screen w-1/5 flex flex-col items-center overflow-y-auto " +
+                "h-full w-1/5 flex flex-col items-center overflow-y-auto " +
                     sideNavColor,
             );
             setBgColor("bg-white");
@@ -185,7 +185,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             </div>
 
                             {/* Gender */}
-                            <div className="flex my-8 ml-5 flex-col">
+                            <div className="flex ml-5 mt-8 ml-5 flex-col">
                                 <div className="mb-3 font-medium">Gender</div>
                                 <Group className="mx-3">
                                     <Checkbox
@@ -210,7 +210,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             </div>
 
                             {/* Race/Ethnicity */}
-                            <div className="flex my-8 ml-5 flex-col">
+                            <div className="flex my-5 ml-5 flex-col">
                                 <div className="mb-3 font-medium">
                                     Race/Ethnicity
                                 </div>
@@ -249,7 +249,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                             </div>
 
                             {/* Living Area */}
-                            <div className="flex my-8 ml-5 flex-col">
+                            <div className="flex my-5 ml-5 flex-col">
                                 <div className="mb-3 font-medium">Living</div>
                                 <Group className="mx-3">
                                     <Checkbox
@@ -262,6 +262,69 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                                         defaultunchecked="true"
                                         onChange={() => {}}
                                         label="Rural"
+                                        size="xs"
+                                    />
+                                </Group>
+                            </div>
+
+                            {/* Safety */}
+                            <div className="flex my-5 ml-5 flex-col">
+                                <div className="mb-3 font-medium">
+                                    Safety Enough?
+                                </div>
+                                <Group className="mx-3">
+                                    <Checkbox
+                                        defaultunchecked="true"
+                                        onChange={() => {}}
+                                        label="Yes"
+                                        size="xs"
+                                    />
+                                    <Checkbox
+                                        defaultunchecked="true"
+                                        onChange={() => {}}
+                                        label="No"
+                                        size="xs"
+                                    />
+                                </Group>
+                            </div>
+
+                            {/* Wearable */}
+                            <div className="flex my-5 ml-5 flex-col">
+                                <div className="mb-3 font-medium">
+                                    Wearable?
+                                </div>
+                                <Group className="mx-3">
+                                    <Checkbox
+                                        defaultunchecked="true"
+                                        onChange={() => {}}
+                                        label="Yes"
+                                        size="xs"
+                                    />
+                                    <Checkbox
+                                        defaultunchecked="true"
+                                        onChange={() => {}}
+                                        label="No"
+                                        size="xs"
+                                    />
+                                </Group>
+                            </div>
+
+                            {/* Marital Status */}
+                            <div className="flex my-5 ml-5 flex-col">
+                                <div className="mb-3 font-medium">
+                                    Marital Status
+                                </div>
+                                <Group className="mx-3">
+                                    <Checkbox
+                                        defaultunchecked="true"
+                                        onChange={() => {}}
+                                        label="Single"
+                                        size="xs"
+                                    />
+                                    <Checkbox
+                                        defaultunchecked="true"
+                                        onChange={() => {}}
+                                        label="Married"
                                         size="xs"
                                     />
                                 </Group>
