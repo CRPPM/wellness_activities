@@ -24,6 +24,7 @@ export default function ActivityCard({
     const [width, setWidth] = useState<int>(100);
     const [textSize, setTextSize] = useState<string>("");
     const [textAccentSize, setTextAccentSize] = useState<string>("text-md");
+    const [showImage, setShowImage] = useState<Boolean>(true);
 
     useEffect(() => {
         if (order == 1) {
@@ -39,19 +40,27 @@ export default function ActivityCard({
             setTextSize("sm");
             setTextAccentSize("text-md");
         }
+        order > 5 ? setShowImage(false) : setShowImage(true);
     });
 
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
-            <Group justify="space-between" mt="xs" mb="xs">
-                <div className="w-[10vw] flex justify-center">
-                    <Image
-                        src={imgSrc}
-                        height={26}
-                        width={width}
-                        alt={altImage}
-                    />
-                </div>
+            <Group
+                justify="space-between"
+                mt="xs"
+                mb="xs"
+                className={order > 5 ? "m-auto !mt-0 !mb-0" : ""}
+            >
+                {showImage && (
+                    <div className="w-[10vw] flex justify-center">
+                        <Image
+                            src={imgSrc}
+                            height={26}
+                            width={width}
+                            alt={altImage}
+                        />
+                    </div>
+                )}
                 <Text fw={500} size={textSize} className="w-[50vw]">
                     <span className={"font-bold " + textAccentSize}>
                         {percentage}%
