@@ -44,21 +44,32 @@ export default function SideNavGoal({
         social: "bg-social",
     };
 
+    const titleBackgrounds = {
+        sleep: "bg-sleepText",
+        physical: "bg-physicalText",
+        emotional: "bg-emotionalText",
+        productivity: "bg-productivityText",
+        social: "bg-socialText",
+    };
+
+    const hoverColorBackgrounds = {
+        sleep: "hover:after:bg-sleep",
+        physical: "hover:after:bg-physical",
+        emotional: "hover:after:bg-emotional",
+        productivity: "hover:after:bg-productivity",
+        social: "hover:after:bg-social",
+    };
+
     const colorUnderlines = {
-        sleep: "decoration-sleep",
-        physical: "decoration-physical",
-        emotional: "decoration-emotional",
-        productivity: "decoration-productivity",
-        social: "decoration-social",
+        sleep: "after:bg-sleep",
+        physical: "after:bg-physical",
+        emotional: "after:bg-emotional",
+        productivity: "after:bg-productivity",
+        social: "after:bg-social",
     };
 
     return (
-        <div
-            className={
-                "flex flex-col underline decoration-4 underline-offset-4 " +
-                colorUnderlines[goalColor]
-            }
-        >
+        <div>
             <div className={"flex " + centerText}>
                 <div className="flex items-center" style={{ width: "30px" }}>
                     <Image
@@ -70,12 +81,23 @@ export default function SideNavGoal({
                     />
                 </div>
                 <h2
-                    className={"ml-2 my-3 uppercase text-lg " + mousePointer}
+                    className={
+                        "ml-2 my-3 uppercase " +
+                        mousePointer +
+                        " " +
+                        colorUnderlines[goalColor] +
+                        " " +
+                        hoverColorBackgrounds[goalColor] +
+                        (curGoal == "" ? " goal-animated text-lg" : " text-xl")
+                    }
                     onClick={(e) => {
                         setOpened(false);
                         setGoal(goal);
                         setSideNavColor(colorBackgrounds[goalColor]);
-                        setCenterText("justify-center mt-3");
+                        setCenterText(
+                            "justify-center mb-4 pt-2 " +
+                                titleBackgrounds[goalColor],
+                        );
                         setMousePointer("cursor-auto");
                     }}
                 >

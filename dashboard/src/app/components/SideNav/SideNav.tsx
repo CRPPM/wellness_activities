@@ -18,12 +18,12 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
         "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
     );
 
-    const titleeColors = {
-        Sleep: "text-sleepText",
-        "Physical Health": "text-physicalText",
-        "Emotional Health": "text-emotionalText",
-        Productivity: "text-productivityText",
-        "Social Wellness": "text-socialText",
+    const titleColors = {
+        Sleep: "bg-sleepText",
+        "Physical Health": "bg-physicalText",
+        "Emotional Health": "bg-emotionalText",
+        Productivity: "bg-productivityText",
+        "Social Wellness": "bg-socialText",
     };
 
     useEffect(() => {
@@ -140,7 +140,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                     )}
                     {goal != "" && (
                         <div
-                            className="text-center cursor-pointer italic text-xs mb-3 mt-2 underline decoration-2 underline-offset-4 decoration-gray-600"
+                            className="text-center cursor-pointer italic text-xs mb-3 mt-2 select-animated after:bg-gray-600 w-fit m-auto"
                             onClick={() => {
                                 setCenterText("mt-3 ml-5");
                                 setGoal("");
@@ -156,7 +156,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                     <div className="w-full">
                         <h1
                             className={
-                                "mt-5 tracking-widest text-2xl w-full items-center uppercase text-center " +
+                                "mt-2 p-2 tracking-widest text-xl w-full items-center uppercase text-center " +
                                 titleColors[goal]
                             }
                         >

@@ -19,3 +19,70 @@ body {
     text-wrap: balance;
   }
 }
+
+.goal-animated {
+  text-decoration: none;
+  position: relative;
+  bottom: 0px;
+  -webkit-transition: 0.1s linear bottom;
+  -moz-transition: 0.1s linear bottom;
+  transition: 0.1s linear bottom;
+}
+
+.goal-animated::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 1px;
+  width: 100%;
+  height: 3px;
+  -webkit-transform-origin: left center;
+  -webkit-transition: 0.075s linear all;
+  -moz-transition: 0.075s linear all;
+  transition: 0.075s linear all;
+}
+
+.goal-animated:hover {
+  cursor: pointer;
+  bottom: 1px;
+}
+
+.goal-animated:hover::after {
+  height: 4px;
+  bottom: 1px;
+  -webkit-transform: rotate(-1deg);
+  -moz-transform: rotate(-1deg);
+  transform: rotate(-1deg);
+}
+
+.select-animated {
+  text-decoration: none;
+  position: relative;
+  bottom: 0px;
+  -webkit-transition: 0.1s linear bottom;
+  -moz-transition: 0.1s linear bottom;
+  transition: 0.1s linear bottom;
+}
+
+.select-animated::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 1px;
+  width: 100%;
+  height: 1px;
+  -webkit-transform-origin: left center;
+  -webkit-transition: 0.075s linear all;
+  -moz-transition: 0.075s linear all;
+  transition: 0.075s linear all;
+}
+
+.select-animated:hover {
+  cursor: pointer;
+  bottom: 1px;
+}
+
+.select-animated:hover::after {
+  height: 2px;
+  bottom: 1px;
+}
