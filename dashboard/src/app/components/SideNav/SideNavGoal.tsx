@@ -59,11 +59,6 @@ export default function SideNavGoal({
                 colorUnderlines[goalColor]
             }
         >
-            {curGoal != "" && (
-                <div className="w-4/5 m-auto mt-4 mb-2">
-                    <Image src={goalSrc} width={300} height={20} />
-                </div>
-            )}
             <div className={"flex " + centerText}>
                 <div className="flex items-center" style={{ width: "30px" }}>
                     <Image
@@ -80,13 +75,18 @@ export default function SideNavGoal({
                         setOpened(false);
                         setGoal(goal);
                         setSideNavColor(colorBackgrounds[goalColor]);
-                        setCenterText("justify-center");
+                        setCenterText("justify-center mt-3");
                         setMousePointer("cursor-auto");
                     }}
                 >
                     {goal}
                 </h2>
             </div>
+            {curGoal != "" && (
+                <div className="w-4/5 m-auto mt-1 mb-2">
+                    <Image src={goalSrc} width={300} height={20} />
+                </div>
+            )}
         </div>
     );
 }

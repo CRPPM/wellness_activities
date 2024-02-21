@@ -17,7 +17,6 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
     const [outerStyle, setOuterStyle] = useState(
         "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
     );
-    const [goalText, setGoalText] = useState("Select a Goal");
 
     useEffect(() => {
         if (opened) {
@@ -25,26 +24,26 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                 "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
             );
             setBgColor("bg-zinc-100");
-            setGoalText("Select a Goal");
         } else {
             setOuterStyle(
                 "h-screen w-1/5 flex flex-col items-center overflow-y-auto " +
                     sideNavColor,
             );
             setBgColor("bg-white");
-            setGoalText("Goal");
         }
     }, [opened]);
 
     return (
         <div className={outerStyle}>
             <div className="w-full flex flex-col items-center">
-                <h1
-                    className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center"
-                    style={{ color: goalText == "Goal" ? "#54b6a6" : "black" }}
-                >
-                    {goalText}
-                </h1>
+                {goal == "" && (
+                    <h1
+                        className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center"
+                        style={{ color: "#54b6a6" }}
+                    >
+                        Select a Goal
+                    </h1>
+                )}
                 <div className="w-full">
                     {(goal == "" || goal == "Sleep") && (
                         <SideNavGoal
@@ -133,7 +132,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                     )}
                     {goal != "" && (
                         <div
-                            className="text-center cursor-pointer italic text-xs mb-3"
+                            className="text-center cursor-pointer italic text-xs mb-3 mt-2 underline decoration-2 underline-offset-4 decoration-gray-600"
                             onClick={() => {
                                 setCenterText("mt-3 ml-5");
                                 setGoal("");
@@ -148,7 +147,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                 {goal != "" && (
                     <div className="w-full">
                         <h1
-                            className="mt-2 tracking-widest text-2xl w-full items-center uppercase text-center"
+                            className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center"
                             style={{ color: "#54b6a6" }}
                         >
                             Filters
