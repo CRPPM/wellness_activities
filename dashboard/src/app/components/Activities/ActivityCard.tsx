@@ -10,6 +10,7 @@ interface Props {
     avgDuration: int;
     avgFrequency: int;
     altImage: string | null;
+    goal: string;
 }
 
 export default function ActivityCard({
@@ -19,12 +20,30 @@ export default function ActivityCard({
     avgDuration,
     avgFrequency,
     altImage,
+    goal,
 }: Props) {
+    const [foundImgSrc, setFoundImgeSrc] = useState<string>(false);
     let imgSrc = "/images/" + activity.replaceAll(" ", "_") + ".png";
+    let fallbackSrc = "/images/default.png";
     const [width, setWidth] = useState<int>(100);
     const [textSize, setTextSize] = useState<string>("");
     const [textAccentSize, setTextAccentSize] = useState<string>("text-md");
     const [showImage, setShowImage] = useState<Boolean>(true);
+
+    if (goal == "Physical Health") {
+        if (
+            activity.includes("exercising moderately") ||
+            activity.includes("time in nature")
+        ) {
+            imgSrc = "/images/" + activity.replaceAll(" ", "_") + "_phys.png";
+        }
+    }
+
+    if (goal == "Emotional Health") {
+        if (activity.includes("exercising moderately")) {
+            imgSrc = "/images/" + activity.replaceAll(" ", "_") + "_emo.png";
+        }
+    }
 
     useEffect(() => {
         if (order == 1) {
@@ -54,10 +73,13 @@ export default function ActivityCard({
                 {showImage && (
                     <div className="w-[10vw] flex justify-center">
                         <Image
-                            src={imgSrc}
+                            src={foundImgSrc ? fallbackSrc : imgSrc}
                             height={26}
                             width={width}
                             alt={altImage}
+                            onErrorCapture={() => {
+                                setFoundImgeSrc(true);
+                            }}
                         />
                     </div>
                 )}

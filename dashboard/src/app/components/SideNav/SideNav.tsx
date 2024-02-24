@@ -34,7 +34,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
             setBgColor("bg-zinc-100");
         } else {
             setOuterStyle(
-                "h-full w-1/5 flex flex-col items-center overflow-y-auto " +
+                "h-auto w-1/5 flex flex-col items-center overflow-y-auto " +
                     sideNavColor,
             );
             setBgColor("bg-white");
@@ -45,10 +45,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
         <div className={outerStyle}>
             <div className="w-full flex flex-col items-center">
                 {goal == "" && (
-                    <h1
-                        className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center"
-                        style={{ color: "#54b6a6" }}
-                    >
+                    <h1 className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center text-gray-800">
                         Select a Goal
                     </h1>
                 )}
