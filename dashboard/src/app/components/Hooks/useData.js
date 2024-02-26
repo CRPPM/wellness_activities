@@ -3,12 +3,47 @@ import path from "path";
 import { readFileSync } from "fs";
 import { QUESTIONS } from "./activity_dict";
 
-export default async function useData(goal) {
+export default async function useData(
+    goal,
+    ageValue,
+    genderValue,
+    raceValue,
+    incomeValue,
+    livingValue,
+    sexualValue,
+    mhsgValue,
+    phsgValue,
+    BFIExtraHiValue,
+) {
     const file = path.join(process.cwd(), "data", "activities.json");
     const stringified = readFileSync(file, "utf8");
     const data = JSON.parse(stringified)["data"];
-    return calculate_activity_stats(data, goal);
+    return calculate_activity_stats(
+        data,
+        goal,
+        ageValue,
+        genderValue,
+        raceValue,
+        incomeValue,
+        livingValue,
+        sexualValue,
+        mhsgValue,
+        phsgValue,
+        BFIExtraHiValue,
+    );
 }
+
+const demo_cols = [
+    "ageG",
+    "GenderB",
+    "raceB",
+    "incomeB",
+    "locationB",
+    "sexorB",
+    "MHSG",
+    "PHSG",
+    "BFIExtraHi",
+];
 
 function return_avg(data, goalPrefix, act_suffix) {
     let avg_cols = Object.keys(data[0]).filter(
@@ -48,7 +83,54 @@ function return_avg(data, goalPrefix, act_suffix) {
     return avg_dict;
 }
 
-function calculate_activity_stats(data, goal) {
+function filter_by_demographics(
+    data,
+    ageValue,
+    genderValue,
+    raceValue,
+    incomeValue,
+    livingValue,
+    sexualValue,
+    mhsgValue,
+    phsgValue,
+    BFIExtraHiValue,
+) {
+    [
+        ageValue,
+        genderValue,
+        raceValue,
+        incomeValue,
+        livingValue,
+        sexualValue,
+        mhsgValue,
+        phsgValue,
+        BFIExtraHiValue,
+    ].forEach((demo, i) => {
+        data = data.filter(function (d) {
+            if (demo.length == 0) return true;
+            else {
+                if (d[demo_cols[i]] != null)
+                    return demo.includes(d[demo_cols[i]].toString());
+            }
+        });
+    });
+
+    return data;
+}
+
+function calculate_activity_stats(
+    data,
+    goal,
+    ageValue,
+    genderValue,
+    raceValue,
+    incomeValue,
+    livingValue,
+    sexualValue,
+    mhsgValue,
+    phsgValue,
+    BFIExtraHiValue,
+) {
     let goalPrefix = "";
     switch (goal) {
         case "Sleep":
@@ -84,17 +166,18 @@ function calculate_activity_stats(data, goal) {
     }
 
     // Filter by demographics here
-    let demo_cols = [
-        "GenderB",
-        "sexorB",
-        "raceB",
-        "incomeB",
-        "locationB",
-        "MHSG",
-        "PHSG",
-        "BFIExtraHi",
-        "ageG",
-    ];
+    data = filter_by_demographics(
+        data,
+        ageValue,
+        genderValue,
+        raceValue,
+        incomeValue,
+        livingValue,
+        sexualValue,
+        mhsgValue,
+        phsgValue,
+        BFIExtraHiValue,
+    );
 
     // Count cols
     let act_cols = Object.keys(data[0]).filter(

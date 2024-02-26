@@ -7,20 +7,65 @@ import useData from "../Hooks/useData";
 interface Props {
     goal: string | null;
     setGoal: Function;
+    ageValue: number[];
+    genderValue: number[];
+    raceValue: number[];
+    incomeValue: number[];
+    livingValue: number[];
+    sexualValue: number[];
+    mhsgValue: number[];
+    phsgValue: number[];
+    BFIExtraHiValue: number[];
 }
 
-export default function ActivityData({ goal, setGoal }: Props) {
+export default function ActivityData({
+    goal,
+    setGoal,
+    ageValue,
+    genderValue,
+    raceValue,
+    incomeValue,
+    livingValue,
+    sexualValue,
+    mhsgValue,
+    phsgValue,
+    BFIExtraHiValue,
+}: Props) {
     const [activityData, setActivityData] = useState([]);
 
     const loadMetric = async (goal) => {
-        setActivityData(await useData(goal));
+        setActivityData(
+            await useData(
+                goal,
+                ageValue,
+                genderValue,
+                raceValue,
+                incomeValue,
+                livingValue,
+                sexualValue,
+                mhsgValue,
+                phsgValue,
+                BFIExtraHiValue,
+            ),
+        );
     };
 
     useEffect(() => {
         if (goal != "") {
             loadMetric(goal);
         }
-    }, [goal]);
+    }, [
+        goal,
+        ageValue,
+        genderValue,
+        raceValue,
+        incomeValue,
+        livingValue,
+        sexualValue,
+        mhsgValue,
+        phsgValue,
+        BFIExtraHiValue,
+    ]);
 
     return (
         <div
@@ -30,7 +75,7 @@ export default function ActivityData({ goal, setGoal }: Props) {
             }
         >
             {goal != "" && (
-                <Stack>
+                <Stack className="mb-8">
                     <h1 className="tracking-widest text-2xl w-full items-center uppercase">
                         Activities
                     </h1>
@@ -45,6 +90,7 @@ export default function ActivityData({ goal, setGoal }: Props) {
                                 avgFrequency={ele.Frequency.toFixed(2)}
                                 altImage={"writing a schedule in a notebook"}
                                 goal={goal}
+                                key={i}
                             />
                         );
                     })}

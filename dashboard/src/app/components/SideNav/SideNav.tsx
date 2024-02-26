@@ -1,15 +1,55 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import SideNavGoal from "./SideNavGoal";
-import { Checkbox, Group, RangeSlider, Button } from "@mantine/core";
+import { Checkbox, Group, RangeSlider, Button, Accordion } from "@mantine/core";
 
 interface Props {
     goal: string;
     setGoal: Function;
     setBgColor: Function;
+    ageValue: string[];
+    setAgeValue: Function;
+    genderValue: string[];
+    setGenderValue: Function;
+    raceValue: string[];
+    setRaceValue: Function;
+    incomeValue: string[];
+    setIncomeValue: Function;
+    livingValue: string[];
+    setLivingValue: Function;
+    sexualValue: string[];
+    setSexualValue: Function;
+    mhsgValue: string[];
+    setMhsgValue: Function;
+    phsgValue: string[];
+    setPhsgValue: Function;
+    BFIExtraHiValue: string[];
+    setBFIExtraHiValue: Function;
 }
 
-export default function SideNav({ goal, setGoal, setBgColor }: Props) {
+export default function SideNav({
+    goal,
+    setGoal,
+    setBgColor,
+    ageValue,
+    setAgeValue,
+    genderValue,
+    setGenderValue,
+    raceValue,
+    setRaceValue,
+    incomeValue,
+    setIncomeValue,
+    livingValue,
+    setLivingValue,
+    sexualValue,
+    setSexualValue,
+    mhsgValue,
+    setMhsgValue,
+    phsgValue,
+    setPhsgValue,
+    BFIExtraHiValue,
+    setBFIExtraHiValue,
+}: Props) {
     const [centerText, setCenterText] = useState("mt-3 ml-5");
     const [mousePointer, setMousePointer] = useState("cursor-pointer");
     const [sideNavColor, setSideNavColor] = useState("");
@@ -26,6 +66,161 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
         "Social Wellness": "bg-socialText",
     };
 
+    const goals = [
+        {
+            goal: "Sleep",
+            iconImg: "sleep_icon.png",
+            alt: "sleep icon",
+            goalImg: "sleep.png",
+            goalColor: "sleep",
+        },
+        {
+            goal: "Physical Health",
+            iconImg: "exercise_icon.png",
+            alt: "physical health icon",
+            goalImg: "physical_health.png",
+            goalColor: "physical",
+        },
+        {
+            goal: "Emotional Health",
+            iconImg: "emotions_icon.png",
+            alt: "emotional health icon",
+            goalImg: "emotional_health.png",
+            goalColor: "emotional",
+        },
+        {
+            goal: "Productivity",
+            iconImg: "improvement_icon.png",
+            alt: "productivity icon",
+            goalImg: "sleep.png",
+            goalColor: "productivity",
+        },
+        {
+            goal: "Social Wellness",
+            iconImg: "social_icon.png",
+            alt: "social wellness icon",
+            goalImg: "sleep.png",
+            goalColor: "social",
+        },
+    ];
+
+    const demoCheckBoxes = [
+        {
+            value: "Age",
+            title: "Age Range",
+            groupValue: ageValue,
+            changeGroupValue: setAgeValue,
+            options: ["18-29", "30-49", "50+"],
+        },
+        {
+            value: "Gender",
+            title: "Gender",
+            groupValue: genderValue,
+            changeGroupValue: setGenderValue,
+            options: ["Male", "Female"],
+        },
+        {
+            value: "Race",
+            title: "Race/Ethnicity",
+            groupValue: raceValue,
+            changeGroupValue: setRaceValue,
+            options: ["White", "Minority"],
+        },
+        {
+            value: "Income",
+            title: "Income",
+            groupValue: incomeValue,
+            changeGroupValue: setIncomeValue,
+            options: ["less than $49,999", "Greater than $50,000"],
+        },
+        {
+            value: "Location",
+            title: "Location",
+            groupValue: livingValue,
+            changeGroupValue: setLivingValue,
+            options: ["Rural", "Suburban/City"],
+        },
+        {
+            value: "Sexual Orientation",
+            title: "Sexual Orientation",
+            groupValue: sexualValue,
+            changeGroupValue: setSexualValue,
+            options: ["Heterosexual", "LGBTQAI+"],
+        },
+        {
+            value: "MHSG",
+            title: "MHSG",
+            groupValue: mhsgValue,
+            changeGroupValue: setMhsgValue,
+            options: ["No Mental Health Diagnoses", "Mental Health Diagnoses"],
+        },
+        {
+            value: "PHSG",
+            title: "PHSG",
+            groupValue: phsgValue,
+            changeGroupValue: setPhsgValue,
+            options: [
+                "No Physical Health Problems",
+                "Physical Health Problems",
+            ],
+        },
+        {
+            value: "BFIExtraHi",
+            title: "BFIExtraHi",
+            groupValue: BFIExtraHiValue,
+            changeGroupValue: setBFIExtraHiValue,
+            options: ["Low Extroversion", "High Extroversion"],
+        },
+    ];
+
+    const accordionItems = demoCheckBoxes.map((item) => (
+        <Accordion.Item
+            className="flex py-3 flex-col"
+            value={item.value}
+            key={item.value}
+        >
+            <Accordion.Control className="font-medium">
+                {item.title}
+            </Accordion.Control>
+            <Accordion.Panel>
+                <Checkbox.Group
+                    className="mx-3"
+                    value={item.groupValue}
+                    onChange={item.changeGroupValue}
+                >
+                    <Group mt="xs">
+                        {item.options.map((option, index) => {
+                            let curIndex = structuredClone(index);
+                            if (["Age Range", "Gender"].includes(item.title)) {
+                                curIndex += 1;
+                            } else if (
+                                [
+                                    "Race/Ethnicity",
+                                    "Income",
+                                    "Location",
+                                    "Sexual Orientation",
+                                ].includes(item.title)
+                            ) {
+                                curIndex = option;
+                            } else if (item.title == "BFIExtraHi") {
+                                curIndex = option.split(" ")[0].toLowerCase();
+                            }
+
+                            return (
+                                <Checkbox
+                                    defaultunchecked="true"
+                                    onChange={() => {}}
+                                    value={curIndex.toString()}
+                                    label={option}
+                                    key={index}
+                                />
+                            );
+                        })}
+                    </Group>
+                </Checkbox.Group>
+            </Accordion.Panel>
+        </Accordion.Item>
+    ));
     useEffect(() => {
         if (opened) {
             setOuterStyle(
@@ -50,91 +245,28 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                     </h1>
                 )}
                 <div className="w-full">
-                    {(goal == "" || goal == "Sleep") && (
-                        <SideNavGoal
-                            goal="Sleep"
-                            iconImg="sleep_icon.png"
-                            alt="sleep icon"
-                            setGoal={setGoal}
-                            curGoal={goal}
-                            goalImg="sleep.png"
-                            centerText={centerText}
-                            setCenterText={setCenterText}
-                            mousePointer={mousePointer}
-                            setMousePointer={setMousePointer}
-                            goalColor="sleep"
-                            setOpened={setOpened}
-                            setSideNavColor={setSideNavColor}
-                        />
-                    )}
-                    {(goal == "" || goal == "Physical Health") && (
-                        <SideNavGoal
-                            goal="Physical Health"
-                            iconImg="exercise_icon.png"
-                            alt="physical health icon"
-                            setGoal={setGoal}
-                            curGoal={goal}
-                            goalImg="physical_health.png"
-                            centerText={centerText}
-                            setCenterText={setCenterText}
-                            mousePointer={mousePointer}
-                            setMousePointer={setMousePointer}
-                            goalColor="physical"
-                            setOpened={setOpened}
-                            setSideNavColor={setSideNavColor}
-                        />
-                    )}
-                    {(goal == "" || goal == "Emotional Health") && (
-                        <SideNavGoal
-                            goal="Emotional Health"
-                            iconImg="emotions_icon.png"
-                            alt="emotional health icon"
-                            setGoal={setGoal}
-                            curGoal={goal}
-                            goalImg="emotional_health.png"
-                            centerText={centerText}
-                            setCenterText={setCenterText}
-                            mousePointer={mousePointer}
-                            setMousePointer={setMousePointer}
-                            goalColor="emotional"
-                            setOpened={setOpened}
-                            setSideNavColor={setSideNavColor}
-                        />
-                    )}
-                    {(goal == "" || goal == "Productivity") && (
-                        <SideNavGoal
-                            goal="Productivity"
-                            iconImg="improvement_icon.png"
-                            alt="productivity icon"
-                            setGoal={setGoal}
-                            curGoal={goal}
-                            goalImg="sleep.png"
-                            centerText={centerText}
-                            setCenterText={setCenterText}
-                            mousePointer={mousePointer}
-                            setMousePointer={setMousePointer}
-                            goalColor="productivity"
-                            setOpened={setOpened}
-                            setSideNavColor={setSideNavColor}
-                        />
-                    )}
-                    {(goal == "" || goal == "Social Wellness") && (
-                        <SideNavGoal
-                            goal="Social Wellness"
-                            iconImg="social_icon.png"
-                            alt="social wellness icon"
-                            setGoal={setGoal}
-                            curGoal={goal}
-                            goalImg="sleep.png"
-                            centerText={centerText}
-                            setCenterText={setCenterText}
-                            mousePointer={mousePointer}
-                            setMousePointer={setMousePointer}
-                            goalColor="social"
-                            setOpened={setOpened}
-                            setSideNavColor={setSideNavColor}
-                        />
-                    )}
+                    {goals.map((goalItem, index) => {
+                        if (goal == "" || goal == goalItem.goal) {
+                            return (
+                                <SideNavGoal
+                                    goal={goalItem.goal}
+                                    iconImg={goalItem.iconImg}
+                                    alt={goalItem.alt}
+                                    setGoal={setGoal}
+                                    curGoal={goal}
+                                    goalImg={goalItem.goalImg}
+                                    centerText={centerText}
+                                    setCenterText={setCenterText}
+                                    mousePointer={mousePointer}
+                                    setMousePointer={setMousePointer}
+                                    goalColor={goalItem.goalColor}
+                                    setOpened={setOpened}
+                                    setSideNavColor={setSideNavColor}
+                                />
+                            );
+                        }
+                    })}
+
                     {goal != "" && (
                         <div
                             className="text-center cursor-pointer italic text-xs mb-3 mt-2 select-animated after:bg-gray-600 w-fit m-auto"
@@ -143,6 +275,7 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                                 setGoal("");
                                 setMousePointer("cursor-pointer");
                                 setOpened(true);
+                                setAgeValue([]);
                             }}
                         >
                             Select another goal{" "}
@@ -159,174 +292,15 @@ export default function SideNav({ goal, setGoal, setBgColor }: Props) {
                         >
                             Filters
                         </h1>
-                        <div>
-                            {/* Age Range */}
-                            <div className=" w-4/5 flex my-3 ml-5 flex-col">
-                                <div className="mb-3 font-medium">
-                                    Age Range
-                                </div>
-                                <RangeSlider
-                                    minRange={1}
-                                    min={16}
-                                    max={24}
-                                    step={1}
-                                    defaultValue={[18, 22]}
-                                    marks={[
-                                        { value: 16, label: "16" },
-                                        { value: 18, label: "18" },
-                                        { value: 20, label: "20" },
-                                        { value: 22, label: "22" },
-                                        { value: 24, label: "24" },
-                                    ]}
-                                />
-                            </div>
-
-                            {/* Gender */}
-                            <div className="flex ml-5 mt-8 ml-5 flex-col">
-                                <div className="mb-3 font-medium">Gender</div>
-                                <Group className="mx-3">
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Male"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Female"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Other"
-                                        size="xs"
-                                    />
-                                </Group>
-                            </div>
-
-                            {/* Race/Ethnicity */}
-                            <div className="flex my-5 ml-5 flex-col">
-                                <div className="mb-3 font-medium">
-                                    Race/Ethnicity
-                                </div>
-                                <Group className="mx-3">
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="American Indian or Alaskan Native"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Asian / Pacific Islander"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Black or African American"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Hispanic"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="White / Caucasian"
-                                        size="xs"
-                                    />
-                                </Group>
-                            </div>
-
-                            {/* Living Area */}
-                            <div className="flex my-5 ml-5 flex-col">
-                                <div className="mb-3 font-medium">Living</div>
-                                <Group className="mx-3">
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Urban"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Rural"
-                                        size="xs"
-                                    />
-                                </Group>
-                            </div>
-
-                            {/* Safety */}
-                            <div className="flex my-5 ml-5 flex-col">
-                                <div className="mb-3 font-medium">
-                                    Safety Enough?
-                                </div>
-                                <Group className="mx-3">
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Yes"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="No"
-                                        size="xs"
-                                    />
-                                </Group>
-                            </div>
-
-                            {/* Wearable */}
-                            <div className="flex my-5 ml-5 flex-col">
-                                <div className="mb-3 font-medium">
-                                    Wearable?
-                                </div>
-                                <Group className="mx-3">
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Yes"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="No"
-                                        size="xs"
-                                    />
-                                </Group>
-                            </div>
-
-                            {/* Marital Status */}
-                            <div className="flex my-5 ml-5 flex-col">
-                                <div className="mb-3 font-medium">
-                                    Marital Status
-                                </div>
-                                <Group className="mx-3">
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Single"
-                                        size="xs"
-                                    />
-                                    <Checkbox
-                                        defaultunchecked="true"
-                                        onChange={() => {}}
-                                        label="Married"
-                                        size="xs"
-                                    />
-                                </Group>
-                            </div>
-                        </div>
+                        <Accordion
+                            chevronPosition="left"
+                            multiple
+                            // defaultValue={demoCheckBoxes.map(
+                            //     ({ value }) => value,
+                            // )}
+                        >
+                            {accordionItems}
+                        </Accordion>
                     </div>
                 )}
             </div>
