@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Stack, Card, Group, Badge, Button, Text } from "@mantine/core";
+import { Stack, Button, LoadingOverlay } from "@mantine/core";
 import ActivityCard from "./ActivityCard";
 import useData from "../Hooks/useData";
 
@@ -32,8 +32,10 @@ export default function ActivityData({
     BFIExtraHiValue,
 }: Props) {
     const [activityData, setActivityData] = useState([]);
+    const [visible, setVisible] = useState(false);
 
     const loadMetric = async (goal) => {
+        setVisible(true);
         setActivityData(
             await useData(
                 goal,
@@ -48,6 +50,10 @@ export default function ActivityData({
                 BFIExtraHiValue,
             ),
         );
+
+        setTimeout(() => {
+            setVisible(false);
+        }, 200);
     };
 
     useEffect(() => {
@@ -79,7 +85,10 @@ export default function ActivityData({
                     <h1 className="tracking-widest text-2xl w-full items-center uppercase">
                         Activities
                     </h1>
-
+                    <LoadingOverlay
+                        visible={visible}
+                        overlayProps={{ radius: "sm", blur: 3 }}
+                    />
                     {activityData.map(function (ele, i) {
                         return (
                             <ActivityCard
