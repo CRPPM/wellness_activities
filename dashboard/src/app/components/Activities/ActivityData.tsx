@@ -34,6 +34,14 @@ export default function ActivityData({
     const [activityData, setActivityData] = useState([]);
     const [visible, setVisible] = useState(false);
 
+    const titleColors = {
+        Sleep: "#51b5a5",
+        "Physical Health": "#dcc45a",
+        "Emotional Health": "#3b8bff",
+        Productivity: "#b78b66",
+        "Social Wellness": "#ff611c",
+    };
+
     const loadMetric = async (goal) => {
         setVisible(true);
         setActivityData(
@@ -48,6 +56,7 @@ export default function ActivityData({
                 mhsgValue,
                 phsgValue,
                 BFIExtraHiValue,
+                false,
             ),
         );
 
@@ -73,6 +82,56 @@ export default function ActivityData({
         BFIExtraHiValue,
     ]);
 
+    const downloadFile = ({ data, fileName, fileType }) => {
+        const blob = new Blob([data], { type: fileType });
+        const a = document.createElement("a");
+        a.download = fileName;
+        a.href = window.URL.createObjectURL(blob);
+        const clickEvt = new MouseEvent("click", {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+        });
+        a.dispatchEvent(clickEvt);
+        a.remove();
+    };
+
+    async function downloadData() {
+        let data = await useData(
+            goal,
+            ageValue,
+            genderValue,
+            raceValue,
+            incomeValue,
+            livingValue,
+            sexualValue,
+            mhsgValue,
+            phsgValue,
+            BFIExtraHiValue,
+            true,
+        );
+        if (data.length != 0) {
+            let headers = Object.keys(data[0]);
+            headers.shift();
+            headers = [headers.join(",")];
+            console.log(headers);
+            // Convert users data to a csv
+            let rawCSV = data.reduce((acc, row) => {
+                let vals = Object.values(row);
+                vals.shift();
+                acc.push(vals.join(","));
+                return acc;
+            }, []);
+            console.log(rawCSV);
+            downloadFile({
+                data: [...headers, ...rawCSV].join("\n"),
+                fileName: "activityData.csv",
+                fileType: "text/csv",
+            });
+        }
+        console.log(data);
+    }
+
     return (
         <div
             className={
@@ -82,9 +141,19 @@ export default function ActivityData({
         >
             {goal != "" && (
                 <Stack className="mb-8">
-                    <h1 className="tracking-widest text-2xl w-full items-center uppercase">
-                        Activities
-                    </h1>
+                    <div className="flex">
+                        <h1 className="tracking-widest text-2xl w-full items-center uppercase">
+                            Activities
+                        </h1>
+                        <Button
+                            color={titleColors[goal]}
+                            style={{ width: "170px" }}
+                            radius="xs"
+                            onClick={downloadData}
+                        >
+                            Download CSV
+                        </Button>
+                    </div>
                     <LoadingOverlay
                         visible={visible}
                         overlayProps={{ radius: "sm", blur: 3 }}

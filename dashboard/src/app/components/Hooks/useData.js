@@ -14,11 +14,12 @@ export default async function useData(
     mhsgValue,
     phsgValue,
     BFIExtraHiValue,
+    download_raw_data,
 ) {
     const file = path.join(process.cwd(), "data", "activities.json");
     const stringified = readFileSync(file, "utf8");
     const data = JSON.parse(stringified)["data"];
-    return calculate_activity_stats(
+    return prepare_data(
         data,
         goal,
         ageValue,
@@ -30,6 +31,7 @@ export default async function useData(
         mhsgValue,
         phsgValue,
         BFIExtraHiValue,
+        download_raw_data,
     );
 }
 
@@ -118,7 +120,7 @@ function filter_by_demographics(
     return data;
 }
 
-function calculate_activity_stats(
+function prepare_data(
     data,
     goal,
     ageValue,
@@ -130,6 +132,7 @@ function calculate_activity_stats(
     mhsgValue,
     phsgValue,
     BFIExtraHiValue,
+    download_raw_data,
 ) {
     let goalPrefix = "";
     switch (goal) {
@@ -179,6 +182,9 @@ function calculate_activity_stats(
         BFIExtraHiValue,
     );
 
+    if (download_raw_data) {
+        return data;
+    }
     // Count cols
     let act_cols = Object.keys(data[0]).filter(
         (key) =>
