@@ -276,6 +276,14 @@ export default function SideNav({
                                 setMousePointer("cursor-pointer");
                                 setOpened(true);
                                 setAgeValue([]);
+                                setGenderValue([]);
+                                setRaceValue([]);
+                                setIncomeValue([]);
+                                setLivingValue([]);
+                                setSexualValue([]);
+                                setMhsgValue([]);
+                                setPhsgValue([]);
+                                setBFIExtraHiValue([]);
                             }}
                         >
                             Select another goal{" "}

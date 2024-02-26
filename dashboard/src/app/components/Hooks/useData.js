@@ -183,6 +183,15 @@ function prepare_data(
     );
 
     if (download_raw_data) {
+        let act_cols = Object.keys(data[0]).filter(
+            (key) =>
+                (!key.startsWith(goalPrefix) || key.endsWith("Goal")) &&
+                !demo_cols.includes(key),
+        );
+        console.log(act_cols);
+        data.map(function (obj) {
+            return act_cols.forEach((e) => delete obj[e]);
+        });
         return data;
     }
     // Count cols

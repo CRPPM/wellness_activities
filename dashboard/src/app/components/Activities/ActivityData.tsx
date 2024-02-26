@@ -114,22 +114,42 @@ export default function ActivityData({
             let headers = Object.keys(data[0]);
             headers.shift();
             headers = [headers.join(",")];
-            console.log(headers);
             // Convert users data to a csv
             let rawCSV = data.reduce((acc, row) => {
+                row.GenderB = ["man", "woman"][Number(row.GenderB) - 1];
+                row.MHSG = [
+                    "no mental health diagnoses",
+                    "mental health diagnoses",
+                ][Number(row.MHSG)];
+                row.PHSG = [
+                    "no physical health diagnoses",
+                    "physical health diagnoses",
+                ][Number(row.PHSG)];
+                row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
+
                 let vals = Object.values(row);
+
                 vals.shift();
-                acc.push(vals.join(","));
+                let actString = vals.join(",");
+
+                actString = actString.replace(
+                    "less than $49,999",
+                    '"less than $49,999"',
+                );
+                actString = actString.replace(
+                    "Greater than $50,000",
+                    '"Greater than $50,000"',
+                );
+                acc.push(actString);
                 return acc;
             }, []);
-            console.log(rawCSV);
+
             downloadFile({
                 data: [...headers, ...rawCSV].join("\n"),
                 fileName: "activityData.csv",
                 fileType: "text/csv",
             });
         }
-        console.log(data);
     }
 
     return (
