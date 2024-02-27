@@ -16,6 +16,7 @@ interface Props {
     mhsgValue: number[];
     phsgValue: number[];
     BFIExtraHiValue: number[];
+    setDisabledOptions: Function;
 }
 
 export default function ActivityData({
@@ -30,6 +31,7 @@ export default function ActivityData({
     mhsgValue,
     phsgValue,
     BFIExtraHiValue,
+    setDisabledOptions,
 }: Props) {
     const [activityData, setActivityData] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -44,22 +46,21 @@ export default function ActivityData({
 
     const loadMetric = async (goal) => {
         setVisible(true);
-        setActivityData(
-            await useData(
-                goal,
-                ageValue,
-                genderValue,
-                raceValue,
-                incomeValue,
-                livingValue,
-                sexualValue,
-                mhsgValue,
-                phsgValue,
-                BFIExtraHiValue,
-                false,
-            ),
+        let filteredData = await useData(
+            goal,
+            ageValue,
+            genderValue,
+            raceValue,
+            incomeValue,
+            livingValue,
+            sexualValue,
+            mhsgValue,
+            phsgValue,
+            BFIExtraHiValue,
+            false,
         );
-
+        setActivityData(filteredData[0]);
+        setDisabledOptions(filteredData[1]);
         setTimeout(() => {
             setVisible(false);
         }, 200);

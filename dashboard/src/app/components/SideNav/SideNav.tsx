@@ -56,6 +56,7 @@ export default function SideNav({
     setPhsgValue,
     BFIExtraHiValue,
     setBFIExtraHiValue,
+    disabledOptions,
 }: Props) {
     const [centerText, setCenterText] = useState("mt-3 ml-5");
     const [mousePointer, setMousePointer] = useState("cursor-pointer");
@@ -212,6 +213,9 @@ export default function SideNav({
                             "=" +
                             curIndex.toString()
                         }
+                        disabled={disabledOptions.includes(
+                            item.value + "=" + curIndex.toString(),
+                        )}
                     >
                         {option}
                     </Combobox.Option>

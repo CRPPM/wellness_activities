@@ -17,6 +17,7 @@ export default function Home() {
   const [mhsgValue, setMhsgValue] = useState([]);
   const [phsgValue, setPhsgValue] = useState([]);
   const [BFIExtraHiValue, setBFIExtraHiValue] = useState([]);
+  const [disabledOptions, setDisabledOptions] = useState<string[]>([]);
 
   return (
     <MantineProvider>
@@ -43,6 +44,7 @@ export default function Home() {
           setPhsgValue={setPhsgValue}
           BFIExtraHiValue={BFIExtraHiValue}
           setBFIExtraHiValue={setBFIExtraHiValue}
+          disabledOptions={disabledOptions}
         />
         <ActivityData
           goal={goal}
@@ -56,6 +58,7 @@ export default function Home() {
           mhsgValue={mhsgValue}
           phsgValue={phsgValue}
           BFIExtraHiValue={BFIExtraHiValue}
+          setDisabledOptions={setDisabledOptions}
         />
       </div>
     </MantineProvider>

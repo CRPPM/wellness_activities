@@ -47,6 +47,45 @@ const demo_cols = [
     "BFIExtraHi",
 ];
 
+const demoValues = [
+    {
+        value: "Age",
+        options: ["1", "2", "3"],
+    },
+    {
+        value: "Gender",
+        options: ["1", "2"],
+    },
+    {
+        value: "Race",
+        options: ["White", "Minority"],
+    },
+    {
+        value: "Income",
+        options: ["less than $49,999", "Greater than $50,000"],
+    },
+    {
+        value: "Location",
+        options: ["Rural", "Suburban/City"],
+    },
+    {
+        value: "Sexual Orientation",
+        options: ["Heterosexual", "LGBTQAI+"],
+    },
+    {
+        value: "MHSG",
+        options: ["0", "1"],
+    },
+    {
+        value: "PHSG",
+        options: ["0", "1"],
+    },
+    {
+        value: "BFIExtraHi",
+        options: ["low", "high"],
+    },
+];
+
 function return_avg(data, goalPrefix, act_suffix) {
     let avg_cols = Object.keys(data[0]).filter(
         (key) => !key.endsWith(act_suffix) || !key.startsWith(goalPrefix),
@@ -97,7 +136,7 @@ function filter_by_demographics(
     phsgValue,
     BFIExtraHiValue,
 ) {
-    [
+    let demos = [
         ageValue,
         genderValue,
         raceValue,
@@ -107,7 +146,8 @@ function filter_by_demographics(
         mhsgValue,
         phsgValue,
         BFIExtraHiValue,
-    ].forEach((demo, i) => {
+    ];
+    demos.forEach((demo, i) => {
         data = data.filter(function (d) {
             if (demo.length == 0) return true;
             else {
@@ -117,7 +157,27 @@ function filter_by_demographics(
         });
     });
 
-    return data;
+    let disabled_options = [];
+    demoValues.forEach((demo, i) => {
+        demo.options.forEach((opt) => {
+            if (demos[i].includes(opt)) {
+                disabled_options.push(demo.value + "=" + opt);
+                return;
+            }
+            let test_data = structuredClone(data);
+            let remaining_data = test_data.filter(function (d) {
+                if (d[demo_cols[i]] != null)
+                    return [...demos[i], opt].includes(
+                        d[demo_cols[i]].toString(),
+                    );
+            }).length;
+
+            if (remaining_data < 20)
+                disabled_options.push(demo.value + "=" + opt);
+            console.log(remaining_data);
+        });
+    });
+    return [data, disabled_options];
 }
 
 function prepare_data(
@@ -169,7 +229,8 @@ function prepare_data(
     }
 
     // Filter by demographics here
-    data = filter_by_demographics(
+    let disabled_options;
+    [data, disabled_options] = filter_by_demographics(
         data,
         ageValue,
         genderValue,
@@ -253,5 +314,5 @@ function prepare_data(
         });
     });
 
-    return display_data;
+    return [display_data, disabled_options];
 }
