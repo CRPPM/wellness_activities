@@ -63,7 +63,12 @@ export default function ActivityCard({
     });
 
     return (
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
+        <Card
+            shadow="sm"
+            padding="lg"
+            radius="md"
+            className={"!bg-zinc-100 !opacity-2"}
+        >
             <Group
                 justify="space-between"
                 mt="xs"

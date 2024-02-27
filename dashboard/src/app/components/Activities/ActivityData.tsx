@@ -179,18 +179,22 @@ export default function ActivityData({
                         overlayProps={{ radius: "sm", blur: 3 }}
                     />
                     {activityData.map(function (ele, i) {
-                        return (
-                            <ActivityCard
-                                order={i + 1}
-                                activity={ele.index}
-                                percentage={ele.Percentage.toFixed(2)}
-                                avgDuration={Math.round(ele.Duration, 2)}
-                                avgFrequency={ele.Frequency.toFixed(2)}
-                                altImage={"writing a schedule in a notebook"}
-                                goal={goal}
-                                key={i}
-                            />
-                        );
+                        if (ele.Percentage > 0) {
+                            return (
+                                <ActivityCard
+                                    order={i + 1}
+                                    activity={ele.index}
+                                    percentage={ele.Percentage.toFixed(2)}
+                                    avgDuration={Math.round(ele.Duration, 2)}
+                                    avgFrequency={ele.Frequency.toFixed(2)}
+                                    altImage={
+                                        "writing a schedule in a notebook"
+                                    }
+                                    goal={goal}
+                                    key={i}
+                                />
+                            );
+                        }
                     })}
                 </Stack>
             )}

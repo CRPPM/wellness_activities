@@ -248,7 +248,7 @@ export default function SideNav({
             setBgColor("bg-zinc-100");
         } else {
             setOuterStyle(
-                "h-auto w-1/5 flex flex-col items-center overflow-y-auto " +
+                "h-auto min-h-screen w-1/5 flex flex-col items-center overflow-y-auto " +
                     sideNavColor,
             );
             setBgColor("bg-white");
