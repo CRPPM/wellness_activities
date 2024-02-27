@@ -362,7 +362,7 @@ export default function SideNav({
                                 <Pill.Group>
                                     {filters.map((fil, index) => (
                                         <Pill
-                                            size="md"
+                                            size="lg"
                                             className={
                                                 titleColors[goal] +
                                                 " my-[0.05rem]"
@@ -373,7 +373,22 @@ export default function SideNav({
                                                 updateFilters(fil);
                                             }}
                                         >
-                                            {fil.split("=")[0]}
+                                            <span className="italic">
+                                                {
+                                                    fil
+                                                        .split("=")[0]
+                                                        .split(":")[0]
+                                                }
+                                                :
+                                            </span>
+
+                                            <span className="font-semibold">
+                                                {
+                                                    fil
+                                                        .split("=")[0]
+                                                        .split(":")[1]
+                                                }
+                                            </span>
                                         </Pill>
                                     ))}
                                 </Pill.Group>
