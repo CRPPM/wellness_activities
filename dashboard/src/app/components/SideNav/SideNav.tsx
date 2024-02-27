@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import SideNavGoal from "./SideNavGoal";
-import { Checkbox, Group, RangeSlider, Button, Accordion } from "@mantine/core";
+import {
+    Group,
+    Combobox,
+    useCombobox,
+    InputBase,
+    Input,
+    Pill,
+} from "@mantine/core";
 
 interface Props {
     goal: string;
@@ -57,13 +64,17 @@ export default function SideNav({
     const [outerStyle, setOuterStyle] = useState(
         "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
     );
+    const combobox = useCombobox({
+        onDropdownClose: () => combobox.resetSelectedOption(),
+    });
+    const [filters, setFilters] = useState<string[]>([]);
 
     const titleColors = {
-        Sleep: "bg-sleepText",
-        "Physical Health": "bg-physicalText",
-        "Emotional Health": "bg-emotionalText",
-        Productivity: "bg-productivityText",
-        "Social Wellness": "bg-socialText",
+        Sleep: "!bg-sleepText",
+        "Physical Health": "!bg-physicalText",
+        "Emotional Health": "!bg-emotionalText",
+        Productivity: "!bg-productivityText",
+        "Social Wellness": "!bg-socialText",
     };
 
     const goals = [
@@ -104,7 +115,7 @@ export default function SideNav({
         },
     ];
 
-    const demoCheckBoxes = [
+    const demoValues = [
         {
             value: "Age",
             title: "Age Range",
@@ -173,54 +184,62 @@ export default function SideNav({
         },
     ];
 
-    const accordionItems = demoCheckBoxes.map((item) => (
-        <Accordion.Item
-            className="flex py-3 flex-col"
-            value={item.value}
-            key={item.value}
-        >
-            <Accordion.Control className="font-medium">
-                {item.title}
-            </Accordion.Control>
-            <Accordion.Panel>
-                <Checkbox.Group
-                    className="mx-3"
-                    value={item.groupValue}
-                    onChange={item.changeGroupValue}
-                >
-                    <Group mt="xs">
-                        {item.options.map((option, index) => {
-                            let curIndex = structuredClone(index);
-                            if (["Age Range", "Gender"].includes(item.title)) {
-                                curIndex += 1;
-                            } else if (
-                                [
-                                    "Race/Ethnicity",
-                                    "Income",
-                                    "Location",
-                                    "Sexual Orientation",
-                                ].includes(item.title)
-                            ) {
-                                curIndex = option;
-                            } else if (item.title == "BFIExtraHi") {
-                                curIndex = option.split(" ")[0].toLowerCase();
-                            }
+    const comboboxItems = demoValues.map((item) => (
+        <Combobox.Group label={item.title} key={item.value}>
+            {item.options.map((option, index) => {
+                let curIndex = structuredClone(index);
+                if (["Age Range", "Gender"].includes(item.title)) {
+                    curIndex += 1;
+                } else if (
+                    [
+                        "Race/Ethnicity",
+                        "Income",
+                        "Location",
+                        "Sexual Orientation",
+                    ].includes(item.title)
+                ) {
+                    curIndex = option;
+                } else if (item.title == "BFIExtraHi") {
+                    curIndex = option.split(" ")[0].toLowerCase();
+                }
 
-                            return (
-                                <Checkbox
-                                    defaultunchecked="true"
-                                    onChange={() => {}}
-                                    value={curIndex.toString()}
-                                    label={option}
-                                    key={index}
-                                />
-                            );
-                        })}
-                    </Group>
-                </Checkbox.Group>
-            </Accordion.Panel>
-        </Accordion.Item>
+                return (
+                    <Combobox.Option
+                        value={
+                            item.title +
+                            ": " +
+                            option +
+                            "=" +
+                            curIndex.toString()
+                        }
+                    >
+                        {option}
+                    </Combobox.Option>
+                );
+            })}
+        </Combobox.Group>
     ));
+
+    function updateFilters(fil) {
+        let index = filters.indexOf(fil);
+        let demoInfo = demoValues.find((x) => x.title === fil.split(":")[0]);
+        if (index > -1) {
+            filters.splice(index, 1);
+            setFilters([...filters]);
+
+            let groupIndex = demoInfo.groupValue.indexOf(fil.split("=")[1]);
+            demoInfo.groupValue.splice(groupIndex, 1);
+            demoInfo.changeGroupValue([...demoInfo.groupValue]);
+        } else {
+            setFilters([...filters, fil]);
+
+            demoInfo.changeGroupValue([
+                ...demoInfo.groupValue,
+                fil.split("=")[1],
+            ]);
+        }
+    }
+
     useEffect(() => {
         if (opened) {
             setOuterStyle(
@@ -300,15 +319,66 @@ export default function SideNav({
                         >
                             Filters
                         </h1>
-                        <Accordion
-                            chevronPosition="left"
-                            multiple
-                            // defaultValue={demoCheckBoxes.map(
-                            //     ({ value }) => value,
-                            // )}
-                        >
-                            {accordionItems}
-                        </Accordion>
+                        <div className="mx-2 mt-2">
+                            <Combobox
+                                store={combobox}
+                                className="mb-3"
+                                withinPortal={false}
+                                onOptionSubmit={(fil) => {
+                                    updateFilters(fil);
+
+                                    combobox.closeDropdown();
+                                }}
+                            >
+                                <Combobox.Target>
+                                    <InputBase
+                                        component="button"
+                                        type="button"
+                                        pointer
+                                        rightSection={<Combobox.Chevron />}
+                                        onClick={() =>
+                                            combobox.toggleDropdown()
+                                        }
+                                        rightSectionPointerEvents="none"
+                                    >
+                                        {
+                                            <Input.Placeholder>
+                                                Select a Filter
+                                            </Input.Placeholder>
+                                        }
+                                    </InputBase>
+                                </Combobox.Target>
+
+                                <Combobox.Dropdown>
+                                    <Combobox.Options
+                                        mah={300}
+                                        className="overflow-y-auto"
+                                    >
+                                        {comboboxItems}
+                                    </Combobox.Options>
+                                </Combobox.Dropdown>
+                            </Combobox>
+                            <div>
+                                <Pill.Group>
+                                    {filters.map((fil, index) => (
+                                        <Pill
+                                            size="md"
+                                            className={
+                                                titleColors[goal] +
+                                                " my-[0.05rem]"
+                                            }
+                                            key={index}
+                                            withRemoveButton
+                                            onRemove={() => {
+                                                updateFilters(fil);
+                                            }}
+                                        >
+                                            {fil.split("=")[0]}
+                                        </Pill>
+                                    ))}
+                                </Pill.Group>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
