@@ -9,6 +9,7 @@ import {
     Input,
     Pill,
 } from "@mantine/core";
+import "./SideNav.css";
 
 interface Props {
     goal: string;
@@ -365,35 +366,64 @@ export default function SideNav({
                             <div>
                                 <Pill.Group>
                                     {filters.map((fil, index) => (
-                                        <Pill
-                                            size="lg"
-                                            className={
-                                                titleColors[goal] +
-                                                " my-[0.05rem]"
-                                            }
-                                            key={index}
-                                            withRemoveButton
-                                            onRemove={() => {
-                                                updateFilters(fil);
-                                            }}
-                                        >
-                                            <span className="italic">
-                                                {
-                                                    fil
-                                                        .split("=")[0]
-                                                        .split(":")[0]
+                                        <div key={index}>
+                                            <Pill
+                                                size="lg"
+                                                className={
+                                                    titleColors[goal] +
+                                                    " my-[0.05rem] input-desktop"
                                                 }
-                                                :
-                                            </span>
+                                                withRemoveButton
+                                                onRemove={() => {
+                                                    updateFilters(fil);
+                                                }}
+                                            >
+                                                <span className="italic">
+                                                    {
+                                                        fil
+                                                            .split("=")[0]
+                                                            .split(":")[0]
+                                                    }
+                                                    :
+                                                </span>
 
-                                            <span className="font-semibold">
-                                                {
-                                                    fil
-                                                        .split("=")[0]
-                                                        .split(":")[1]
+                                                <span className="font-semibold">
+                                                    {
+                                                        fil
+                                                            .split("=")[0]
+                                                            .split(":")[1]
+                                                    }
+                                                </span>
+                                            </Pill>
+                                            <Pill
+                                                size="xs"
+                                                className={
+                                                    titleColors[goal] +
+                                                    " my-[0.05rem] input-mobile"
                                                 }
-                                            </span>
-                                        </Pill>
+                                                withRemoveButton
+                                                onRemove={() => {
+                                                    updateFilters(fil);
+                                                }}
+                                            >
+                                                <span className="italic">
+                                                    {
+                                                        fil
+                                                            .split("=")[0]
+                                                            .split(":")[0]
+                                                    }
+                                                    :
+                                                </span>
+
+                                                <span className="font-semibold">
+                                                    {
+                                                        fil
+                                                            .split("=")[0]
+                                                            .split(":")[1]
+                                                    }
+                                                </span>
+                                            </Pill>
+                                        </div>
                                     ))}
                                 </Pill.Group>
                             </div>

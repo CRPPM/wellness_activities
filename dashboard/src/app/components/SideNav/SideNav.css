@@ -1,0 +1,20 @@
+/** Mobile **/
+@media only screen and (max-width: 767px),
+  only screen and (max-device-width: 767px) {
+  .input-desktop {
+    display: none;
+  }
+  .input-mobile {
+    display: flex;
+  }
+}
+
+/** Desktop **/
+@media only screen and (min-device-width: 768px) {
+  .input-desktop {
+    display: flex;
+  }
+  .input-mobile {
+    display: none;
+  }
+}

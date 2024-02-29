@@ -174,7 +174,6 @@ function filter_by_demographics(
 
             if (remaining_data < 20)
                 disabled_options.push(demo.value + "=" + opt);
-            console.log(remaining_data);
         });
     });
     return [data, disabled_options];

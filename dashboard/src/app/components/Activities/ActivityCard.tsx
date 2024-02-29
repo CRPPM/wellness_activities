@@ -88,20 +88,32 @@ export default function ActivityCard({
                         />
                     </div>
                 )}
-                <Text fw={500} size={textSize} className="w-[50vw]">
-                    <span className={"font-bold " + textAccentSize}>
+                <Text
+                    fw={500}
+                    size={textSize}
+                    className="w-[50vw] max-sm:text-xs"
+                >
+                    <span
+                        className={"font-bold max-sm:text-xs " + textAccentSize}
+                    >
                         {percentage}%
                     </span>{" "}
                     of people found that{" "}
-                    <span className={"font-bold " + textAccentSize}>
+                    <span
+                        className={"font-bold max-sm:text-xs" + textAccentSize}
+                    >
                         {activity}
                     </span>{" "}
                     for{" "}
-                    <span className={"font-bold " + textAccentSize}>
+                    <span
+                        className={"font-bold max-sm:text-xs" + textAccentSize}
+                    >
                         {avgDuration}
                     </span>{" "}
                     minutes on average{" "}
-                    <span className={"font-bold " + textAccentSize}>
+                    <span
+                        className={"font-bold max-sm:text-xs" + textAccentSize}
+                    >
                         {avgFrequency} times a week
                     </span>{" "}
                     helped with their sleep.

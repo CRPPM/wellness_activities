@@ -82,7 +82,7 @@ export default function SideNavGoal({
                 </div>
                 <h2
                     className={
-                        "ml-2 my-3 text-gray-800 uppercase " +
+                        "ml-2 my-3 text-gray-800 uppercase text-center " +
                         mousePointer +
                         " " +
                         colorUnderlines[goalColor] +
