@@ -104,14 +104,14 @@ export default function SideNav({
             goal: "Productivity",
             iconImg: "improvement_icon.png",
             alt: "productivity icon",
-            goalImg: "sleep.png",
+            goalImg: "productivity.png",
             goalColor: "productivity",
         },
         {
             goal: "Social Wellness",
             iconImg: "social_icon.png",
             alt: "social wellness icon",
-            goalImg: "sleep.png",
+            goalImg: "social wellness.png",
             goalColor: "social",
         },
     ];
