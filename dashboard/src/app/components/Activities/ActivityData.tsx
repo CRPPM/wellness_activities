@@ -5,7 +5,7 @@ import ActivityCard from "./ActivityCard";
 import useData from "../Hooks/useData";
 
 interface Props {
-    goal: string | null;
+    goal: string;
     setGoal: Function;
     ageValue: number[];
     genderValue: number[];
@@ -36,7 +36,7 @@ export default function ActivityData({
     const [activityData, setActivityData] = useState([]);
     const [visible, setVisible] = useState(false);
 
-    const titleColors = {
+    const titleColors: { [key: string]: string } = {
         Sleep: "#51b5a5",
         "Physical Health": "#dcc45a",
         "Emotional Health": "#3b8bff",
@@ -44,7 +44,7 @@ export default function ActivityData({
         "Social Wellness": "#ff611c",
     };
 
-    const loadMetric = async (goal) => {
+    const loadMetric = async (goal: string) => {
         setVisible(true);
         let filteredData = await useData(
             goal,
@@ -83,7 +83,15 @@ export default function ActivityData({
         BFIExtraHiValue,
     ]);
 
-    const downloadFile = ({ data, fileName, fileType }) => {
+    const downloadFile = ({
+        data,
+        fileName,
+        fileType,
+    }: {
+        data: BlobPart;
+        fileName: string;
+        fileType: string;
+    }) => {
         const blob = new Blob([data], { type: fileType });
         const a = document.createElement("a");
         a.download = fileName;
@@ -116,7 +124,7 @@ export default function ActivityData({
             headers.shift();
             headers = [headers.join(",")];
             // Convert users data to a csv
-            let rawCSV = data.reduce((acc, row) => {
+            let rawCSV = data.reduce((acc: string[], row: any) => {
                 row.GenderB = ["man", "woman"][Number(row.GenderB) - 1];
                 row.MHSG = [
                     "no mental health diagnoses",
@@ -179,14 +187,23 @@ export default function ActivityData({
                         visible={visible}
                         overlayProps={{ radius: "sm", blur: 3 }}
                     />
-                    {activityData.map(function (ele, i) {
+                    {activityData.map(function (
+                        ele: {
+                            index: string;
+                            Count: number;
+                            Percentage: number;
+                            Duration: number;
+                            Frequency: number;
+                        },
+                        i: number,
+                    ) {
                         if (ele.Percentage > 0) {
                             return (
                                 <ActivityCard
                                     order={i + 1}
                                     activity={ele.index}
                                     percentage={ele.Percentage.toFixed(2)}
-                                    avgDuration={Math.round(ele.Duration, 2)}
+                                    avgDuration={ele.Duration.toFixed(2)}
                                     avgFrequency={ele.Frequency.toFixed(2)}
                                     altImage={
                                         "writing a schedule in a notebook"

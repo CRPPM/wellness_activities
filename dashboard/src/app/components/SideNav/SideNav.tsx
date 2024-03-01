@@ -33,6 +33,7 @@ interface Props {
     setPhsgValue: Function;
     BFIExtraHiValue: string[];
     setBFIExtraHiValue: Function;
+    disabledOptions: string[];
 }
 
 export default function SideNav({
@@ -71,7 +72,7 @@ export default function SideNav({
     });
     const [filters, setFilters] = useState<string[]>([]);
 
-    const titleColors = {
+    const titleColors: { [key: string]: string } = {
         Sleep: "!bg-sleepText",
         "Physical Health": "!bg-physicalText",
         "Emotional Health": "!bg-emotionalText",
@@ -189,9 +190,9 @@ export default function SideNav({
     const comboboxItems = demoValues.map((item) => (
         <Combobox.Group label={item.title} key={item.value}>
             {item.options.map((option, index) => {
-                let curIndex = structuredClone(index);
+                let curIndex = structuredClone(index).toString();
                 if (["Age Range", "Gender"].includes(item.title)) {
-                    curIndex += 1;
+                    curIndex = String(Number(curIndex) + 1);
                 } else if (
                     [
                         "Race/Ethnicity",
@@ -225,23 +226,27 @@ export default function SideNav({
         </Combobox.Group>
     ));
 
-    function updateFilters(fil) {
+    function updateFilters(fil: string) {
         let index = filters.indexOf(fil);
         let demoInfo = demoValues.find((x) => x.title === fil.split(":")[0]);
         if (index > -1) {
             filters.splice(index, 1);
             setFilters([...filters]);
 
-            let groupIndex = demoInfo.groupValue.indexOf(fil.split("=")[1]);
-            demoInfo.groupValue.splice(groupIndex, 1);
-            demoInfo.changeGroupValue([...demoInfo.groupValue]);
+            if (demoInfo !== undefined) {
+                let groupIndex = demoInfo.groupValue.indexOf(fil.split("=")[1]);
+                demoInfo.groupValue.splice(groupIndex, 1);
+                demoInfo.changeGroupValue([...demoInfo.groupValue]);
+            }
         } else {
             setFilters([...filters, fil]);
 
-            demoInfo.changeGroupValue([
-                ...demoInfo.groupValue,
-                fil.split("=")[1],
-            ]);
+            if (demoInfo !== undefined) {
+                demoInfo.changeGroupValue([
+                    ...demoInfo.groupValue,
+                    fil.split("=")[1],
+                ]);
+            }
         }
     }
 
@@ -308,6 +313,7 @@ export default function SideNav({
                                 setMhsgValue([]);
                                 setPhsgValue([]);
                                 setBFIExtraHiValue([]);
+                                setFilters([]);
                             }}
                         >
                             Select another goal{" "}
@@ -327,7 +333,6 @@ export default function SideNav({
                         <div className="mx-2 mt-2">
                             <Combobox
                                 store={combobox}
-                                className="mb-3"
                                 withinPortal={false}
                                 onOptionSubmit={(fil) => {
                                     updateFilters(fil);
@@ -339,6 +344,7 @@ export default function SideNav({
                                     <InputBase
                                         component="button"
                                         type="button"
+                                        className="mb-3"
                                         pointer
                                         rightSection={<Combobox.Chevron />}
                                         onClick={() =>

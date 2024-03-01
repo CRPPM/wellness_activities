@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Stack, Card, Group, Badge, Button, Text } from "@mantine/core";
-import ActivityCard from "./ActivityCard";
 
 interface Props {
-    width: int;
-    activity: string | null;
-    percentage: int;
-    avgDuration: int;
-    avgFrequency: int;
-    altImage: string | null;
+    order: number;
+    activity: string;
+    percentage: string;
+    avgDuration: string;
+    avgFrequency: string;
+    altImage: string;
     goal: string;
 }
 
@@ -22,13 +21,14 @@ export default function ActivityCard({
     altImage,
     goal,
 }: Props) {
-    const [foundImgSrc, setFoundImgeSrc] = useState<string>(false);
-    let imgSrc = "/images/" + activity.replaceAll(" ", "_") + ".png";
-    let fallbackSrc = "/images/default.png";
-    const [width, setWidth] = useState<int>(100);
+    const [foundImgSrc, setFoundImgeSrc] = useState<Boolean>(false);
+    const [width, setWidth] = useState<number>(100);
     const [textSize, setTextSize] = useState<string>("");
     const [textAccentSize, setTextAccentSize] = useState<string>("text-md");
     const [showImage, setShowImage] = useState<Boolean>(true);
+
+    let imgSrc = "/images/" + activity.replaceAll(" ", "_") + ".png";
+    let fallbackSrc = "/images/default.png";
 
     if (goal == "Physical Health") {
         if (

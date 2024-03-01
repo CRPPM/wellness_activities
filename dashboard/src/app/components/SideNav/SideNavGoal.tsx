@@ -36,7 +36,7 @@ export default function SideNavGoal({
 
     // Tailwind cannot understand string interpolation or concatenation
     // https://tailwindcss.com/docs/content-configuration#dynamic-class-names
-    const colorBackgrounds = {
+    const colorBackgrounds: { [key: string]: string } = {
         sleep: "bg-sleep",
         physical: "bg-physical",
         emotional: "bg-emotional",
@@ -44,7 +44,7 @@ export default function SideNavGoal({
         social: "bg-social",
     };
 
-    const titleBackgrounds = {
+    const titleBackgrounds: { [key: string]: string } = {
         sleep: "bg-sleepText",
         physical: "bg-physicalText",
         emotional: "bg-emotionalText",
@@ -52,7 +52,7 @@ export default function SideNavGoal({
         social: "bg-socialText",
     };
 
-    const hoverColorBackgrounds = {
+    const hoverColorBackgrounds: { [key: string]: string } = {
         sleep: "hover:after:bg-sleep",
         physical: "hover:after:bg-physical",
         emotional: "hover:after:bg-emotional",
@@ -60,7 +60,7 @@ export default function SideNavGoal({
         social: "hover:after:bg-social",
     };
 
-    const colorUnderlines = {
+    const colorUnderlines: { [key: string]: string } = {
         sleep: "after:bg-sleep",
         physical: "after:bg-physical",
         emotional: "after:bg-emotional",
@@ -106,7 +106,7 @@ export default function SideNavGoal({
             </div>
             {curGoal != "" && (
                 <div className="w-4/5 m-auto mt-1 mb-2">
-                    <Image src={goalSrc} width={300} height={20} />
+                    <Image src={goalSrc} width={300} height={20} alt={goal} />
                 </div>
             )}
         </div>
