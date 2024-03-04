@@ -16,11 +16,32 @@ export default async function useData(
     BFIExtraHiValue,
     download_raw_data,
 ) {
-    const file = path.join(process.cwd(), "data", "activities.json");
-    const stringified = readFileSync(file, "utf8");
-    const data = JSON.parse(stringified)["data"];
+    // const file = path.join(process.cwd(), "data", "activities.json");
+    // const stringified = readFileSync(file, "utf8");
+    // const data = JSON.parse(stringified)["data"];
+
+    const loadMetric = async () => {
+        let data = [];
+        new Promise((resolve, reject) => {
+            fetch(process.cwd(), "/api/loadActivityJSON", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            }).then((res) => {
+                if (res.ok) {
+                    res.json().then((data1) => {
+                        console.log("hi!");
+                        console.log(data1);
+                        data = data1;
+                        resolve(true);
+                    });
+                }
+            });
+        });
+        return data;
+    };
+
     return prepare_data(
-        data,
+        loadMetric(),
         goal,
         ageValue,
         genderValue,
