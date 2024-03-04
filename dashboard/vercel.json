@@ -1,6 +1,6 @@
 {
     "functions": {
-        "src/*.js": {
+        "pages/*.js": {
             "includeFiles": "data/**/*"
         }
     }
