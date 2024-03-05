@@ -35,7 +35,6 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         console.log("hi!");
-                        console.log(data1);
                         activityData.current = prepare_data(
                             data,
                             goal,
