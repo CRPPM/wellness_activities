@@ -6,7 +6,7 @@ export default function handler(req, res) {
   const { goal } = req.body;
   const file = path.join(process.cwd(), "dashboard", "data", "activities.json");
   const stringified = readFileSync(file, "utf8");
-  const data = JSON.parse(stringified)["data"];
+  let data = JSON.parse(stringified)["data"];
 
   let goalPrefix = "";
   switch (goal) {
