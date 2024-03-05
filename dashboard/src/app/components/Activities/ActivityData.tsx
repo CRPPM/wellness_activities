@@ -122,7 +122,7 @@ export default function ActivityData({
 
                 let vals = Object.values(row);
 
-                vals.forEach((v, i, arr) => {
+                vals.forEach((v: string, i: number, arr: string[]) => {
                     if (v.includes(",")) {
                         arr[i] = '"' + v + '"';
                     }
