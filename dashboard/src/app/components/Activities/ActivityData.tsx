@@ -160,7 +160,7 @@ export default function ActivityData({
             }
         >
             {goal != "" && (
-                <Stack className="mb-8">
+                <Stack className="mb-8 w-[60vw]">
                     <div className="flex">
                         <h1 className="tracking-widest text-2xl w-full items-center uppercase">
                             Activities
