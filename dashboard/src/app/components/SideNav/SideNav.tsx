@@ -219,6 +219,7 @@ export default function SideNav({
                         disabled={disabledOptions.includes(
                             item.value + "=" + curIndex.toString(),
                         )}
+                        key={index}
                     >
                         {option}
                     </Combobox.Option>
@@ -279,6 +280,7 @@ export default function SideNav({
                         if (goal == "" || goal == goalItem.goal) {
                             return (
                                 <SideNavGoal
+                                    key={index}
                                     goal={goalItem.goal}
                                     iconImg={goalItem.iconImg}
                                     alt={goalItem.alt}
