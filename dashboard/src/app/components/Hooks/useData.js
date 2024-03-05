@@ -25,6 +25,7 @@ const useData = (
     const loadMetric = async (goal) => {
         return new Promise((resolve, reject) => {
             activityData.current = [];
+            disabledOptions.current = [];
             let path = "/api/loadActivityJSON.js";
             fetch(path, {
                 method: "POST",
@@ -63,7 +64,11 @@ const useData = (
 
     useEffect(() => {
         if (goal != "") {
-            loadMetric(goal);
+            new Promise((resolve, reject) => {
+                loadMetric(goal);
+            }).then(() => {
+                console.log("loaded JSON");
+            });
         }
     }, [
         goal,
