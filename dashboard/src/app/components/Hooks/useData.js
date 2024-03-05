@@ -49,7 +49,9 @@ const useData = (
                             BFIExtraHiValue,
                             download_raw_data,
                         );
-
+                        console.log("did we get anything?");
+                        console.log(prepped_data);
+                        console.log(prepped_data[0]);
                         activityData.current = prepped_data[0];
                         disabledOptions.current = prepped_data[1];
                         resolve(true);
