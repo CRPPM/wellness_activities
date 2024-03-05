@@ -60,9 +60,7 @@ export default function ActivityData({
     useEffect(() => {
         if (goal != "") {
             setVisible(true);
-            // let filteredData = getData();
-            // console.log("disabledOptions");
-            // console.log(filteredData);
+            console.log(getData());
             setActivityData(getData());
             setDisabledOptions(getDisabledOptions());
             setTimeout(() => {
