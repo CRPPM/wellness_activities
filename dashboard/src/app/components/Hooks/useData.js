@@ -91,15 +91,6 @@ const useData = (
         BFIExtraHiValue,
     ]);
 
-    function getData() {
-        console.log("I already know this is running too soon");
-        return activityData.current;
-    }
-
-    function getDisabledOptions() {
-        return disabledOptions.current;
-    }
-
     return { getData, getDisabledOptions };
 };
 
