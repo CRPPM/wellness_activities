@@ -1,5 +1,5 @@
 import path from "path";
-import { readFileSync } from "fs";
+// import { readFileSync } from "fs";
 import { QUESTIONS } from "./activity_dict";
 import { useRef, useEffect } from "react";
 
