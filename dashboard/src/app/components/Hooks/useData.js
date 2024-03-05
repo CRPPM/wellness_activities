@@ -58,7 +58,7 @@ const useData = (
 
     useEffect(() => {
         if (goal != "") {
-            loadMetric(goal);
+            Promise(loadMetric(goal));
         }
     }, [
         goal,
@@ -260,7 +260,7 @@ function prepare_data(
     }
 
     // Filter by demographics here
-    let disabled_options;
+    // let disabled_options;
     [data, disabled_options] = filter_by_demographics(
         data,
         ageValue,
