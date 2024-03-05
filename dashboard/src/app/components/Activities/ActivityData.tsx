@@ -43,7 +43,7 @@ export default function ActivityData({
         Productivity: "#b78b66",
         "Social Wellness": "#ff611c",
     };
-    const { getData, getDisabledOptions } = useData(
+    useData(
         goal,
         ageValue,
         genderValue,
@@ -54,33 +54,31 @@ export default function ActivityData({
         mhsgValue,
         phsgValue,
         BFIExtraHiValue,
+        setActivityData,
+        setDisabledOptions,
+        setVisible,
         false,
     );
 
-    useEffect(() => {
-        console.log("hi there!");
-        console.log(goal);
-        if (goal != "") {
-            setVisible(true);
-            console.log(getData());
-            setActivityData(getData());
-            setDisabledOptions(getDisabledOptions());
-            setTimeout(() => {
-                setVisible(false);
-            }, 200);
-        }
-    }, [
-        goal,
-        ageValue,
-        genderValue,
-        raceValue,
-        incomeValue,
-        livingValue,
-        sexualValue,
-        mhsgValue,
-        phsgValue,
-        BFIExtraHiValue,
-    ]);
+    // useEffect(() => {
+    //     console.log("hi there!");
+    //     console.log(goal);
+    //     if (goal != "") {
+
+    //         console.log(getData());
+    //     }
+    // }, [
+    //     goal,
+    //     ageValue,
+    //     genderValue,
+    //     raceValue,
+    //     incomeValue,
+    //     livingValue,
+    //     sexualValue,
+    //     mhsgValue,
+    //     phsgValue,
+    //     BFIExtraHiValue,
+    // ]);
 
     const downloadFile = ({
         data,

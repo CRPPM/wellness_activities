@@ -14,18 +14,21 @@ const useData = (
     mhsgValue,
     phsgValue,
     BFIExtraHiValue,
+    setActivityData,
+    setDisabledOptions,
+    setVisible,
     download_raw_data,
 ) => {
-    const activityData = useRef([]);
-    const disabledOptions = useRef([]);
+    // const activityData = useRef([]);
+    // const disabledOptions = useRef([]);
     // const file = path.join(process.cwd(), "data", "activities.json");
     // const stringified = readFileSync(file, "utf8");
     // const data = JSON.parse(stringified)["data"];
 
     const loadMetric = async (goal) => {
         return new Promise((resolve, reject) => {
-            activityData.current = [];
-            disabledOptions.current = [];
+            // activityData.current = [];
+            // disabledOptions.current = [];
             let path = "/api/loadActivityJSON.js";
             fetch(path, {
                 method: "POST",
@@ -54,8 +57,14 @@ const useData = (
                         console.log("did we get anything?");
                         console.log(prepped_data);
                         console.log(prepped_data[0]);
-                        activityData.current = prepped_data[0];
-                        disabledOptions.current = prepped_data[1];
+                        // activityData.current = prepped_data[0];
+                        // disabledOptions.current = prepped_data[1];
+                        setVisible(true);
+                        setActivityData(prepped_data[0]);
+                        setDisabledOptions(prepped_data[1]);
+                        setTimeout(() => {
+                            setVisible(false);
+                        }, 200);
                         resolve(true);
                     });
                 }
@@ -82,16 +91,16 @@ const useData = (
         BFIExtraHiValue,
     ]);
 
-    function getData() {
-        console.log("I already know this is running too soon");
-        return activityData.current;
-    }
+    // function getData() {
+    //     console.log("I already know this is running too soon");
+    //     return activityData.current;
+    // }
 
-    function getDisabledOptions() {
-        return disabledOptions.current;
-    }
+    // function getDisabledOptions() {
+    //     return disabledOptions.current;
+    // }
 
-    return { getData, getDisabledOptions };
+    // return { getData, getDisabledOptions };
 };
 
 const demo_cols = [
