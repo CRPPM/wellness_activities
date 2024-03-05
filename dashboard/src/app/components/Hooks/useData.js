@@ -64,9 +64,7 @@ const useData = (
 
     useEffect(() => {
         if (goal != "") {
-            new Promise((resolve, reject) => {
-                loadMetric(goal);
-            }).then(() => {
+            Promise.all([loadMetric(goal)]).then(() => {
                 console.log("loaded JSON");
             });
         }
