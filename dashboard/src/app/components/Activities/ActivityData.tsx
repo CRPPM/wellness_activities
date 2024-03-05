@@ -124,6 +124,7 @@ export default function ActivityData({
                 // console.log(vals);
                 vals.forEach((v: string, i: number, arr: string[]) => {
                     if (v != null) {
+                        console.log(v);
                         if (v.includes(",")) {
                             arr[i] = '"' + v + '"';
                         }
