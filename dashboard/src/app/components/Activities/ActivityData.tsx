@@ -121,12 +121,12 @@ export default function ActivityData({
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
 
                 let vals = Object.values(row);
-
-                vals.forEach((v: any, i: number, arr: string[]) => {
-                    if (v.includes(",")) {
-                        arr[i] = '"' + v + '"';
-                    }
-                });
+                console.log(vals);
+                // vals.forEach((v: string, i: number, arr: string[]) => {
+                // if (v.includes(",")) {
+                // arr[i] = '"' + v + '"';
+                // }
+                // });
 
                 vals.shift();
                 let actString = vals.join(",");
