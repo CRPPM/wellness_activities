@@ -102,10 +102,11 @@ export default function ActivityCard({
                     <span
                         className={"font-bold max-sm:text-xs" + textAccentSize}
                     >
-                        {activity}
+                        {activity} helped with their {goal.toLowerCase()}.
                     </span>{" "}
-                    <br />
-                    for{" "}
+                </Text>
+                <Text>
+                    People engaged in this activity for
                     <span
                         className={"font-bold max-sm:text-xs" + textAccentSize}
                     >
@@ -115,9 +116,8 @@ export default function ActivityCard({
                     <span
                         className={"font-bold max-sm:text-xs" + textAccentSize}
                     >
-                        {avgFrequency} times a week
+                        {avgFrequency} times a week.
                     </span>{" "}
-                    helped with their {goal.toLowerCase()}.
                 </Text>
             </Group>
         </Card>
