@@ -62,7 +62,7 @@ const useData = (
 
     useEffect(() => {
         if (goal != "") {
-            new Promise(loadMetric(goal));
+            loadMetric(goal);
         }
     }, [
         goal,
