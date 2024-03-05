@@ -58,6 +58,8 @@ export default function ActivityData({
     );
 
     useEffect(() => {
+        console.log("hi there!");
+        console.log(goal);
         if (goal != "") {
             setVisible(true);
             console.log(getData());

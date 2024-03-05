@@ -35,7 +35,6 @@ const useData = (
             }).then((res) => {
                 if (res.ok) {
                     res.json().then((data) => {
-                        console.log("hi!");
                         let prepped_data = prepare_data(
                             data,
                             goal,
@@ -189,8 +188,6 @@ function filter_by_demographics(
     phsgValue,
     BFIExtraHiValue,
 ) {
-    console.log("hi there");
-    console.log(data);
     let demos = [
         ageValue,
         genderValue,
