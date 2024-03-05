@@ -123,8 +123,10 @@ export default function ActivityData({
                 let vals = Object.values<string>(row);
                 // console.log(vals);
                 vals.forEach((v: string, i: number, arr: string[]) => {
-                    if (v != null && v.includes(",")) {
-                        arr[i] = '"' + v + '"';
+                    if (v != null) {
+                        if (v.includes(",")) {
+                            arr[i] = '"' + v + '"';
+                        }
                     }
                 });
 
