@@ -52,17 +52,9 @@ const useData = (
                             BFIExtraHiValue,
                             rawData,
                         );
-                        console.log("did we get anything?");
-                        console.log(prepped_data);
-                        console.log(prepped_data[0]);
-                        // activityData.current = prepped_data[0];
-                        // disabledOptions.current = prepped_data[1];
-                        setVisible(true);
                         setActivityData(prepped_data[0]);
                         setDisabledOptions(prepped_data[1]);
-                        setTimeout(() => {
-                            setVisible(false);
-                        }, 200);
+
                         resolve(true);
                     });
                 }
@@ -72,8 +64,10 @@ const useData = (
 
     useEffect(() => {
         if (goal != "") {
+            setVisible(true);
             Promise.all([loadMetric(goal)]).then(() => {
                 console.log("loaded JSON");
+                setVisible(false);
             });
         }
     }, [
@@ -90,6 +84,8 @@ const useData = (
     ]);
 
     function getRawData() {
+        console.log("ok");
+        console.log(rawData.current);
         return rawData.current;
     }
 
