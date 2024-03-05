@@ -43,7 +43,7 @@ export default function ActivityData({
         Productivity: "#b78b66",
         "Social Wellness": "#ff611c",
     };
-    const { getData } = useData(
+    const { getData, getDisabledOptions } = useData(
         goal,
         ageValue,
         genderValue,
@@ -60,11 +60,11 @@ export default function ActivityData({
     useEffect(() => {
         if (goal != "") {
             setVisible(true);
-            let filteredData = getData();
-            console.log("disabledOptions");
-            console.log(filteredData);
-            setActivityData(filteredData[0]);
-            setDisabledOptions(filteredData[1]);
+            // let filteredData = getData();
+            // console.log("disabledOptions");
+            // console.log(filteredData);
+            setActivityData(getData());
+            setDisabledOptions(getDisabledOptions());
             setTimeout(() => {
                 setVisible(false);
             }, 200);

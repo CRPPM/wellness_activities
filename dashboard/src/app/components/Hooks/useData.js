@@ -17,6 +17,7 @@ const useData = (
     download_raw_data,
 ) => {
     const activityData = useRef([]);
+    const disabledOptions = useRef([]);
     // const file = path.join(process.cwd(), "data", "activities.json");
     // const stringified = readFileSync(file, "utf8");
     // const data = JSON.parse(stringified)["data"];
@@ -35,7 +36,7 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         console.log("hi!");
-                        activityData.current = prepare_data(
+                        let prepped_data = prepare_data(
                             data,
                             goal,
                             ageValue,
@@ -49,6 +50,9 @@ const useData = (
                             BFIExtraHiValue,
                             download_raw_data,
                         );
+
+                        activityData.current = prepped_data[0];
+                        disabledOptions.current = prepped_data[1];
                         resolve(true);
                     });
                 }
@@ -77,7 +81,11 @@ const useData = (
         return activityData.current;
     }
 
-    return { getData };
+    function getDisabledOptions() {
+        return disabledOptions.current;
+    }
+
+    return { getData, getDisabledOptions };
 };
 
 const demo_cols = [
