@@ -191,16 +191,16 @@ export default function SideNav({
         <Combobox.Group label={item.title} key={item.value}>
             {item.options.map((option, index) => {
                 let curIndex = structuredClone(index).toString();
-                if (["Age Range", "Gender"].includes(item.title)) {
+                let plusOneDemos = ["Age Range", "Gender"];
+                let asIsDemos = [
+                    "Race/Ethnicity",
+                    "Income",
+                    "Location",
+                    "Sexual Orientation",
+                ];
+                if (plusOneDemos.includes(item.title)) {
                     curIndex = String(Number(curIndex) + 1);
-                } else if (
-                    [
-                        "Race/Ethnicity",
-                        "Income",
-                        "Location",
-                        "Sexual Orientation",
-                    ].includes(item.title)
-                ) {
+                } else if (asIsDemos.includes(item.title)) {
                     curIndex = option;
                 } else if (item.title == "BFIExtraHi") {
                     curIndex = option.split(" ")[0].toLowerCase();
