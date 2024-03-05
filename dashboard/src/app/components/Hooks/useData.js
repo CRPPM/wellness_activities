@@ -24,7 +24,7 @@ const useData = (
     const loadMetric = async () => {
         return new Promise((resolve, reject) => {
             activityData.current = [];
-            let path = "/api/loadActivityJSON";
+            let path = "/api/loadActivityJSON.js";
             fetch(path, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
