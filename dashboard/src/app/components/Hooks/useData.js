@@ -1,5 +1,4 @@
 import path from "path";
-// import { readFileSync } from "fs";
 import { QUESTIONS } from "./activity_dict";
 import { useRef, useEffect } from "react";
 
@@ -17,9 +16,8 @@ const useData = (
     setActivityData,
     setDisabledOptions,
     setVisible,
-    download_raw_data,
 ) => {
-    // const activityData = useRef([]);
+    const rawData = useRef([]);
     // const disabledOptions = useRef([]);
     // const file = path.join(process.cwd(), "data", "activities.json");
     // const stringified = readFileSync(file, "utf8");
@@ -52,7 +50,6 @@ const useData = (
                             mhsgValue,
                             phsgValue,
                             BFIExtraHiValue,
-                            download_raw_data,
                         );
                         console.log("did we get anything?");
                         console.log(prepped_data);
@@ -90,6 +87,12 @@ const useData = (
         phsgValue,
         BFIExtraHiValue,
     ]);
+
+    function getRawData() {
+        return rawData.current;
+    }
+
+    return { getRawData };
 };
 
 const demo_cols = [
@@ -248,7 +251,6 @@ function prepare_data(
     mhsgValue,
     phsgValue,
     BFIExtraHiValue,
-    download_raw_data,
 ) {
     let goalPrefix = "";
     switch (goal) {
@@ -284,18 +286,19 @@ function prepare_data(
         BFIExtraHiValue,
     );
 
-    if (download_raw_data) {
-        let act_cols = Object.keys(data[0]).filter(
-            (key) =>
-                (!key.startsWith(goalPrefix) || key.endsWith("Goal")) &&
-                !demo_cols.includes(key),
-        );
-        console.log(act_cols);
-        data.map(function (obj) {
-            return act_cols.forEach((e) => delete obj[e]);
-        });
-        return data;
-    }
+    // Save raw data
+    let raw_cols = Object.keys(data[0]).filter(
+        (key) =>
+            (!key.startsWith(goalPrefix) || key.endsWith("Goal")) &&
+            !demo_cols.includes(key),
+    );
+    let raw_data = structuredClone(data);
+    raw_data.map(function (obj) {
+        return raw_cols.forEach((e) => delete obj[e]);
+    });
+
+    rawData.current = raw_data;
+
     // Count cols
     let act_cols = Object.keys(data[0]).filter(
         (key) =>

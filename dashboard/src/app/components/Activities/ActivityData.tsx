@@ -43,7 +43,7 @@ export default function ActivityData({
         Productivity: "#b78b66",
         "Social Wellness": "#ff611c",
     };
-    useData(
+    const { getRawData } = useData(
         goal,
         ageValue,
         genderValue,
@@ -57,7 +57,6 @@ export default function ActivityData({
         setActivityData,
         setDisabledOptions,
         setVisible,
-        false,
     );
 
     // useEffect(() => {
@@ -103,13 +102,13 @@ export default function ActivityData({
     };
 
     async function downloadData() {
-        // let data = getData();
-        if (activityData.length != 0) {
-            let headers = Object.keys(activityData[0]);
+        let data = getRawData();
+        if (data.length != 0) {
+            let headers = Object.keys(data[0]);
             headers.shift();
             headers = [headers.join(",")];
             // Convert users data to a csv
-            let rawCSV = activityData.reduce((acc: string[], row: any) => {
+            let rawCSV = data.reduce((acc: string[], row: any) => {
                 row.GenderB = ["man", "woman"][Number(row.GenderB) - 1];
                 row.MHSG = [
                     "no mental health diagnoses",
