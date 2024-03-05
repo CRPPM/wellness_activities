@@ -23,7 +23,7 @@ const useData = (
 
     const loadMetric = async () => {
         return new Promise((resolve, reject) => {
-            fetch(process.cwd(), "/api/loadActivityJSON", {
+            fetch("/api/loadActivityJSON", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
             }).then((res) => {
