@@ -43,32 +43,29 @@ export default function ActivityData({
         Productivity: "#b78b66",
         "Social Wellness": "#ff611c",
     };
-
-    const loadMetric = async (goal: string) => {
-        setVisible(true);
-        let filteredData = await useData(
-            goal,
-            ageValue,
-            genderValue,
-            raceValue,
-            incomeValue,
-            livingValue,
-            sexualValue,
-            mhsgValue,
-            phsgValue,
-            BFIExtraHiValue,
-            false,
-        );
-        setActivityData(filteredData[0]);
-        setDisabledOptions(filteredData[1]);
-        setTimeout(() => {
-            setVisible(false);
-        }, 200);
-    };
+    const { getData } = useData(
+        goal,
+        ageValue,
+        genderValue,
+        raceValue,
+        incomeValue,
+        livingValue,
+        sexualValue,
+        mhsgValue,
+        phsgValue,
+        BFIExtraHiValue,
+        false,
+    );
 
     useEffect(() => {
         if (goal != "") {
-            loadMetric(goal);
+            setVisible(true);
+            let filteredData = getData();
+            setActivityData(filteredData[0]);
+            setDisabledOptions(filteredData[1]);
+            setTimeout(() => {
+                setVisible(false);
+            }, 200);
         }
     }, [
         goal,

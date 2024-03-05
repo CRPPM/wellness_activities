@@ -1,9 +1,9 @@
-"use server";
 import path from "path";
 import { readFileSync } from "fs";
 import { QUESTIONS } from "./activity_dict";
+import { useRef, useEffect } from "react";
 
-export default async function useData(
+const useData = (
     goal,
     ageValue,
     genderValue,
@@ -15,14 +15,14 @@ export default async function useData(
     phsgValue,
     BFIExtraHiValue,
     download_raw_data,
-) {
+) => {
+    const activityData = useRef([]);
     // const file = path.join(process.cwd(), "data", "activities.json");
     // const stringified = readFileSync(file, "utf8");
     // const data = JSON.parse(stringified)["data"];
 
     const loadMetric = async () => {
-        let data = [];
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             fetch(process.cwd(), "/api/loadActivityJSON", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -31,17 +31,32 @@ export default async function useData(
                     res.json().then((data1) => {
                         console.log("hi!");
                         console.log(data1);
-                        data = data1;
+                        activityData.current = prepare_data(
+                            loadMetric(),
+                            goal,
+                            ageValue,
+                            genderValue,
+                            raceValue,
+                            incomeValue,
+                            livingValue,
+                            sexualValue,
+                            mhsgValue,
+                            phsgValue,
+                            BFIExtraHiValue,
+                            download_raw_data,
+                        );
                         resolve(true);
                     });
                 }
             });
         });
-        return data;
     };
 
-    return prepare_data(
-        loadMetric(),
+    useEffect(() => {
+        if (goal != "") {
+            loadMetric(goal);
+        }
+    }, [
         goal,
         ageValue,
         genderValue,
@@ -52,9 +67,14 @@ export default async function useData(
         mhsgValue,
         phsgValue,
         BFIExtraHiValue,
-        download_raw_data,
-    );
-}
+    ]);
+
+    function getData() {
+        return activityData.current;
+    }
+
+    return { getData };
+};
 
 const demo_cols = [
     "ageG",
@@ -336,3 +356,5 @@ function prepare_data(
 
     return [display_data, disabled_options];
 }
+
+export default useData;
