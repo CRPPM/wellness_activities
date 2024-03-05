@@ -190,7 +190,9 @@ export default function SideNav({
     const comboboxItems = demoValues.map((item) => (
         <Combobox.Group label={item.title} key={item.value}>
             {item.options.map((option, index) => {
+                console.log(option);
                 let curIndex = structuredClone(index).toString();
+                console.log(curIndex);
                 let plusOneDemos = ["Age Range", "Gender"];
                 let asIsDemos = [
                     "Race/Ethnicity",
@@ -205,7 +207,8 @@ export default function SideNav({
                 } else if (item.title == "BFIExtraHi") {
                     curIndex = option.split(" ")[0].toLowerCase();
                 }
-
+                console.log(curIndex);
+                console.log("");
                 return (
                     <Combobox.Option
                         value={
