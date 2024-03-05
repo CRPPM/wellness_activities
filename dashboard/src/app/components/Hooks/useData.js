@@ -50,6 +50,7 @@ const useData = (
                             mhsgValue,
                             phsgValue,
                             BFIExtraHiValue,
+                            rawData,
                         );
                         console.log("did we get anything?");
                         console.log(prepped_data);
@@ -251,6 +252,7 @@ function prepare_data(
     mhsgValue,
     phsgValue,
     BFIExtraHiValue,
+    rawData,
 ) {
     let goalPrefix = "";
     switch (goal) {
