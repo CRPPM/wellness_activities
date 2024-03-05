@@ -43,7 +43,7 @@ export default function ActivityData({
         Productivity: "#b78b66",
         "Social Wellness": "#ff611c",
     };
-    useData(
+    const { getData, getDisabledOptions } = useData(
         goal,
         ageValue,
         genderValue,
