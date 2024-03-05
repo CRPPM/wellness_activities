@@ -111,7 +111,7 @@ export default function ActivityCard({
                         size={textSize}
                         className="max-sm:text-xs !pt-2"
                     >
-                        People engaged in this activity on average{" "}
+                        People typically engaged in this activity{" "}
                         <span
                             className={
                                 "font-bold max-sm:text-xs" + textAccentSize
@@ -119,7 +119,7 @@ export default function ActivityCard({
                         >
                             {avgFrequency} times a week
                         </span>{" "}
-                        for{" "}
+                        for about{" "}
                         <span
                             className={
                                 "font-bold max-sm:text-xs" + textAccentSize
