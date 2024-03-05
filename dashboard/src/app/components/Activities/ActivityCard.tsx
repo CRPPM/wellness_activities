@@ -106,8 +106,20 @@ export default function ActivityCard({
                             {activity} helped with their {goal.toLowerCase()}.
                         </span>{" "}
                     </Text>
-                    <Text fw={500} size={textSize} className="max-sm:text-xs">
-                        People engaged in this activity for{" "}
+                    <Text
+                        fw={500}
+                        size={textSize}
+                        className="max-sm:text-xs pt-2"
+                    >
+                        People engaged in this activity on average{" "}
+                        <span
+                            className={
+                                "font-bold max-sm:text-xs" + textAccentSize
+                            }
+                        >
+                            {avgFrequency} times a week
+                        </span>
+                        for
                         <span
                             className={
                                 "font-bold max-sm:text-xs" + textAccentSize
@@ -115,14 +127,7 @@ export default function ActivityCard({
                         >
                             {avgDuration}
                         </span>{" "}
-                        minutes on average{" "}
-                        <span
-                            className={
-                                "font-bold max-sm:text-xs" + textAccentSize
-                            }
-                        >
-                            {avgFrequency} times a week.
-                        </span>{" "}
+                        minutes.
                     </Text>
                 </div>
             </Group>
