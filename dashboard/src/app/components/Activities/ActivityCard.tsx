@@ -109,7 +109,7 @@ export default function ActivityCard({
                     <Text
                         fw={500}
                         size={textSize}
-                        className="max-sm:text-xs pt-2"
+                        className="max-sm:text-xs !pt-2"
                     >
                         People engaged in this activity on average{" "}
                         <span
@@ -118,8 +118,8 @@ export default function ActivityCard({
                             }
                         >
                             {avgFrequency} times a week
-                        </span>
-                        for
+                        </span>{" "}
+                        for{" "}
                         <span
                             className={
                                 "font-bold max-sm:text-xs" + textAccentSize
