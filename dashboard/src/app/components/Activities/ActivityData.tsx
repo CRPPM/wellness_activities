@@ -120,14 +120,11 @@ export default function ActivityData({
                 ][Number(row.PHSG)];
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
 
-                let vals = Object.values<string>(row);
+                let vals = Object.values<any>(row);
                 // console.log(vals);
-                vals.forEach((v: string, i: number, arr: string[]) => {
-                    if (v != null) {
-                        console.log(v);
-                        if (v.includes(",")) {
-                            arr[i] = '"' + v + '"';
-                        }
+                vals.forEach((v: any, i: number, arr: string[]) => {
+                    if (v != null && typeof v === "string" && v.includes(",")) {
+                        arr[i] = '"' + v + '"';
                     }
                 });
 
