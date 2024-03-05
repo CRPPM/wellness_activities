@@ -36,6 +36,7 @@ const useData = (
             }).then((res) => {
                 if (res.ok) {
                     res.json().then((data) => {
+                        console.log("maybe?");
                         let prepped_data = prepare_data(
                             data,
                             goal,
