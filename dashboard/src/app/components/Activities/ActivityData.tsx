@@ -122,17 +122,24 @@ export default function ActivityData({
 
                 let vals = Object.values(row);
 
+                vals.forEach((v, i, arr) => {
+                    if (v.includes(",")) {
+                        arr[i] = '"' + v + '"';
+                    }
+                });
+
                 vals.shift();
                 let actString = vals.join(",");
 
-                actString = actString.replace(
-                    "less than $49,999",
-                    '"less than $49,999"',
-                );
-                actString = actString.replace(
-                    "Greater than $50,000",
-                    '"Greater than $50,000"',
-                );
+                // actString = actString.replace(
+                //     "less than $49,999",
+                //     '"less than $49,999"',
+                // );
+                // actString = actString.replace(
+                //     "Greater than $50,000",
+                //     '"Greater than $50,000"',
+                // );
+
                 acc.push(actString);
                 return acc;
             }, []);
