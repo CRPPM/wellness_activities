@@ -23,7 +23,9 @@ const useData = (
 
     const loadMetric = async () => {
         return new Promise((resolve, reject) => {
-            fetch("/api/loadActivityJSON", {
+            activityData.current = [];
+            let path = "/api/loadActivityJSON";
+            fetch(path, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
             }).then((res) => {
