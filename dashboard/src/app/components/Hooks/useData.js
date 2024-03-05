@@ -21,20 +21,23 @@ const useData = (
     // const stringified = readFileSync(file, "utf8");
     // const data = JSON.parse(stringified)["data"];
 
-    const loadMetric = async () => {
+    const loadMetric = async (goal) => {
         return new Promise((resolve, reject) => {
             activityData.current = [];
             let path = "/api/loadActivityJSON.js";
             fetch(path, {
                 method: "POST",
+                body: JSON.stringify({
+                    goal: goal,
+                }),
                 headers: { "Content-Type": "application/json" },
             }).then((res) => {
                 if (res.ok) {
-                    res.json().then((data1) => {
+                    res.json().then((data) => {
                         console.log("hi!");
                         console.log(data1);
                         activityData.current = prepare_data(
-                            loadMetric(),
+                            data,
                             goal,
                             ageValue,
                             genderValue,
@@ -238,40 +241,6 @@ function prepare_data(
     BFIExtraHiValue,
     download_raw_data,
 ) {
-    let goalPrefix = "";
-    switch (goal) {
-        case "Sleep":
-            data = data.filter(function (d) {
-                return d.SleepGoal == "sleep";
-            });
-            goalPrefix = "Sleep";
-            break;
-        case "Physical Health":
-            data = data.filter(function (d) {
-                return d.PhysGoal == "physical health";
-            });
-            goalPrefix = "Phys";
-            break;
-        case "Emotional Health":
-            data = data.filter(function (d) {
-                return d.EmoGoal == "emotional health";
-            });
-            goalPrefix = "Emo";
-            break;
-        case "Productivity":
-            data = data.filter(function (d) {
-                return d.ProductGoal == "productivity";
-            });
-            goalPrefix = "Product";
-            break;
-        case "Social Wellness":
-            data = data.filter(function (d) {
-                return d.SocialGoal == "social wellness";
-            });
-            goalPrefix = "Social";
-            break;
-    }
-
     // Filter by demographics here
     let disabled_options;
     [data, disabled_options] = filter_by_demographics(
