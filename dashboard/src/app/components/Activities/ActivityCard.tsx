@@ -88,37 +88,43 @@ export default function ActivityCard({
                         />
                     </div>
                 )}
-                <Text
-                    fw={500}
-                    size={textSize}
-                    className="w-[50vw] max-sm:text-xs"
-                >
-                    <span
-                        className={"font-bold max-sm:text-xs " + textAccentSize}
-                    >
-                        {percentage}%
-                    </span>{" "}
-                    of people found that{" "}
-                    <span
-                        className={"font-bold max-sm:text-xs" + textAccentSize}
-                    >
-                        {activity} helped with their {goal.toLowerCase()}.
-                    </span>{" "}
-                </Text>
-                <Text>
-                    People engaged in this activity for
-                    <span
-                        className={"font-bold max-sm:text-xs" + textAccentSize}
-                    >
-                        {avgDuration}
-                    </span>{" "}
-                    minutes on average{" "}
-                    <span
-                        className={"font-bold max-sm:text-xs" + textAccentSize}
-                    >
-                        {avgFrequency} times a week.
-                    </span>{" "}
-                </Text>
+                <div className="w-[50vw]">
+                    <Text fw={500} size={textSize} className="max-sm:text-xs">
+                        <span
+                            className={
+                                "font-bold max-sm:text-xs " + textAccentSize
+                            }
+                        >
+                            {percentage}%
+                        </span>{" "}
+                        of people found that{" "}
+                        <span
+                            className={
+                                "font-bold max-sm:text-xs" + textAccentSize
+                            }
+                        >
+                            {activity} helped with their {goal.toLowerCase()}.
+                        </span>{" "}
+                    </Text>
+                    <Text fw={500} size={textSize} className="max-sm:text-xs">
+                        People engaged in this activity for{" "}
+                        <span
+                            className={
+                                "font-bold max-sm:text-xs" + textAccentSize
+                            }
+                        >
+                            {avgDuration}
+                        </span>{" "}
+                        minutes on average{" "}
+                        <span
+                            className={
+                                "font-bold max-sm:text-xs" + textAccentSize
+                            }
+                        >
+                            {avgFrequency} times a week.
+                        </span>{" "}
+                    </Text>
+                </div>
             </Group>
         </Card>
     );
