@@ -61,6 +61,8 @@ export default function ActivityData({
         if (goal != "") {
             setVisible(true);
             let filteredData = getData();
+            console.log("disabledOptions");
+            console.log(filteredData);
             setActivityData(filteredData[0]);
             setDisabledOptions(filteredData[1]);
             setTimeout(() => {
