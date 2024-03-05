@@ -103,19 +103,7 @@ export default function ActivityData({
     };
 
     async function downloadData() {
-        let data = await useData(
-            goal,
-            ageValue,
-            genderValue,
-            raceValue,
-            incomeValue,
-            livingValue,
-            sexualValue,
-            mhsgValue,
-            phsgValue,
-            BFIExtraHiValue,
-            true,
-        );
+        let data = getData();
         if (data.length != 0) {
             let headers = Object.keys(data[0]);
             headers.shift();
