@@ -90,8 +90,6 @@ const useData = (
         phsgValue,
         BFIExtraHiValue,
     ]);
-
-    return { getData, getDisabledOptions };
 };
 
 const demo_cols = [
