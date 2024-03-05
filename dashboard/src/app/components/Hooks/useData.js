@@ -240,6 +240,25 @@ function prepare_data(
     BFIExtraHiValue,
     download_raw_data,
 ) {
+    let goalPrefix = "";
+    switch (goal) {
+        case "Sleep":
+            goalPrefix = "Sleep";
+            break;
+        case "Physical Health":
+            goalPrefix = "Phys";
+            break;
+        case "Emotional Health":
+            goalPrefix = "Emo";
+            break;
+        case "Productivity":
+            goalPrefix = "Product";
+            break;
+        case "Social Wellness":
+            goalPrefix = "Social";
+            break;
+    }
+
     // Filter by demographics here
     let disabled_options;
     [data, disabled_options] = filter_by_demographics(
