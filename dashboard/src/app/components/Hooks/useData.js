@@ -82,6 +82,7 @@ const useData = (
     ]);
 
     function getData() {
+        console.log("I already know this is running too soon");
         return activityData.current;
     }
 
