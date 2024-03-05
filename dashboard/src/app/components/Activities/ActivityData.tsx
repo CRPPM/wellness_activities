@@ -59,26 +59,6 @@ export default function ActivityData({
         setVisible,
     );
 
-    // useEffect(() => {
-    //     console.log("hi there!");
-    //     console.log(goal);
-    //     if (goal != "") {
-
-    //         console.log(getData());
-    //     }
-    // }, [
-    //     goal,
-    //     ageValue,
-    //     genderValue,
-    //     raceValue,
-    //     incomeValue,
-    //     livingValue,
-    //     sexualValue,
-    //     mhsgValue,
-    //     phsgValue,
-    //     BFIExtraHiValue,
-    // ]);
-
     const downloadFile = ({
         data,
         fileName,
@@ -121,7 +101,7 @@ export default function ActivityData({
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
 
                 let vals = Object.values<any>(row);
-                // console.log(vals);
+
                 vals.forEach((v: any, i: number, arr: string[]) => {
                     if (v != null && typeof v === "string" && v.includes(",")) {
                         arr[i] = '"' + v + '"';
@@ -130,15 +110,6 @@ export default function ActivityData({
 
                 vals.shift();
                 let actString = vals.join(",");
-
-                // actString = actString.replace(
-                //     "less than $49,999",
-                //     '"less than $49,999"',
-                // );
-                // actString = actString.replace(
-                //     "Greater than $50,000",
-                //     '"Greater than $50,000"',
-                // );
 
                 acc.push(actString);
                 return acc;
@@ -178,7 +149,7 @@ export default function ActivityData({
                         visible={visible}
                         overlayProps={{ radius: "sm", blur: 3 }}
                     />
-                    {activityData.map(function (
+                    {activityData.slice(0, 10).map(function (
                         ele: {
                             index: string;
                             Count: number;
@@ -193,9 +164,9 @@ export default function ActivityData({
                                 <ActivityCard
                                     order={i + 1}
                                     activity={ele.index}
-                                    percentage={ele.Percentage.toFixed(2)}
-                                    avgDuration={ele.Duration.toFixed(2)}
-                                    avgFrequency={ele.Frequency.toFixed(2)}
+                                    percentage={ele.Percentage.toFixed(0)}
+                                    avgDuration={ele.Duration.toFixed(0)}
+                                    avgFrequency={ele.Frequency.toFixed(0)}
                                     altImage={
                                         "writing a schedule in a notebook"
                                     }

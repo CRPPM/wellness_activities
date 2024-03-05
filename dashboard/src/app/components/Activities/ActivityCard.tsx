@@ -59,7 +59,7 @@ export default function ActivityCard({
             setTextSize("sm");
             setTextAccentSize("text-md");
         }
-        order > 5 ? setShowImage(false) : setShowImage(true);
+        order > 10 ? setShowImage(false) : setShowImage(true);
     });
 
     return (
@@ -104,6 +104,7 @@ export default function ActivityCard({
                     >
                         {activity}
                     </span>{" "}
+                    <br />
                     for{" "}
                     <span
                         className={"font-bold max-sm:text-xs" + textAccentSize}
@@ -116,7 +117,7 @@ export default function ActivityCard({
                     >
                         {avgFrequency} times a week
                     </span>{" "}
-                    helped with their sleep.
+                    helped with their {goal.toLowerCase()}.
                 </Text>
             </Group>
         </Card>
