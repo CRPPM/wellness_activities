@@ -92,7 +92,7 @@ export default function ActivityCard({
                     </div>
                 )}
                 <div className="w-[50vw]">
-                    <Text fw={500} size={textSize} className="max-sm:text-xs">
+                    <Text fw={400} size={textSize} className="max-sm:text-xs">
                         <span
                             className={
                                 "font-bold max-sm:text-xs " + textPercentSize
@@ -102,23 +102,29 @@ export default function ActivityCard({
                         </span>{" "}
                         of people found that{" "}
                         {!activity.includes("__") && (
-                            <span
-                                className={
-                                    "font-bold max-sm:text-xs " + textAccentSize
-                                }
-                            >
-                                {activity} helped with their{" "}
-                                {goal.toLowerCase()}.
+                            <span>
+                                <span
+                                    className={
+                                        "font-bold max-sm:text-xs " +
+                                        textAccentSize
+                                    }
+                                >
+                                    {activity}{" "}
+                                </span>
+                                helped with their {goal.toLowerCase()}.
                             </span>
                         )}
                         {activity.includes("__") && (
-                            <span
-                                className={
-                                    "font-bold max-sm:text-xs " + textAccentSize
-                                }
-                            >
-                                {activity.split("__")[0]} an average of{" "}
-                                {avgFrequency}
+                            <span>
+                                <span
+                                    className={
+                                        "font-bold max-sm:text-xs " +
+                                        textAccentSize
+                                    }
+                                >
+                                    {activity.split("__")[0]} an average of{" "}
+                                    {avgFrequency}
+                                </span>
                                 {activity.split("__")[1]} helped with their{" "}
                                 {goal.toLowerCase()}.
                             </span>
