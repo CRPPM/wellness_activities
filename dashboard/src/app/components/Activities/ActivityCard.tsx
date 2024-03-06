@@ -98,13 +98,27 @@ export default function ActivityCard({
                             {percentage}%
                         </span>{" "}
                         of people found that{" "}
-                        <span
-                            className={
-                                "font-bold max-sm:text-xs" + textAccentSize
-                            }
-                        >
-                            {activity} helped with their {goal.toLowerCase()}.
-                        </span>{" "}
+                        {!activity.includes("__") && (
+                            <span
+                                className={
+                                    "font-bold max-sm:text-xs" + textAccentSize
+                                }
+                            >
+                                {activity} helped with their{" "}
+                                {goal.toLowerCase()}.
+                            </span>
+                        )}
+                        {activity.includes("__") && (
+                            <span
+                                className={
+                                    "font-bold max-sm:text-xs" + textAccentSize
+                                }
+                            >
+                                {activity.split("__")[0]} an average of{" "}
+                                {activity.split("__")[1]} helped with their{" "}
+                                {goal.toLowerCase()}.
+                            </span>
+                        )}
                     </Text>
                     <Text
                         fw={500}
@@ -112,22 +126,37 @@ export default function ActivityCard({
                         className="max-sm:text-xs !pt-2"
                     >
                         People typically engaged in this activity{" "}
-                        <span
-                            className={
-                                "font-bold max-sm:text-xs" + textAccentSize
-                            }
-                        >
-                            {avgFrequency} times a week
-                        </span>{" "}
-                        for about{" "}
-                        <span
-                            className={
-                                "font-bold max-sm:text-xs" + textAccentSize
-                            }
-                        >
-                            {avgDuration}
-                        </span>{" "}
-                        minutes.
+                        {activity.includes("__") && (
+                            <span
+                                className={
+                                    "font-bold max-sm:text-xs" + textAccentSize
+                                }
+                            >
+                                {avgFrequency} times a week.
+                            </span>
+                        )}
+                        {activity.includes("__") && (
+                            <div>
+                                <span
+                                    className={
+                                        "font-bold max-sm:text-xs" +
+                                        textAccentSize
+                                    }
+                                >
+                                    {avgFrequency} times a week
+                                </span>
+                                for about{" "}
+                                <span
+                                    className={
+                                        "font-bold max-sm:text-xs" +
+                                        textAccentSize
+                                    }
+                                >
+                                    {avgDuration}
+                                </span>{" "}
+                                minutes.
+                            </div>
+                        )}
                     </Text>
                 </div>
             </Group>
