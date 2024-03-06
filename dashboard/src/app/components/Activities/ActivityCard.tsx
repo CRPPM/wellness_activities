@@ -137,7 +137,7 @@ export default function ActivityCard({
                             </span>
                         )}
                         {!activity.includes("__") && (
-                            <div>
+                            <span>
                                 <span
                                     className={
                                         "font-bold max-sm:text-xs" +
@@ -145,7 +145,7 @@ export default function ActivityCard({
                                     }
                                 >
                                     {avgFrequency} times a week
-                                </span>
+                                </span>{" "}
                                 for about{" "}
                                 <span
                                     className={
@@ -156,7 +156,7 @@ export default function ActivityCard({
                                     {avgDuration}
                                 </span>{" "}
                                 minutes.
-                            </div>
+                            </span>
                         )}
                     </Text>
                 </div>
