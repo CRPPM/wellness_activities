@@ -2,6 +2,7 @@
 
 /Raw Data
 *.xlsx
+/sankey
 
 # dependencies
 /node_modules
