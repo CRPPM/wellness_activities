@@ -115,6 +115,7 @@ export default function ActivityCard({
                                 }
                             >
                                 {activity.split("__")[0]} an average of{" "}
+                                {avgFrequency}
                                 {activity.split("__")[1]} helped with their{" "}
                                 {goal.toLowerCase()}.
                             </span>
@@ -135,7 +136,7 @@ export default function ActivityCard({
                                 {avgFrequency} times a week.
                             </span>
                         )}
-                        {activity.includes("__") && (
+                        {!activity.includes("__") && (
                             <div>
                                 <span
                                     className={

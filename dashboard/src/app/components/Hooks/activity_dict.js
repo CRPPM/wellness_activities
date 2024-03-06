@@ -11,8 +11,8 @@ export const QUESTIONS = {
     SleepNatSound: "listening to nature sounds or white noise",
     SleepShow: "taking a restorative shower or bath",
     SleepExMod: "exercising moderately (running, biking, lifting weights)",
-    SleepEarly: "going to bed earlier by __ mins",
-    SleepScreen: "turning off screens __ mins before bed",
+    SleepEarly: "going to bed earlier by __ minutes",
+    SleepScreen: "turning off screens __ minutes before bed",
     SleepRead: "reading or listening to a podcast",
     SleepMusic: "listening to relaxing music",
     SleepBreaths: "taking some deep breaths",
@@ -78,7 +78,7 @@ export const QUESTIONS = {
     PhysStretch: "stretching",
     PhysTreat: "treating yourself to a delicious snack or drink",
     PhysStand: "taking breaks from sitting",
-    PhysEarlierBed: "going to bed earlier by __ mins",
+    PhysEarlierBed: "going to bed earlier by __ minutes",
     PhysPray: "praying/reading religious texts",
 
     // Productivity
