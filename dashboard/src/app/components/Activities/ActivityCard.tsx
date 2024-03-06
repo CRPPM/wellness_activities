@@ -25,6 +25,7 @@ export default function ActivityCard({
     const [width, setWidth] = useState<number>(100);
     const [textSize, setTextSize] = useState<string>("");
     const [textAccentSize, setTextAccentSize] = useState<string>("text-md");
+    const [textPercentSize, setTextPercentSize] = useState<string>("text-lg");
     const [showImage, setShowImage] = useState<Boolean>(true);
 
     let imgSrc = "/images/" + activity.replaceAll(" ", "_") + ".png";
@@ -50,6 +51,7 @@ export default function ActivityCard({
             setWidth(150);
             setTextSize("md");
             setTextAccentSize("text-lg");
+            setTextPercentSize("text-[1.75rem]");
         } else {
             if (order == 2) {
                 setWidth(100);
@@ -58,6 +60,7 @@ export default function ActivityCard({
             }
             setTextSize("sm");
             setTextAccentSize("text-md");
+            setTextPercentSize("text-lg");
         }
         order > 10 ? setShowImage(false) : setShowImage(true);
     });
@@ -92,7 +95,7 @@ export default function ActivityCard({
                     <Text fw={500} size={textSize} className="max-sm:text-xs">
                         <span
                             className={
-                                "font-bold max-sm:text-xs " + textAccentSize
+                                "font-bold max-sm:text-xs " + textPercentSize
                             }
                         >
                             {percentage}%
@@ -122,7 +125,7 @@ export default function ActivityCard({
                         )}
                     </Text>
                     <Text
-                        fw={500}
+                        fw={400}
                         size={textSize}
                         className="max-sm:text-xs !pt-2"
                     >
@@ -130,7 +133,7 @@ export default function ActivityCard({
                         {activity.includes("__") && (
                             <span
                                 className={
-                                    "font-bold max-sm:text-xs" + textAccentSize
+                                    "font-bold max-sm:text-xs " + textAccentSize
                                 }
                             >
                                 {avgFrequency} times a week.
@@ -140,7 +143,7 @@ export default function ActivityCard({
                             <span>
                                 <span
                                     className={
-                                        "font-bold max-sm:text-xs" +
+                                        "font-bold max-sm:text-xs " +
                                         textAccentSize
                                     }
                                 >
@@ -149,7 +152,7 @@ export default function ActivityCard({
                                 for about{" "}
                                 <span
                                     className={
-                                        "font-bold max-sm:text-xs" +
+                                        "font-bold max-sm:text-xs " +
                                         textAccentSize
                                     }
                                 >
