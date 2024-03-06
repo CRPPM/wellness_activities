@@ -104,7 +104,7 @@ export default function ActivityCard({
                         {!activity.includes("__") && (
                             <span
                                 className={
-                                    "font-bold max-sm:text-xs" + textAccentSize
+                                    "font-bold max-sm:text-xs " + textAccentSize
                                 }
                             >
                                 {activity} helped with their{" "}
@@ -114,7 +114,7 @@ export default function ActivityCard({
                         {activity.includes("__") && (
                             <span
                                 className={
-                                    "font-bold max-sm:text-xs" + textAccentSize
+                                    "font-bold max-sm:text-xs " + textAccentSize
                                 }
                             >
                                 {activity.split("__")[0]} an average of{" "}
