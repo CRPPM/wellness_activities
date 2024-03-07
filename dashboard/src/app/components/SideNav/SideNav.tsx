@@ -63,9 +63,12 @@ export default function SideNav({
     const [centerText, setCenterText] = useState("mt-3 ml-5");
     const [mousePointer, setMousePointer] = useState("cursor-pointer");
     const [sideNavColor, setSideNavColor] = useState("");
+    const [sideNavContainer, setSideNavContainer] = useState(
+        "flex m-auto justify-center items-center",
+    );
     const [opened, setOpened] = useState(true);
     const [outerStyle, setOuterStyle] = useState(
-        "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
+        "flex flex-col items-center bg-white p-4 h-fit w-[375px] rounded-md shadow-custom m-8",
     );
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
@@ -255,190 +258,210 @@ export default function SideNav({
     useEffect(() => {
         if (opened) {
             setOuterStyle(
-                "flex flex-col items-center bg-white p-4 h-fit w-[375px] fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 rounded-md shadow-custom",
+                "flex flex-col items-center bg-white p-4 h-fit w-[375px] rounded-md shadow-custom m-8",
             );
+            setSideNavContainer("flex m-auto justify-center items-center");
             setBgColor("bg-zinc-100");
         } else {
             setOuterStyle(
-                "h-auto min-h-screen w-1/5 flex flex-col items-center overflow-y-auto " +
+                "h-auto min-h-screen w-full flex flex-col items-center overflow-y-auto " +
                     sideNavColor,
             );
+            setSideNavContainer("w-1/5");
             setBgColor("bg-white");
         }
     }, [opened]);
 
     return (
-        <div className={outerStyle}>
-            <div className="w-full flex flex-col items-center">
-                {goal == "" && (
-                    <h1 className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center text-gray-800">
-                        Select a Goal
-                    </h1>
-                )}
-                <div className="w-full">
-                    {goals.map((goalItem, index) => {
-                        if (goal == "" || goal == goalItem.goal) {
-                            return (
-                                <SideNavGoal
-                                    key={index}
-                                    goal={goalItem.goal}
-                                    iconImg={goalItem.iconImg}
-                                    alt={goalItem.alt}
-                                    setGoal={setGoal}
-                                    curGoal={goal}
-                                    goalImg={goalItem.goalImg}
-                                    centerText={centerText}
-                                    setCenterText={setCenterText}
-                                    mousePointer={mousePointer}
-                                    setMousePointer={setMousePointer}
-                                    goalColor={goalItem.goalColor}
-                                    setOpened={setOpened}
-                                    setSideNavColor={setSideNavColor}
-                                />
-                            );
-                        }
-                    })}
+        <div className={sideNavContainer}>
+            {goal == "" && (
+                <div className="w-[375px] text-3xl text-justify m-8 font-light">
+                    We asked{" "}
+                    <span className="animated-text font-semibold">
+                        1000 people
+                    </span>{" "}
+                    what aspects of health they excelled in and the most
+                    effective wellness activities they employed.
+                    <br />
+                    <br />
+                    <span className="animated-text font-semibold">
+                        Select a health goal
+                    </span>{" "}
+                    to explore what works for people like you!
+                </div>
+            )}
+            <div className={outerStyle}>
+                <div className="w-full flex flex-col items-center">
+                    {/*{goal == "" && (
+                        <h1 className="mt-5 tracking-widest text-2xl w-full items-center uppercase text-center text-gray-800">
+                            Select a Goal
+                        </h1>
+                    )}*/}
+                    <div className="w-full">
+                        {goals.map((goalItem, index) => {
+                            if (goal == "" || goal == goalItem.goal) {
+                                return (
+                                    <SideNavGoal
+                                        key={index}
+                                        goal={goalItem.goal}
+                                        iconImg={goalItem.iconImg}
+                                        alt={goalItem.alt}
+                                        setGoal={setGoal}
+                                        curGoal={goal}
+                                        goalImg={goalItem.goalImg}
+                                        centerText={centerText}
+                                        setCenterText={setCenterText}
+                                        mousePointer={mousePointer}
+                                        setMousePointer={setMousePointer}
+                                        goalColor={goalItem.goalColor}
+                                        setOpened={setOpened}
+                                        setSideNavColor={setSideNavColor}
+                                    />
+                                );
+                            }
+                        })}
 
+                        {goal != "" && (
+                            <div
+                                className="text-center cursor-pointer italic text-xs mb-3 mt-2 select-animated after:bg-gray-600 w-fit m-auto"
+                                onClick={() => {
+                                    setCenterText("mt-3 ml-5");
+                                    setGoal("");
+                                    setMousePointer("cursor-pointer");
+                                    setOpened(true);
+                                    setAgeValue([]);
+                                    setGenderValue([]);
+                                    setRaceValue([]);
+                                    setIncomeValue([]);
+                                    setLivingValue([]);
+                                    setSexualValue([]);
+                                    setMhsgValue([]);
+                                    setPhsgValue([]);
+                                    setBFIExtraHiValue([]);
+                                    setFilters([]);
+                                }}
+                            >
+                                Select another goal{" "}
+                            </div>
+                        )}
+                    </div>
                     {goal != "" && (
-                        <div
-                            className="text-center cursor-pointer italic text-xs mb-3 mt-2 select-animated after:bg-gray-600 w-fit m-auto"
-                            onClick={() => {
-                                setCenterText("mt-3 ml-5");
-                                setGoal("");
-                                setMousePointer("cursor-pointer");
-                                setOpened(true);
-                                setAgeValue([]);
-                                setGenderValue([]);
-                                setRaceValue([]);
-                                setIncomeValue([]);
-                                setLivingValue([]);
-                                setSexualValue([]);
-                                setMhsgValue([]);
-                                setPhsgValue([]);
-                                setBFIExtraHiValue([]);
-                                setFilters([]);
-                            }}
-                        >
-                            Select another goal{" "}
+                        <div className="w-full">
+                            <h1
+                                className={
+                                    "mt-2 p-2 tracking-widest text-xl w-full items-center uppercase text-center " +
+                                    titleColors[goal]
+                                }
+                            >
+                                Filters
+                            </h1>
+                            <div className="mx-2 mt-2">
+                                <Combobox
+                                    store={combobox}
+                                    withinPortal={false}
+                                    onOptionSubmit={(fil) => {
+                                        updateFilters(fil);
+
+                                        combobox.closeDropdown();
+                                    }}
+                                >
+                                    <Combobox.Target>
+                                        <InputBase
+                                            component="button"
+                                            type="button"
+                                            className="mb-3"
+                                            pointer
+                                            rightSection={<Combobox.Chevron />}
+                                            onClick={() =>
+                                                combobox.toggleDropdown()
+                                            }
+                                            rightSectionPointerEvents="none"
+                                        >
+                                            {
+                                                <Input.Placeholder>
+                                                    Select a Filter
+                                                </Input.Placeholder>
+                                            }
+                                        </InputBase>
+                                    </Combobox.Target>
+
+                                    <Combobox.Dropdown>
+                                        <Combobox.Options
+                                            mah={300}
+                                            className="overflow-y-auto"
+                                        >
+                                            {comboboxItems}
+                                        </Combobox.Options>
+                                    </Combobox.Dropdown>
+                                </Combobox>
+                                <div>
+                                    <Pill.Group>
+                                        {filters.map((fil, index) => (
+                                            <div key={index}>
+                                                <Pill
+                                                    size="lg"
+                                                    className={
+                                                        titleColors[goal] +
+                                                        " my-[0.05rem] input-desktop"
+                                                    }
+                                                    withRemoveButton
+                                                    onRemove={() => {
+                                                        updateFilters(fil);
+                                                    }}
+                                                >
+                                                    <span className="italic">
+                                                        {
+                                                            fil
+                                                                .split("=")[0]
+                                                                .split(":")[0]
+                                                        }
+                                                        :
+                                                    </span>
+
+                                                    <span className="font-semibold">
+                                                        {
+                                                            fil
+                                                                .split("=")[0]
+                                                                .split(":")[1]
+                                                        }
+                                                    </span>
+                                                </Pill>
+                                                <Pill
+                                                    size="xs"
+                                                    className={
+                                                        titleColors[goal] +
+                                                        " my-[0.05rem] input-mobile"
+                                                    }
+                                                    withRemoveButton
+                                                    onRemove={() => {
+                                                        updateFilters(fil);
+                                                    }}
+                                                >
+                                                    <span className="italic">
+                                                        {
+                                                            fil
+                                                                .split("=")[0]
+                                                                .split(":")[0]
+                                                        }
+                                                        :
+                                                    </span>
+
+                                                    <span className="font-semibold">
+                                                        {
+                                                            fil
+                                                                .split("=")[0]
+                                                                .split(":")[1]
+                                                        }
+                                                    </span>
+                                                </Pill>
+                                            </div>
+                                        ))}
+                                    </Pill.Group>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
-                {goal != "" && (
-                    <div className="w-full">
-                        <h1
-                            className={
-                                "mt-2 p-2 tracking-widest text-xl w-full items-center uppercase text-center " +
-                                titleColors[goal]
-                            }
-                        >
-                            Filters
-                        </h1>
-                        <div className="mx-2 mt-2">
-                            <Combobox
-                                store={combobox}
-                                withinPortal={false}
-                                onOptionSubmit={(fil) => {
-                                    updateFilters(fil);
-
-                                    combobox.closeDropdown();
-                                }}
-                            >
-                                <Combobox.Target>
-                                    <InputBase
-                                        component="button"
-                                        type="button"
-                                        className="mb-3"
-                                        pointer
-                                        rightSection={<Combobox.Chevron />}
-                                        onClick={() =>
-                                            combobox.toggleDropdown()
-                                        }
-                                        rightSectionPointerEvents="none"
-                                    >
-                                        {
-                                            <Input.Placeholder>
-                                                Select a Filter
-                                            </Input.Placeholder>
-                                        }
-                                    </InputBase>
-                                </Combobox.Target>
-
-                                <Combobox.Dropdown>
-                                    <Combobox.Options
-                                        mah={300}
-                                        className="overflow-y-auto"
-                                    >
-                                        {comboboxItems}
-                                    </Combobox.Options>
-                                </Combobox.Dropdown>
-                            </Combobox>
-                            <div>
-                                <Pill.Group>
-                                    {filters.map((fil, index) => (
-                                        <div key={index}>
-                                            <Pill
-                                                size="lg"
-                                                className={
-                                                    titleColors[goal] +
-                                                    " my-[0.05rem] input-desktop"
-                                                }
-                                                withRemoveButton
-                                                onRemove={() => {
-                                                    updateFilters(fil);
-                                                }}
-                                            >
-                                                <span className="italic">
-                                                    {
-                                                        fil
-                                                            .split("=")[0]
-                                                            .split(":")[0]
-                                                    }
-                                                    :
-                                                </span>
-
-                                                <span className="font-semibold">
-                                                    {
-                                                        fil
-                                                            .split("=")[0]
-                                                            .split(":")[1]
-                                                    }
-                                                </span>
-                                            </Pill>
-                                            <Pill
-                                                size="xs"
-                                                className={
-                                                    titleColors[goal] +
-                                                    " my-[0.05rem] input-mobile"
-                                                }
-                                                withRemoveButton
-                                                onRemove={() => {
-                                                    updateFilters(fil);
-                                                }}
-                                            >
-                                                <span className="italic">
-                                                    {
-                                                        fil
-                                                            .split("=")[0]
-                                                            .split(":")[0]
-                                                    }
-                                                    :
-                                                </span>
-
-                                                <span className="font-semibold">
-                                                    {
-                                                        fil
-                                                            .split("=")[0]
-                                                            .split(":")[1]
-                                                    }
-                                                </span>
-                                            </Pill>
-                                        </div>
-                                    ))}
-                                </Pill.Group>
-                            </div>
-                        </div>
-                    </div>
-                )}
             </div>
         </div>
     );

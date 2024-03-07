@@ -18,3 +18,25 @@
     display: none;
   }
 }
+
+.animated-text {
+  animation: color-change 7s infinite;
+}
+
+@keyframes color-change {
+  0% {
+    color: #51b5a5;
+  }
+  25% {
+    color: #dcc45a;
+  }
+  50% {
+    color: #3b8bff;
+  }
+  75% {
+    color: #b78b66;
+  }
+  100% {
+    color: #ff611c;
+  }
+}

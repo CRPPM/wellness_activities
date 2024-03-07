@@ -126,24 +126,39 @@ export default function ActivityData({
     return (
         <div
             className={
-                "w-4/5 flex flex-col items-center pt-[9vh] " +
-                (goal == "" ? "h-screen" : "h-fit")
+                "flex flex-col items-center pt-[9vh] " +
+                (goal == "" ? "h-screen" : "h-fit w-4/5 ")
             }
         >
             {goal != "" && (
                 <Stack className="mb-8 min-w-[60vw]">
-                    <div className="flex">
-                        <h1 className="tracking-widest text-2xl w-full items-center uppercase">
-                            Activities
-                        </h1>
-                        <Button
-                            color={titleColors[goal]}
-                            style={{ width: "170px" }}
-                            radius="xs"
-                            onClick={downloadData}
-                        >
-                            Download CSV
-                        </Button>
+                    <div>
+                        <div className="flex">
+                            <h1 className="tracking-widest text-2xl w-full items-center uppercase">
+                                Activities
+                            </h1>
+                            <Button
+                                color={titleColors[goal]}
+                                style={{ width: "170px" }}
+                                radius="xs"
+                                onClick={downloadData}
+                            >
+                                Download CSV
+                            </Button>
+                        </div>
+
+                        <div className="italic pt-2">
+                            Here are the most popular activities for those who
+                            excelled in the{" "}
+                            <span
+                                style={{ color: titleColors[goal] }}
+                                className="font-semibold"
+                            >
+                                {goal.toUpperCase()}
+                            </span>{" "}
+                            goal. Use the filters on the left to see what works
+                            for different people.
+                        </div>
                     </div>
                     <LoadingOverlay
                         visible={visible}
