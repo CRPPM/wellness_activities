@@ -76,7 +76,7 @@ export default function ActivityCard({
                 justify="space-between"
                 mt="xs"
                 mb="xs"
-                className={order > 5 ? "m-auto !mt-0 !mb-0" : ""}
+                className={order > 5 ? "m-auto !mt-0 !mb-0" : "m-auto"}
             >
                 {showImage && (
                     <div className="w-[10vw] flex justify-center">
