@@ -124,9 +124,9 @@ export default function ActivityCard({
                                 >
                                     {activity.split("__")[0]} an average of{" "}
                                     {avgFrequency}
-                                </span>
-                                {activity.split("__")[1]} helped with their{" "}
-                                {goal.toLowerCase()}.
+                                    {activity.split("__")[1]}
+                                </span>{" "}
+                                helped with their {goal.toLowerCase()}.
                             </span>
                         )}
                     </Text>
