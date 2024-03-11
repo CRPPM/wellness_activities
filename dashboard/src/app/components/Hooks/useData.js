@@ -1,6 +1,7 @@
 import path from "path";
 import { QUESTIONS } from "./activity_dict";
 import { useRef, useEffect } from "react";
+import { pako } from "pako";
 
 const useData = (
     goal,
@@ -30,25 +31,32 @@ const useData = (
             }).then((res) => {
                 if (res.ok) {
                     res.json().then((data) => {
-                        console.log(data);
-                        let prepped_data = prepare_data(
-                            data,
-                            goal,
-                            ageValue,
-                            genderValue,
-                            raceValue,
-                            incomeValue,
-                            livingValue,
-                            sexualValue,
-                            mhsgValue,
-                            phsgValue,
-                            BFIExtraHiValue,
-                            rawData,
-                        );
-                        setActivityData(prepped_data[0]);
-                        setDisabledOptions(prepped_data[1]);
+                        try {
+                            const result = pako.inflate(data);
+                            console.log(result);
+                            let prepped_data = prepare_data(
+                                result,
+                                goal,
+                                ageValue,
+                                genderValue,
+                                raceValue,
+                                incomeValue,
+                                livingValue,
+                                sexualValue,
+                                mhsgValue,
+                                phsgValue,
+                                BFIExtraHiValue,
+                                rawData,
+                            );
+                            setActivityData(prepped_data[0]);
+                            setDisabledOptions(prepped_data[1]);
 
-                        resolve(true);
+                            resolve(true);
+                            // ... continue processing
+                        } catch (err) {
+                            console.log(err);
+                            resolve(false);
+                        }
                     });
                 }
             });
