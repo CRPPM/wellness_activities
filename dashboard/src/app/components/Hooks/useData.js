@@ -18,15 +18,8 @@ const useData = (
     setVisible,
 ) => {
     const rawData = useRef([]);
-    // const disabledOptions = useRef([]);
-    // const file = path.join(process.cwd(), "data", "activities.json");
-    // const stringified = readFileSync(file, "utf8");
-    // const data = JSON.parse(stringified)["data"];
-
     const loadMetric = async (goal) => {
         return new Promise((resolve, reject) => {
-            // activityData.current = [];
-            // disabledOptions.current = [];
             let path = "/api/loadActivityJSON.js";
             fetch(path, {
                 method: "POST",
@@ -37,7 +30,6 @@ const useData = (
             }).then((res) => {
                 if (res.ok) {
                     res.json().then((data) => {
-                        console.log("maybe?");
                         let prepped_data = prepare_data(
                             data,
                             goal,
@@ -84,8 +76,6 @@ const useData = (
     ]);
 
     function getRawData() {
-        console.log("ok");
-        console.log(rawData.current);
         return rawData.current;
     }
 

@@ -161,12 +161,12 @@ for g in goals:
     act_cols.extend([col for col in df_goal if col.startswith(g) 
                      and '_' not in col
                      # and col != g + 'Goal'
-                     and col not in dontuse
+                     # and col not in dontuse
                      and not any(n in col for n in ('26', '27', '28', '29', '30'))
                      and col not in [n + 'Time' for n in list(questions.keys()) if n.startswith(g)]
-                     and col not in [n + 'Freq' for n in list(questions.keys()) if n.startswith(g)]
-                     and col not in [n + 'TimeW' for n in dontuse if n.startswith(g)]
-                     and col not in [n + 'FreqW' for n in dontuse if n.startswith(g)]])
+                     and col not in [n + 'Freq' for n in list(questions.keys()) if n.startswith(g)]])
+                     # and col not in [n + 'TimeW' for n in dontuse if n.startswith(g)]
+                     # and col not in [n + 'FreqW' for n in dontuse if n.startswith(g)]])
 
 df_acts = df[act_cols]
 df_acts.replace(0, np.nan, inplace=True)

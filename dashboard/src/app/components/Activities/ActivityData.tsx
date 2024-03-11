@@ -166,7 +166,7 @@ export default function ActivityData({
                     />
                     {activityData.slice(0, 10).map(function (
                         ele: {
-                            index: string;
+                            index: [string, number];
                             Count: number;
                             Percentage: number;
                             Duration: number;
@@ -178,7 +178,8 @@ export default function ActivityData({
                             return (
                                 <ActivityCard
                                     order={i + 1}
-                                    activity={ele.index}
+                                    activity={ele.index[0]}
+                                    include_time={ele.index[1]}
                                     percentage={ele.Percentage.toFixed(0)}
                                     avgDuration={ele.Duration.toFixed(0)}
                                     avgFrequency={ele.Frequency.toFixed(0)}

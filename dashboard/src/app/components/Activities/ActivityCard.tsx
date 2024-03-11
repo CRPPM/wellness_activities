@@ -5,6 +5,7 @@ import { Stack, Card, Group, Badge, Button, Text } from "@mantine/core";
 interface Props {
     order: number;
     activity: string;
+    include_time: number;
     percentage: string;
     avgDuration: string;
     avgFrequency: string;
@@ -15,6 +16,7 @@ interface Props {
 export default function ActivityCard({
     order,
     activity,
+    include_time,
     percentage,
     avgDuration,
     avgFrequency,
@@ -154,17 +156,23 @@ export default function ActivityCard({
                                     }
                                 >
                                     {avgFrequency} times a week
-                                </span>{" "}
-                                for about{" "}
-                                <span
-                                    className={
-                                        "font-bold max-sm:text-xs " +
-                                        textAccentSize
-                                    }
-                                >
-                                    {avgDuration}
-                                </span>{" "}
-                                minutes.
+                                    {!include_time && <span>.</span>}
+                                </span>
+                                {include_time && (
+                                    <span>
+                                        {" "}
+                                        for about{" "}
+                                        <span
+                                            className={
+                                                "font-bold max-sm:text-xs " +
+                                                textAccentSize
+                                            }
+                                        >
+                                            {avgDuration}
+                                        </span>{" "}
+                                        minutes.
+                                    </span>
+                                )}
                             </span>
                         )}
                     </Text>
