@@ -1,6 +1,6 @@
 "use server";
 import { readFileSync } from "fs";
-import { pako } from "pako";
+import pako from "pako";
 import path from "path";
 
 export default function handler(req, res) {
