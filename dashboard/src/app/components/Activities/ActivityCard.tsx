@@ -156,9 +156,9 @@ export default function ActivityCard({
                                     }
                                 >
                                     {avgFrequency} times a week
-                                    {!include_time && <span>.</span>}
+                                    {include_time == 1 && <span>.</span>}
                                 </span>
-                                {include_time && (
+                                {include_time == 0 && (
                                     <span>
                                         {" "}
                                         for about{" "}
