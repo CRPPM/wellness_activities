@@ -8,7 +8,7 @@ export default function handler(req, res) {
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
   console.log("hey");
-  console.log(data);
+  console.log(data[0].BFIExtraHi);
   let goalPrefix = "";
   switch (goal) {
     case "Sleep":
@@ -43,6 +43,6 @@ export default function handler(req, res) {
       break;
   }
   console.log("hey2");
-  console.log(data);
+  console.log(data[0].BFIExtraHi);
   res.send(data);
 }
