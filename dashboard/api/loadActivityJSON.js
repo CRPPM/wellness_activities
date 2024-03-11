@@ -7,7 +7,8 @@ export default function handler(req, res) {
   const file = path.join(process.cwd(), "dashboard", "data", "activities.json");
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
-
+  console.log("hey");
+  console.log(data);
   let goalPrefix = "";
   switch (goal) {
     case "Sleep":
@@ -41,6 +42,7 @@ export default function handler(req, res) {
       goalPrefix = "Social";
       break;
   }
-
+  console.log("hey2");
+  console.log(data);
   res.send(data);
 }
