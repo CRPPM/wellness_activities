@@ -45,6 +45,7 @@ export default function handler(req, res) {
   }
   console.log("hey2");
   console.log(data[0].BFIExtraHi);
-  output = pako.deflate(data);
+  let output = pako.deflate(data);
+  console.log(output);
   res.send(output);
 }
