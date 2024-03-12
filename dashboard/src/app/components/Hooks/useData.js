@@ -276,12 +276,15 @@ function prepare_data(
     data.forEach((d) => {
         Object.keys(QUESTIONS).forEach((q) => {
             if (!(q in d)) {
-                // let keyValues = Object.entries(d);
-                // keyValues.splice(q_i, 0, [q, null]);
-                // data[i] = Object.fromEntries(keyValues);
                 d[q] = null;
-                d[q + "TimeW"] = null;
-                d[q + "FreqW"] = null;
+            }
+            let timeW = q + "TimeW";
+            if (!(timeW in d)) {
+                d[timeW] = null;
+            }
+            let freqW = q + "FreqW";
+            if (!(freqW in d)) {
+                d[freqW] = null;
             }
         });
     });
