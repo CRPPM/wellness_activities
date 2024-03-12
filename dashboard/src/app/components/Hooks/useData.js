@@ -1,7 +1,6 @@
 import path from "path";
 import { QUESTIONS } from "./activity_dict";
 import { useRef, useEffect } from "react";
-import { inflate } from "pako";
 
 const useData = (
     goal,
@@ -20,51 +19,65 @@ const useData = (
 ) => {
     const rawData = useRef([]);
     const loadMetric = async (goal) => {
-        return new Promise((resolve, reject) => {
-            let path = "/api/loadActivityJSON.js";
-            fetch(path, {
-                method: "POST",
-                body: JSON.stringify({
-                    goal: goal,
-                }),
-                headers: { "Content-Type": "application/json" },
-            }).then((res) => {
-                if (res.ok) {
-                    res.json().then((data) => {
-                        try {
-                            const result = inflate(data);
-                            console.log(result);
-                            const jsonString = Buffer.from(result);
-                            console.log(jsonString);
-                            const parsedData = JSON.parse(jsonString);
-                            console.log(parsedData);
-                            let prepped_data = prepare_data(
-                                result,
-                                goal,
-                                ageValue,
-                                genderValue,
-                                raceValue,
-                                incomeValue,
-                                livingValue,
-                                sexualValue,
-                                mhsgValue,
-                                phsgValue,
-                                BFIExtraHiValue,
-                                rawData,
-                            );
-                            setActivityData(prepped_data[0]);
-                            setDisabledOptions(prepped_data[1]);
+        const file = path.join(
+            process.cwd(),
+            "dashboard",
+            "data",
+            "activities.json",
+        );
+        const readableStream = await fetch(file).then(
+            (response) => response.body,
+        );
 
-                            resolve(true);
-                            // ... continue processing
-                        } catch (err) {
-                            console.log(err);
-                            resolve(false);
-                        }
-                    });
-                }
-            });
-        });
+        const compressedReadableStream = readableStream.pipeThrough(
+            new CompressionStream("gzip"),
+        );
+
+        const decompressionStream = new DecompressionStream("gzip");
+        const decompressedReadableStream =
+            compressedReadableStream.pipeThrough(decompressionStream);
+        // console.log(decompressedReadableStream);
+        console.log(await new Response(decompressedReadableStream).blob());
+        // return new Promise((resolve, reject) => {
+        //     let path = "/api/loadActivityJSON.js";
+        //     fetch(path, {
+        //         method: "POST",
+        //         body: JSON.stringify({
+        //             goal: goal,
+        //         }),
+        //         headers: { "Content-Type": "application/json" },
+        //     }).then((res) => {
+        //         if (res.ok) {
+        //             res.json().then((data) => {
+        //                 try {
+
+        //                     let prepped_data = prepare_data(
+        //                         result,
+        //                         goal,
+        //                         ageValue,
+        //                         genderValue,
+        //                         raceValue,
+        //                         incomeValue,
+        //                         livingValue,
+        //                         sexualValue,
+        //                         mhsgValue,
+        //                         phsgValue,
+        //                         BFIExtraHiValue,
+        //                         rawData,
+        //                     );
+        //                     setActivityData(prepped_data[0]);
+        //                     setDisabledOptions(prepped_data[1]);
+
+        //                     resolve(true);
+        //                     // ... continue processing
+        //                 } catch (err) {
+        //                     console.log(err);
+        //                     resolve(false);
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
     };
 
     useEffect(() => {
