@@ -130,16 +130,22 @@ export default function ActivityData({
                 });
                 // let vals = Object.values<any>(row);
                 console.log(vals);
-                vals.forEach((v: any, i: number, arr: string[]) => {
-                    if (v != null && typeof v === "string" && v.includes(",")) {
-                        arr[i] = '"' + v + '"';
-                    }
-                });
+                if (vals != undefined) {
+                    vals.forEach((v: any, i: number, arr: string[]) => {
+                        if (
+                            v != null &&
+                            typeof v === "string" &&
+                            v.includes(",")
+                        ) {
+                            arr[i] = '"' + v + '"';
+                        }
+                    });
 
-                vals.shift();
-                let actString = vals.join(",");
+                    vals.shift();
+                    let actString = vals.join(",");
 
-                acc.push(actString);
+                    acc.push(actString);
+                }
                 return acc;
             }, []);
 
