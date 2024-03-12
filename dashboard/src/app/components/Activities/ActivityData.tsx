@@ -127,7 +127,7 @@ export default function ActivityData({
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
                 let vals: string[] = [];
 
-                headers.split(",").forEach(function (h) {
+                headers[0].split(",").forEach(function (h) {
                     vals.push(row[h]);
                 });
 
