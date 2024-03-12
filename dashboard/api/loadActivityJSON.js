@@ -7,9 +7,9 @@ export default function handler(req, res) {
   const file = path.join(process.cwd(), "dashboard", "data", "activities.json");
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
-  console.log(data[0].SleepAvoidMeals);
-  console.log(data[0].SleepAvoidMealsFreqW);
-  console.log(data[0].SleepAvoidMealsTimeW);
+  console.log(data[0]);
+  // console.log(data[0].SleepAvoidMealsFreqW);
+  // console.log(data[0].SleepAvoidMealsTimeW);
 
   switch (goal) {
     case "Sleep":
