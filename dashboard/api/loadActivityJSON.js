@@ -45,7 +45,8 @@ export default function handler(req, res) {
   }
   console.log("hey2");
   console.log(data[0].BFIExtraHi);
-  let output = deflate(data);
+
+  let output = deflate(new Uint8Array(data));
   console.log(output);
   res.send(output);
 }

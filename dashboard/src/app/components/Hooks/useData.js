@@ -1,7 +1,7 @@
 import path from "path";
 import { QUESTIONS } from "./activity_dict";
 import { useRef, useEffect } from "react";
-import { pako } from "pako";
+import { inflate } from "pako";
 
 const useData = (
     goal,
@@ -32,7 +32,7 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         try {
-                            const result = pako.inflate(data);
+                            const result = inflate(data);
                             console.log(result);
                             let prepped_data = prepare_data(
                                 result,
