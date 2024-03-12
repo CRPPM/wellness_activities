@@ -34,8 +34,7 @@ const useData = (
                         try {
                             const result = inflate(data);
                             console.log(result);
-                            const jsonString =
-                                Buffer.from(result).toString("utf8");
+                            const jsonString = Buffer.from(result);
                             console.log(jsonString);
                             const parsedData = JSON.parse(jsonString);
                             console.log(parsedData);
