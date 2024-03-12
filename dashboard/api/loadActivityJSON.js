@@ -2,7 +2,7 @@
 import { readFileSync } from "fs";
 import path from "path";
 
-export default async function handler(req, res) {
+export default function handler(req, res) {
   const { goal } = req.body;
   const file = path.join(process.cwd(), "dashboard", "data", "activities.json");
   const stringified = readFileSync(file, "utf8");
@@ -13,7 +13,13 @@ export default async function handler(req, res) {
   switch (goal) {
     case "Sleep":
       data = data.filter(function (d) {
-        return d.SleepGoal == "sleep";
+        Object.keys(d).forEach((key) => {
+          let include = d.SleepGoal == "sleep";
+          if (d[key] === null) {
+            delete d[key];
+          }
+        });
+        return include;
       });
       goalPrefix = "Sleep";
       break;
@@ -42,11 +48,6 @@ export default async function handler(req, res) {
       goalPrefix = "Social";
       break;
   }
-  const readableStream = await fetch(file).then((response) => response.body);
 
-  const compressedReadableStream = readableStream.pipeThrough(
-    new CompressionStream("gzip"),
-  );
-
-  res.send(compressedReadableStream);
+  res.send(output);
 }

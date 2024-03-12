@@ -32,14 +32,8 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         try {
-                            let ds = new DecompressionStream("gzip");
-                            let decompressed_stream =
-                                response.body.pipeThrough(ds);
-                            let decompressed_text =
-                                decompressData(decompressed_stream);
-                            console.log(decompressed_text);
                             let prepped_data = prepare_data(
-                                decompressed_text,
+                                data,
                                 goal,
                                 ageValue,
                                 genderValue,
@@ -67,9 +61,6 @@ const useData = (
         });
     };
 
-    async function decompressData(decompressed_stream) {
-        return await new Response(decompressed_stream);
-    }
     useEffect(() => {
         if (goal != "") {
             setVisible(true);
