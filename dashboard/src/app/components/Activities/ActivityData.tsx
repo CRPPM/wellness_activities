@@ -174,6 +174,7 @@ export default function ActivityData({
                         },
                         i: number,
                     ) {
+                        console.log(ele);
                         if (ele.Percentage > 0) {
                             return (
                                 <ActivityCard
