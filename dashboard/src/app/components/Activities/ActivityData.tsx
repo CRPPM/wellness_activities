@@ -135,10 +135,12 @@ export default function ActivityData({
                         !h.includes("TimeW") &&
                         !h.includes("FreqW")
                     ) {
-                        vals.push(QUESTIONS[h as keyof typeof QUESTIONS][0]);
-                    } else {
-                        vals.push(row[h]);
+                        console.log(h);
+                        // vals.push(QUESTIONS[h as keyof typeof QUESTIONS][0]);
                     }
+                    // else {
+                    vals.push(row[h]);
+                    // }
                 });
 
                 vals.forEach((v: any, i: number, arr: string[]) => {
