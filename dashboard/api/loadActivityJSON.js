@@ -65,6 +65,8 @@ export default function handler(req, res) {
       });
       break;
   }
+  console.log(data[0].EmoBreaths);
   console.log(data[0].EmoBreathsFreqW);
+  console.log(data[0].EmoBreathsTimeW);
   res.send(data);
 }
