@@ -19,67 +19,57 @@ const useData = (
 ) => {
     const rawData = useRef([]);
     const loadMetric = async (goal) => {
-        const file = path.join(
-            process.cwd(),
-            "dashboard",
-            "data",
-            "activities.json",
-        );
-        const readableStream = await fetch(file).then(
-            (response) => response.body,
-        );
+        return new Promise((resolve, reject) => {
+            let path = "/api/loadActivityJSON.js";
+            fetch(path, {
+                method: "POST",
+                body: JSON.stringify({
+                    goal: goal,
+                    ageValue: ageValue,
+                }),
+                headers: { "Content-Type": "application/json" },
+            }).then((res) => {
+                if (res.ok) {
+                    res.json().then((data) => {
+                        try {
+                            let ds = new DecompressionStream("gzip");
+                            let decompressed_stream =
+                                response.body.pipeThrough(ds);
+                            let decompressed_text =
+                                decompressData(decompressed_stream);
+                            console.log(decompressed_text);
+                            let prepped_data = prepare_data(
+                                decompressed_text,
+                                goal,
+                                ageValue,
+                                genderValue,
+                                raceValue,
+                                incomeValue,
+                                livingValue,
+                                sexualValue,
+                                mhsgValue,
+                                phsgValue,
+                                BFIExtraHiValue,
+                                rawData,
+                            );
+                            setActivityData(prepped_data[0]);
+                            setDisabledOptions(prepped_data[1]);
 
-        const compressedReadableStream = readableStream.pipeThrough(
-            new CompressionStream("gzip"),
-        );
-
-        const decompressionStream = new DecompressionStream("gzip");
-        const decompressedReadableStream =
-            compressedReadableStream.pipeThrough(decompressionStream);
-        // console.log(decompressedReadableStream);
-        console.log(await new Response(decompressedReadableStream).blob());
-        // return new Promise((resolve, reject) => {
-        //     let path = "/api/loadActivityJSON.js";
-        //     fetch(path, {
-        //         method: "POST",
-        //         body: JSON.stringify({
-        //             goal: goal,
-        //         }),
-        //         headers: { "Content-Type": "application/json" },
-        //     }).then((res) => {
-        //         if (res.ok) {
-        //             res.json().then((data) => {
-        //                 try {
-
-        //                     let prepped_data = prepare_data(
-        //                         result,
-        //                         goal,
-        //                         ageValue,
-        //                         genderValue,
-        //                         raceValue,
-        //                         incomeValue,
-        //                         livingValue,
-        //                         sexualValue,
-        //                         mhsgValue,
-        //                         phsgValue,
-        //                         BFIExtraHiValue,
-        //                         rawData,
-        //                     );
-        //                     setActivityData(prepped_data[0]);
-        //                     setDisabledOptions(prepped_data[1]);
-
-        //                     resolve(true);
-        //                     // ... continue processing
-        //                 } catch (err) {
-        //                     console.log(err);
-        //                     resolve(false);
-        //                 }
-        //             });
-        //         }
-        //     });
-        // });
+                            resolve(true);
+                            // ... continue processing
+                        } catch (err) {
+                            console.log(err);
+                            resolve(false);
+                        }
+                    });
+                }
+            });
+        });
     };
 
+    async function decompressData(decompressed_stream) {
+        return await new Response(decompressed_stream);
+    }
     useEffect(() => {
         if (goal != "") {
             setVisible(true);

@@ -1,9 +1,8 @@
 "use server";
 import { readFileSync } from "fs";
-import { deflate } from "pako";
 import path from "path";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const { goal } = req.body;
   const file = path.join(process.cwd(), "dashboard", "data", "activities.json");
   const stringified = readFileSync(file, "utf8");
@@ -43,10 +42,11 @@ export default function handler(req, res) {
       goalPrefix = "Social";
       break;
   }
-  console.log("hey2");
-  console.log(data[0].BFIExtraHi);
+  const readableStream = await fetch(file).then((response) => response.body);
 
-  let output = deflate(new Uint8Array(data));
-  console.log(output);
-  res.send(output);
+  const compressedReadableStream = readableStream.pipeThrough(
+    new CompressionStream("gzip"),
+  );
+
+  res.send(compressedReadableStream);
 }
