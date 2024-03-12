@@ -46,6 +46,7 @@ const useData = (
                                 BFIExtraHiValue,
                                 rawData,
                             );
+                            console.log(prepped_data[0]);
                             setActivityData(prepped_data[0]);
                             setDisabledOptions(prepped_data[1]);
 
