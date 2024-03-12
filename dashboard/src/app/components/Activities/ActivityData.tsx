@@ -112,7 +112,7 @@ export default function ActivityData({
                 "ageG",
             ]);
             headers = [headers.join(",")];
-            console.log(headers);
+            // console.log(headers);
             // Convert users data to a csv
             let rawCSV = data.reduce((acc: string[], row: any) => {
                 row.GenderB = ["man", "woman"][Number(row.GenderB) - 1];
@@ -127,11 +127,11 @@ export default function ActivityData({
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
                 let vals: string[] = [];
 
-                headers.forEach(function (h) {
+                headers.split(",").forEach(function (h) {
                     vals.push(row[h]);
                 });
 
-                // console.log(vals);
+                console.log(vals);
 
                 vals.forEach((v: any, i: number, arr: string[]) => {
                     if (v != null && typeof v === "string" && v.includes(",")) {
