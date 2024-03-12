@@ -84,34 +84,25 @@ export default function ActivityData({
 
     async function downloadData() {
         let data = getRawData();
+        let demos = [
+            "GenderB",
+            "sexorB",
+            "raceB",
+            "incomeB",
+            "locationB",
+            "MHSG",
+            "PHSG",
+            "BFIExtraHi",
+            "ageG",
+        ];
         if (data.length != 0) {
             let headers = Object.keys(data[0]);
             headers.shift();
             headers = headers.filter(function (item) {
-                return ![
-                    "GenderB",
-                    "sexorB",
-                    "raceB",
-                    "incomeB",
-                    "locationB",
-                    "MHSG",
-                    "PHSG",
-                    "BFIExtraHi",
-                    "ageG",
-                ].includes(item);
+                return !demos.includes(item);
             });
             headers.sort();
-            headers.push.apply(headers, [
-                "GenderB",
-                "sexorB",
-                "raceB",
-                "incomeB",
-                "locationB",
-                "MHSG",
-                "PHSG",
-                "BFIExtraHi",
-                "ageG",
-            ]);
+            headers.push.apply(headers, demos);
 
             headers = [headers.join(",")];
 
@@ -133,7 +124,8 @@ export default function ActivityData({
                     if (
                         row[h] !== null &&
                         !h.includes("TimeW") &&
-                        !h.includes("FreqW")
+                        !h.includes("FreqW") &&
+                        !demos.includes(h)
                     ) {
                         console.log(h);
                         console.log(QUESTIONS[h as keyof typeof QUESTIONS][0]);
