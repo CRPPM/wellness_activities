@@ -135,7 +135,7 @@ export default function ActivityData({
                         !h.includes("TimeW") &&
                         !h.includes("FreqW")
                     ) {
-                        vals.push(QUESTIONS[h][0]);
+                        vals.push(QUESTIONS[h as keyof typeof QUESTIONS][0]);
                     } else {
                         vals.push(row[h]);
                     }
