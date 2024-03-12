@@ -61,5 +61,5 @@ export default function handler(req, res) {
       break;
   }
 
-  res.send(output);
+  res.send(data);
 }
