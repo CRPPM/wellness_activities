@@ -276,8 +276,8 @@ function prepare_data(
                 // keyValues.splice(q_i, 0, [q, null]);
                 // data[i] = Object.fromEntries(keyValues);
                 d[q] = null;
-                d[q + "TimeW"] = 0;
-                d[q + "FreqW"] = 0;
+                d[q + "TimeW"] = undefined;
+                d[q + "FreqW"] = undefined;
             }
         });
     });
