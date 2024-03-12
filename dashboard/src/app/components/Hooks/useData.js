@@ -268,6 +268,17 @@ function prepare_data(
             break;
     }
 
+    // put nulls back in (need this for csv download)
+    data.forEach((d, i) => {
+        Object.keys(QUESTIONS).forEach((q, q_i) => {
+            if (!(q in d)) {
+                let keyValues = Object.entries(d);
+                keyValues.splice(q_i, 0, [q, null]);
+                data[i] = Object.fromEntries(keyValues);
+            }
+        });
+    });
+
     // Filter by demographics here
     let disabled_options;
     [data, disabled_options] = filter_by_demographics(
