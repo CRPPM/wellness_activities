@@ -130,7 +130,7 @@ export default function ActivityData({
                 });
                 // let vals = Object.values<any>(row);
                 console.log(vals);
-                if (vals != undefined) {
+                if (vals !== undefined) {
                     vals.forEach((v: any, i: number, arr: string[]) => {
                         if (
                             v != null &&
