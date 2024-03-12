@@ -32,7 +32,6 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         try {
-                            console.log(data);
                             let prepped_data = prepare_data(
                                 data,
                                 goal,
@@ -47,7 +46,6 @@ const useData = (
                                 BFIExtraHiValue,
                                 rawData,
                             );
-                            console.log(prepped_data[0]);
                             setActivityData(prepped_data[0]);
                             setDisabledOptions(prepped_data[1]);
 
@@ -143,7 +141,6 @@ const demoValues = [
 ];
 
 function return_avg(data, goalPrefix, act_suffix) {
-    console.log(act_suffix);
     let avg_cols = Object.keys(data[0]).filter(
         (key) => !key.endsWith(act_suffix) || !key.startsWith(goalPrefix),
     );
@@ -152,14 +149,12 @@ function return_avg(data, goalPrefix, act_suffix) {
     avg_data.map(function (obj) {
         return avg_cols.forEach((e) => delete obj[e]);
     });
-    console.log("avg_data");
-    console.log(avg_data);
+
     let count_dict = {};
     Object.keys(avg_data[0]).forEach((key) => {
         count_dict[key] = 0;
     });
-    console.log("count_dict");
-    console.log(count_dict);
+
     let avg_dict = avg_data.reduce((previous, current, index, array) => {
         Object.keys(current).forEach((key) => {
             if (index == 1) {
@@ -179,8 +174,7 @@ function return_avg(data, goalPrefix, act_suffix) {
         });
         return current;
     });
-    console.log("avg_dict");
-    console.log(avg_dict);
+
     return avg_dict;
 }
 
@@ -288,9 +282,6 @@ function prepare_data(
             }
         });
     });
-    console.log("fixed data");
-    console.log(data);
-
     // Filter by demographics here
     let disabled_options;
     [data, disabled_options] = filter_by_demographics(

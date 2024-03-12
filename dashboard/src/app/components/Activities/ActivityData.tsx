@@ -101,7 +101,7 @@ export default function ActivityData({
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
 
                 let vals = Object.values<any>(row);
-
+                console.log(vals);
                 vals.forEach((v: any, i: number, arr: string[]) => {
                     if (v != null && typeof v === "string" && v.includes(",")) {
                         arr[i] = '"' + v + '"';
@@ -174,7 +174,6 @@ export default function ActivityData({
                         },
                         i: number,
                     ) {
-                        console.log(ele);
                         if (ele.Percentage > 0) {
                             return (
                                 <ActivityCard
