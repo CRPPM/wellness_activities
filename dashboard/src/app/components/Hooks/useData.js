@@ -269,15 +269,20 @@ function prepare_data(
     }
 
     // put nulls back in (need this for csv download)
-    data.forEach((d, i) => {
-        Object.keys(QUESTIONS).forEach((q, q_i) => {
+    data.forEach((d) => {
+        Object.keys(QUESTIONS).forEach((q) => {
             if (!(q in d)) {
-                let keyValues = Object.entries(d);
-                keyValues.splice(q_i, 0, [q, null]);
-                data[i] = Object.fromEntries(keyValues);
+                // let keyValues = Object.entries(d);
+                // keyValues.splice(q_i, 0, [q, null]);
+                // data[i] = Object.fromEntries(keyValues);
+                d[q] = null;
+                d[q + "TimeW"] = null;
+                d[q + "FreqW"] = null;
             }
         });
     });
+    console.log("fixed data");
+    console.log(data);
 
     // Filter by demographics here
     let disabled_options;

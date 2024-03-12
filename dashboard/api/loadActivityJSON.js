@@ -8,7 +8,6 @@ export default function handler(req, res) {
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
 
-  let goalPrefix = "";
   switch (goal) {
     case "Sleep":
       data = data.filter(function (d) {
@@ -20,7 +19,6 @@ export default function handler(req, res) {
         });
         return include;
       });
-      goalPrefix = "Sleep";
       break;
     case "Physical Health":
       data = data.filter(function (d) {
@@ -32,7 +30,6 @@ export default function handler(req, res) {
         });
         return include;
       });
-      goalPrefix = "Phys";
       break;
     case "Emotional Health":
       data = data.filter(function (d) {
@@ -44,19 +41,28 @@ export default function handler(req, res) {
         });
         return include;
       });
-      goalPrefix = "Emo";
       break;
     case "Productivity":
       data = data.filter(function (d) {
-        return d.ProductGoal == "productivity";
+        let include = d.ProductGoal == "productivity";
+        Object.keys(d).forEach((key) => {
+          if (d[key] === null) {
+            delete d[key];
+          }
+        });
+        return include;
       });
-      goalPrefix = "Product";
       break;
     case "Social Wellness":
       data = data.filter(function (d) {
-        return d.SocialGoal == "social wellness";
+        let include = d.SocialGoal == "social wellness";
+        Object.keys(d).forEach((key) => {
+          if (d[key] === null) {
+            delete d[key];
+          }
+        });
+        return include;
       });
-      goalPrefix = "Social";
       break;
   }
 
