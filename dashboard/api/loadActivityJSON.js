@@ -25,7 +25,13 @@ export default function handler(req, res) {
       break;
     case "Physical Health":
       data = data.filter(function (d) {
-        return d.PhysGoal == "physical health";
+        Object.keys(d).forEach((key) => {
+          let include = d.PhysGoal == "physical health";
+          if (d[key] === null) {
+            delete d[key];
+          }
+        });
+        return include;
       });
       goalPrefix = "Phys";
       break;
