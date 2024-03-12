@@ -126,7 +126,7 @@ export default function ActivityData({
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
                 let vals;
                 headers.forEach(function (h) {
-                    vals.push(row[v]);
+                    vals.push(row[h]);
                 });
                 // let vals = Object.values<any>(row);
                 console.log(vals);
