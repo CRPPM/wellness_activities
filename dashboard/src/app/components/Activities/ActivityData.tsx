@@ -124,7 +124,7 @@ export default function ActivityData({
                     "physical health diagnoses",
                 ][Number(row.PHSG)];
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
-                let vals = [];
+                let vals: string[] = [];
                 headers.forEach(function (h) {
                     vals.push(row[h]);
                 });
