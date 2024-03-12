@@ -111,6 +111,7 @@ export default function ActivityData({
                 "BFIExtraHi",
                 "ageG",
             ]);
+            console.log(headers);
             headers = [headers.join(",")];
             // console.log(headers);
             // Convert users data to a csv
@@ -139,7 +140,7 @@ export default function ActivityData({
                     }
                 });
 
-                vals.shift();
+                // vals.shift();
                 let actString = vals.join(",");
 
                 acc.push(actString);
