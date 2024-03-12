@@ -124,14 +124,14 @@ export default function ActivityData({
                     "physical health diagnoses",
                 ][Number(row.PHSG)];
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
-                let vals;
+                let vals = [];
                 headers.forEach(function (h) {
                     vals.push(row[h]);
                 });
                 // let vals = Object.values<any>(row);
                 console.log(vals);
 
-                vals?.forEach((v: any, i: number, arr: string[]) => {
+                vals.forEach((v: any, i: number, arr: string[]) => {
                     if (v != null && typeof v === "string" && v.includes(",")) {
                         arr[i] = '"' + v + '"';
                     }
