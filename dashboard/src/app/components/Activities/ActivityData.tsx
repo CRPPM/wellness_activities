@@ -127,13 +127,10 @@ export default function ActivityData({
                         !h.includes("FreqW") &&
                         !demos.includes(h)
                     ) {
-                        // console.log(h);
-                        // console.log(QUESTIONS[h as keyof typeof QUESTIONS][0]);
                         let activityVal: string =
                             QUESTIONS[
                                 h as keyof typeof QUESTIONS
                             ][0].toString();
-                        console.log(activityVal);
                         vals.push(activityVal);
                     } else {
                         vals.push(row[h]);
