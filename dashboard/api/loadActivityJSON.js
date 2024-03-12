@@ -13,8 +13,8 @@ export default function handler(req, res) {
   switch (goal) {
     case "Sleep":
       data = data.filter(function (d) {
+        let include = d.SleepGoal == "sleep";
         Object.keys(d).forEach((key) => {
-          let include = d.SleepGoal == "sleep";
           if (d[key] === null) {
             delete d[key];
           }
@@ -25,8 +25,8 @@ export default function handler(req, res) {
       break;
     case "Physical Health":
       data = data.filter(function (d) {
+        let include = d.PhysGoal == "physical health";
         Object.keys(d).forEach((key) => {
-          let include = d.PhysGoal == "physical health";
           if (d[key] === null) {
             delete d[key];
           }
@@ -37,7 +37,13 @@ export default function handler(req, res) {
       break;
     case "Emotional Health":
       data = data.filter(function (d) {
-        return d.EmoGoal == "emotional health";
+        let include = d.EmoGoal == "emotional health";
+        Object.keys(d).forEach((key) => {
+          if (d[key] === null) {
+            delete d[key];
+          }
+        });
+        return include;
       });
       goalPrefix = "Emo";
       break;
