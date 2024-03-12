@@ -86,6 +86,31 @@ export default function ActivityData({
         if (data.length != 0) {
             let headers = Object.keys(data[0]);
             headers.shift();
+            headers = headers.filter(function (item) {
+                return ![
+                    "GenderB",
+                    "sexorB",
+                    "raceB",
+                    "incomeB",
+                    "locationB",
+                    "MHSG",
+                    "PHSG",
+                    "BFIExtraHi",
+                    "ageG",
+                ].includes(item);
+            });
+            headers.sort();
+            headers.push.apply(headers, [
+                "GenderB",
+                "sexorB",
+                "raceB",
+                "incomeB",
+                "locationB",
+                "MHSG",
+                "PHSG",
+                "BFIExtraHi",
+                "ageG",
+            ]);
             headers = [headers.join(",")];
             // Convert users data to a csv
             let rawCSV = data.reduce((acc: string[], row: any) => {
@@ -99,8 +124,11 @@ export default function ActivityData({
                     "physical health diagnoses",
                 ][Number(row.PHSG)];
                 row.ageG = ["18-29", "30-49", "50+"][Number(row.ageG) - 1];
-
-                let vals = Object.values<any>(row);
+                let vals;
+                headers.forEach(function (h) {
+                    vals.push(row[v]);
+                });
+                // let vals = Object.values<any>(row);
                 console.log(vals);
                 vals.forEach((v: any, i: number, arr: string[]) => {
                     if (v != null && typeof v === "string" && v.includes(",")) {
