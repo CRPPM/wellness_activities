@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Stack, Button, LoadingOverlay } from "@mantine/core";
 import ActivityCard from "./ActivityCard";
 import useData from "../Hooks/useData";
+import { QUESTIONS } from "../Hooks/activity_dict";
 
 interface Props {
     goal: string;
@@ -111,9 +112,9 @@ export default function ActivityData({
                 "BFIExtraHi",
                 "ageG",
             ]);
-            console.log(headers);
+
             headers = [headers.join(",")];
-            // console.log(headers);
+
             // Convert users data to a csv
             let rawCSV = data.reduce((acc: string[], row: any) => {
                 row.GenderB = ["man", "woman"][Number(row.GenderB) - 1];
@@ -129,10 +130,16 @@ export default function ActivityData({
                 let vals: string[] = [];
 
                 headers[0].split(",").forEach(function (h) {
-                    vals.push(row[h]);
+                    if (
+                        row[h] !== null &&
+                        !h.includes("TimeW") &&
+                        !h.includes("FreqW")
+                    ) {
+                        vals.push(QUESTIONS[h][0]);
+                    } else {
+                        vals.push(row[h]);
+                    }
                 });
-
-                console.log(vals);
 
                 vals.forEach((v: any, i: number, arr: string[]) => {
                     if (v != null && typeof v === "string" && v.includes(",")) {
@@ -140,7 +147,6 @@ export default function ActivityData({
                     }
                 });
 
-                // vals.shift();
                 let actString = vals.join(",");
 
                 acc.push(actString);
