@@ -15,15 +15,15 @@ const config: Config = {
       },
       colors: {
         sleep: "#B4DFD8",
-        sleepText: "#51b5a5", // Text colors are 35% darker base color
+        sleepText: "#8DCEC3",
         physical: "#F9F5E3",
-        physicalText: "#dcc45a",
+        physicalText: "#F1E7BC",
         emotional: "#E4EFFF",
-        emotionalText: "#3b8bff",
+        emotionalText: "#ADCEFF",
         productivity: "#E8DACE",
-        productivityText: "#b78b66",
+        productivityText: "#D8C0AC",
         social: "#FFCBB4",
-        socialText: "#ff611c",
+        socialText: "#FFA985",
       },
       boxShadow: {
         custom: "5px 5px 10px rgb(0 0 0 / 10%)",

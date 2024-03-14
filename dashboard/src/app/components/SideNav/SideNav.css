@@ -25,18 +25,18 @@
 
 @keyframes color-change {
   0% {
-    color: #51b5a5;
+    color: #8dcec3;
   }
   25% {
-    color: #dcc45a;
+    color: #f1e7bc;
   }
   50% {
-    color: #3b8bff;
+    color: #adceff;
   }
   75% {
-    color: #b78b66;
+    color: #d8c0ac;
   }
   100% {
-    color: #ff611c;
+    color: #ffa985;
   }
 }
