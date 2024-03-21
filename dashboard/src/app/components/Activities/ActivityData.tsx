@@ -44,21 +44,21 @@ export default function ActivityData({
         Productivity: "#b78b66",
         "Social Wellness": "#ff611c",
     };
-    const { getRawData } = useData(
-        goal,
-        ageValue,
-        genderValue,
-        raceValue,
-        incomeValue,
-        livingValue,
-        sexualValue,
-        mhsgValue,
-        phsgValue,
-        BFIExtraHiValue,
-        setActivityData,
-        setDisabledOptions,
-        setVisible,
-    );
+    // const { getRawData } = useData(
+    //     goal,
+    //     ageValue,
+    //     genderValue,
+    //     raceValue,
+    //     incomeValue,
+    //     livingValue,
+    //     sexualValue,
+    //     mhsgValue,
+    //     phsgValue,
+    //     BFIExtraHiValue,
+    //     setActivityData,
+    //     setDisabledOptions,
+    //     setVisible,
+    // );
 
     const downloadFile = ({
         data,
@@ -199,7 +199,7 @@ export default function ActivityData({
                         visible={visible}
                         overlayProps={{ radius: "sm", blur: 3 }}
                     />
-                    {activityData.slice(0, 10).map(function (
+                    {/*{activityData.slice(0, 10).map(function (
                         ele: {
                             index: [string, number];
                             Count: number;
@@ -226,7 +226,7 @@ export default function ActivityData({
                                 />
                             );
                         }
-                    })}
+                    })}*/}
                 </Stack>
             )}
         </div>

@@ -44,12 +44,12 @@ export default function SideNavGoal({
         social: "bg-social",
     };
 
-    const titleBackgrounds: { [key: string]: string } = {
-        sleep: "bg-sleepText",
-        physical: "bg-physicalText",
-        emotional: "bg-emotionalText",
-        productivity: "bg-productivityText",
-        social: "bg-socialText",
+    const headerColors: { [key: string]: string } = {
+        sleep: "!bg-sleepHeader",
+        physical: "!bg-physicalHeader",
+        emotional: "!bg-emotionalHeader",
+        productivity: "!bg-productivityHeader",
+        social: "!bg-socialHeader",
     };
 
     const hoverColorBackgrounds: { [key: string]: string } = {
@@ -96,7 +96,7 @@ export default function SideNavGoal({
                         setSideNavColor(colorBackgrounds[goalColor]);
                         setCenterText(
                             "justify-center mb-4 pt-2 " +
-                                titleBackgrounds[goalColor],
+                                headerColors[goalColor],
                         );
                         setMousePointer("cursor-auto");
                     }}

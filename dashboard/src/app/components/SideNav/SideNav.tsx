@@ -75,12 +75,20 @@ export default function SideNav({
     });
     const [filters, setFilters] = useState<string[]>([]);
 
-    const titleColors: { [key: string]: string } = {
+    const pillColors: { [key: string]: string } = {
         Sleep: "!bg-sleepText",
         "Physical Health": "!bg-physicalText",
         "Emotional Health": "!bg-emotionalText",
         Productivity: "!bg-productivityText",
         "Social Wellness": "!bg-socialText",
+    };
+
+    const headerColors: { [key: string]: string } = {
+        Sleep: "!bg-sleepHeader",
+        "Physical Health": "!bg-physicalHeader",
+        "Emotional Health": "!bg-emotionalHeader",
+        Productivity: "!bg-productivityHeader",
+        "Social Wellness": "!bg-socialHeader",
     };
 
     const goals = [
@@ -350,7 +358,7 @@ export default function SideNav({
                             <h1
                                 className={
                                     "mt-2 p-2 tracking-widest text-xl w-full items-center uppercase text-center " +
-                                    titleColors[goal]
+                                    headerColors[goal]
                                 }
                             >
                                 Filters
@@ -401,7 +409,7 @@ export default function SideNav({
                                                 <Pill
                                                     size="lg"
                                                     className={
-                                                        titleColors[goal] +
+                                                        pillColors[goal] +
                                                         " my-[0.05rem] input-desktop"
                                                     }
                                                     withRemoveButton
@@ -429,7 +437,7 @@ export default function SideNav({
                                                 <Pill
                                                     size="xs"
                                                     className={
-                                                        titleColors[goal] +
+                                                        pillColors[goal] +
                                                         " my-[0.05rem] input-mobile"
                                                     }
                                                     withRemoveButton
