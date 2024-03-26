@@ -8,24 +8,19 @@ import warnings
 warnings.filterwarnings("ignore")
 
 sns.set(style='white')
+colors = ["#7EC8BC", "#EDE1AB", "#99C2FF", "#D1B59E", "#FF9B70"]
+sns.set_palette(sns.color_palette(colors))
 
-df = pd.read_spss("../Raw Data/WellnessActivities2.23.24.sav")
+df = pd.read_spss("../Raw Data/WellnessActivities 3.12.24_JEH_4.sav")
+df = df[df['StartDate'].notna()]
+
 df['ageG'] = df['age'].apply(lambda x: 1 if x >= 18 and x <= 29 else (2 if x >= 30 and x <= 49 else 3))
 
-goals = ['Sleep', 'Phys', 'Emo', 'Product', 'Social']
-demos = ['ChronicYN', 'MedWeightSelf',
-         'MedMuscleSelf', 'MedGastroSelf', 'MedDepSelf',
-         'MedAnxSelf', 'MedPTSDSelf', 'MedSocialSelf',
-         'MedPanicSelf', 'GenderB', 'sexorB', 'raceB',
-         'incomeB', 'locationB', 'ageG', 'MHSG', 'PHSG',
-         'BFIExtraHi', 'WearYN']
-
-dontuse = ['SleepAlc', 'SleepCaf', 'SleepNaps', 'SleepTime', 'SleepRoutine', 'SleepEnviron', 'SleepAvoidMeals',
-           'EmoClothes', 'EmoWater', 'PhysSleep', 'PhysDr', 'PhysAlc', 'PhysWater', 'ProductConsistent',
-           'ProductSilent', 'ProductEliminate', 'ProductAskHelp', 'ProductClothes', 'ProductWater', 'ProductMusic',
-           'SocialJoin', 'SocialAskHelp', 'SocialDistance', 'SocialGreet', 'SocialSleep', 'SocialMedia']
-dontusetime = [d + 'Time' for d in dontuse]
-dontusefreq = [d + 'Freq' for d in dontuse]
+goals = {'Sleep': 'Sleep', 'Phys': 'Physical Health', 'Emo': 'Emotional Health', 'Product':'Productivity', 'Social': 'Social Wellness'}
+demos = {'GenderB': 'Gender', 'sexorB': 'Sexual Orientation',
+         'incomeB': 'Income', 'ageG': 'Age',
+         'MHSG': 'Mental Health Diagnosis', 'PHSG': 'Physical Health Diagnosis',
+         'WearYN': 'Wearable Use', 'WellnessAppG': 'Meditation App Use'}
 
 def calc_rbo(l1,l2,p):
     """ 
@@ -74,8 +69,8 @@ def calc_rbo(l1,l2,p):
     return rbo_ext
 
 def get_top_activities(df_goal, goal):
-    act_cols = [col for col in df_goal if col.startswith(g) and '_' not in col and col != g + 'Goal' and col not in dontuse]
-    act_cols = act_cols[0:25 - len([n for n in dontuse if n.startswith(g)])]
+    act_cols = [col for col in df_goal if col.startswith(g) and '_' not in col and col != g + 'Goal']
+    act_cols = act_cols[0:25]
 
     df_acts = df_goal[act_cols]
     df_acts = df_acts.loc[:,~df_acts.columns.str.contains('26|27|28|29|30')]  # remove write-ins
@@ -86,21 +81,24 @@ def get_top_activities(df_goal, goal):
 
 df_graph = pd.DataFrame(columns=['Goal', 'Demo', 'RBO'])
 
-for g in goals:
+for g in goals.keys():
     print('Goal:', g)
     df_goal = df.loc[df[g + 'Goal'] != 0]
 
-    for d in demos:
-
-        if d in ['GenderB']:
-            A = 1
-            B = 2
-        elif df[d].dtype == 'category':
+    for d in demos.keys():
+        if df[d].dtype == 'category':
             A = df[d].cat.categories[0]
             B = df[d].cat.categories[1]
         elif d == 'ageG':
             A = 1
             B = 3
+        elif d == 'MHSG' or d == 'PHSG':
+            A = 1
+            B = 0
+        else:
+            print(d)
+            print('breaks!')
+            exit()
 
         df_A = df_goal.loc[df_goal[d] == A]
         df_B = df_goal.loc[df_goal[d] == B]
@@ -108,12 +106,13 @@ for g in goals:
         A_list = get_top_activities(df_A, g)
         B_list = get_top_activities(df_B, g)
 
-        new_record = pd.DataFrame([{'Goal':g, 'Demo':d, 'RBO':calc_rbo(A_list, B_list, 0.98)}])
+        new_record = pd.DataFrame([{'Goal':goals[g], 'Demo':demos[d], 'RBO':calc_rbo(A_list, B_list, 0.98)}])
         df_graph = pd.concat([df_graph, new_record], ignore_index=True)
 
-print(df_graph)
 ax = sns.barplot(x='Demo', y='RBO', hue='Goal', data=df_graph)
 ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+plt.xlabel('Demographics')
+plt.ylim([0, 1])
 sns.despine()
-plt.legend(loc='upper right')
+plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.3), ncol=5)
 plt.show()
