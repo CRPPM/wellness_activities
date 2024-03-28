@@ -3,6 +3,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
+from statistics import stdev
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -15,12 +16,14 @@ df = pd.read_spss("../Raw Data/WellnessActivities 3.12.24_JEH_4.sav")
 df = df[df['StartDate'].notna()]
 
 df['ageG'] = df['age'].apply(lambda x: 1 if x >= 18 and x <= 29 else (2 if x >= 30 and x <= 49 else 3))
+df['Per'] = pd.Categorical(df['SRP'].apply(lambda x: 'high' if x >= 10.3 else 'low'))
 
 goals = {'Sleep': 'Sleep', 'Phys': 'Physical Health', 'Emo': 'Emotional Health', 'Product':'Productivity', 'Social': 'Social Wellness'}
 demos_overall = {'GenderB': 'Gender', 'sexorB': 'Sexual Orientation',
                  'incomeB': 'Income', 'ageG': 'Age',
                  'MHSG': 'Mental Health Diagnosis', 'PHSG': 'Physical Health Diagnosis',
-                 'WearYN': 'Wearable Use', 'WellnessAppG': 'Meditation App Use'}
+                 'WearYN': 'Wearable Use', 'WellnessAppG': 'Meditation App Use',
+                 'BFIExtraHi': 'Extroversion', 'Per': 'Perseverance'}
 
 demos_PHSG = {'MedWeightSelf': 'Unhealthy Weight', 'MedMuscleSelf': 'Musculoskeletal Disorder',
               'MedGastroSelf': 'Gastrointestinal Disorder', 'MedCancerSelf': 'Cancer',
@@ -29,6 +32,12 @@ demos_PHSG = {'MedWeightSelf': 'Unhealthy Weight', 'MedMuscleSelf': 'Musculoskel
 demos_MHSG = {'MedDepSelf': 'Depression', 'MedPTSDSelf': 'PTSD', 'MedAnxSelf': 'Anxiety',
               'MedBipolarSelf': 'Bipolar', 'MedAutismSelf': 'Autism', 'MedSocialSelf': 'Social',
               'MedOCDSelf': 'OCD', 'MedPanicSelf': 'Panic Attacks'}
+
+def minmax(val_list):
+    min_val = round(min(val_list), 3)
+    max_val = round(max(val_list), 3)
+
+    return (min_val, max_val)
 
 def calc_rbo(l1,l2,p):
     """ 
@@ -91,10 +100,11 @@ def plot_RBO(demos, remove_other_demos=False):
     df_graph = pd.DataFrame(columns=['Goal', 'Demo', 'RBO', 'Label'])
     min_RBO = 2
     max_RBO = 0
+    rbos = {}
     for g in goals.keys():
-        print('Goal:', g)
+        print('Goal:', goals[g])
         df_goal = df.loc[df[g + 'Goal'] != 0]
-
+        rbos[goals[g]] = []
         for d in demos.keys():
             if not remove_other_demos:
                 if df[d].dtype == 'category':
@@ -127,6 +137,7 @@ def plot_RBO(demos, remove_other_demos=False):
             B_list = get_top_activities(df_B, g)
             
             rbo = calc_rbo(A_list, B_list, 0.98)
+            rbos[goals[g]].append(rbo)
             max_RBO = max(max_RBO, rbo)
             min_RBO = min(min_RBO, rbo)
             
@@ -136,6 +147,11 @@ def plot_RBO(demos, remove_other_demos=False):
     print('')
     print('Max RBO:', max_RBO)
     print('Min RBO:', min_RBO)
+    print('')
+    for r in rbos.keys():
+        print(r, 'Stdev:', round(stdev(rbos[r]), 3), 'Range:', minmax(rbos[r]))
+        print('')
+
 
     ax = sns.barplot(x='Demo', y='RBO', hue='Goal', data=df_graph)
     if remove_other_demos:
