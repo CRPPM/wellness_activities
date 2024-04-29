@@ -31,7 +31,6 @@ export default function ActivityCard({
     const [showImage, setShowImage] = useState<Boolean>(true);
 
     let imgSrc = "/images/" + activity.replaceAll(" ", "_") + ".png";
-    console.log(imgSrc)
     let fallbackSrc = "/images/default.png";
 
     if (goal == "Physical Health") {
