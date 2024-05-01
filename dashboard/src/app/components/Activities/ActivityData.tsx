@@ -28,6 +28,8 @@ interface Props {
     phsgValue: number[];
     BFIExtraHiValue: number[];
     setDisabledOptions: Function;
+    barColors:string[];
+    setBarColors: Function;
     graphType: string;
     setGraphType: Function;
 }
