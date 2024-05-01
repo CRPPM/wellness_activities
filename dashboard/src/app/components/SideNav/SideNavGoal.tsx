@@ -19,6 +19,7 @@ interface Props {
     setBarColors: Function;
     clearBarColors: boolean;
     setClearBarColors: Function;
+    graphType: string;
 }
 export default function SideNavGoal({
     goal,
@@ -43,7 +44,7 @@ export default function SideNavGoal({
     let iconSrc = "/images/" + iconImg;
     let goalSrc = "/images/" + goalImg;
 
-    const [allGoalColor, setAllGoalColor] = useState<>("");
+    const [allGoalColor, setAllGoalColor] = useState("");
     // Tailwind cannot understand string interpolation or concatenation
     // https://tailwindcss.com/docs/content-configuration#dynamic-class-names
     const colorBackgrounds: { [key: string]: string } = {
@@ -97,7 +98,7 @@ export default function SideNavGoal({
         <div>
             <div
                 className={"flex " + centerText + allGoalColor}
-                onClick={(e) => {
+                onClick={(e: any) => {
                     if (curGoal == "All" && goal != "Select goals to display") {
                         let clickedGoal = e.target.innerHTML;
 
@@ -112,7 +113,7 @@ export default function SideNavGoal({
                             );
                             clickedGoal = clickedGoal.replace(
                                 /(^\w{1})|(\s+\w{1})/g,
-                                (letter) => letter.toUpperCase(),
+                                (letter:any) => letter.toUpperCase(),
                             );
                         }
 

@@ -1,8 +1,27 @@
 import { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { sankey as Sankey, sankeyLinkHorizontal } from "d3-sankey";
+import * as d3Sankey from 'd3-sankey';
 import BarChart from "./BarChart";
 
+interface SNodeExtra {
+    nodeId: number;
+    name: string;
+}
+
+interface SLinkExtra {
+    source: number;
+    target: number;
+    value: number;
+    // uom: string;
+}
+
+type SNode = d3Sankey.SankeyNode<SNodeExtra, SLinkExtra>;
+type SLink = d3Sankey.SankeyLink<SNodeExtra, SLinkExtra>;
+
+interface DAG {
+    nodes: SNode[];
+    links: SLink[];
+}
 export default function SankeyDiagram(
     barColors: string[],
     setBarColors: Function,
@@ -11,12 +30,14 @@ export default function SankeyDiagram(
     svgContainer: any,
     nodeColor: string,
 ) {
-    function wrap(text, width) {
-        text.each(function () {
+    function wrap(text: any, width: number) {
+        // console.log(typeof text)
+        // console.log(text)
+        text.each(function (this: any) {
             var text = d3.select(this),
                 words = text.text().split(/\s+/).reverse(),
                 word,
-                line = [],
+                line: string[] = [],
                 lineNumber = 0,
                 lineHeight = 1.1, // ems
                 x = text.attr("x"),
@@ -36,8 +57,9 @@ export default function SankeyDiagram(
             while ((word = words.pop())) {
                 line.push(word);
                 tspan.text(line.join(" "));
-                // console.log(line);
-                if (tspan.node().getComputedTextLength() > width) {
+
+                var tspan_copy:any = tspan // absolutely not the way to do this, but typescript is stupid
+                if (tspan_copy.node().getComputedTextLength() > width) {
                     line.pop();
                     tspan.text(line.join(" "));
                     line = [word];
@@ -48,29 +70,30 @@ export default function SankeyDiagram(
                         .attr("dy", ++lineNumber * lineHeight + dy + "em")
                         .text(word);
                 }
+                
             }
         });
     }
 
-    const graph = {
+    const graph: DAG = {
         nodes: [
-            { node: 0, name: "Depressed" },
-            { node: 1, name: "No Mental Health Conditions" },
-            { node: 2, name: "Music" },
-            { node: 3, name: "Praying" },
-            { node: 4, name: "Meditating" },
-            { node: 5, name: "Cooking" },
-            { node: 6, name: "Eating healthy" },
-            { node: 7, name: "Spending time in nature" },
-            { node: 8, name: "Watching TV" },
-            { node: 9, name: "Playing with Pets" },
-            { node: 10, name: "Exercising moderately" },
-            { node: 11, name: "Spending in-person time with friends" },
-            { node: 12, name: "Cleaning" },
-            { node: 13, name: "Changing into comfortable clothing" },
-            { node: 14, name: "Talking to a therapist" },
-            { node: 15, name: "taking some deep breaths" },
-            { node: 16, name: "Texting/Calling loved ones" },
+            { nodeId: 0, name: "Depressed" },
+            { nodeId: 1, name: "No Mental Health Conditions" },
+            { nodeId: 2, name: "Music" },
+            { nodeId: 3, name: "Praying" },
+            { nodeId: 4, name: "Meditating" },
+            { nodeId: 5, name: "Cooking" },
+            { nodeId: 6, name: "Eating healthy" },
+            { nodeId: 7, name: "Spending time in nature" },
+            { nodeId: 8, name: "Watching TV" },
+            { nodeId: 9, name: "Playing with Pets" },
+            { nodeId: 10, name: "Exercising moderately" },
+            { nodeId: 11, name: "Spending in-person time with friends" },
+            { nodeId: 12, name: "Cleaning" },
+            { nodeId: 13, name: "Changing into comfortable clothing" },
+            { nodeId: 14, name: "Talking to a therapist" },
+            { nodeId: 15, name: "taking some deep breaths" },
+            { nodeId: 16, name: "Texting/Calling loved ones" },
         ],
         links: [
             { source: 0, target: 2, value: 2 },
@@ -118,16 +141,13 @@ export default function SankeyDiagram(
     // var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     // Set the sankey diagram properties
-    var sankey = Sankey()
+    var sankey = d3Sankey.sankey()
         // .nodeId((d) => d.name);
         .nodeWidth(20)
         .nodePadding(290)
         .size([width - 250, height]);
 
-    const { nodes, links } = sankey({
-        nodes: graph.nodes.map((d) => Object.assign({}, d)),
-        links: graph.links.map((d) => Object.assign({}, d)),
-    });
+    const { nodes, links } = sankey(graph);
 
     // Nodes
     const rect = svg
@@ -136,11 +156,11 @@ export default function SankeyDiagram(
         .selectAll()
         .data(nodes)
         .join("rect")
-        .attr("x", (d) => d.x0)
-        .attr("y", (d) => d.y0 - 15)
+        .attr("x", (d:any) => d.x0)
+        .attr("y", (d:any) => d.y0 - 15)
         .attr("height", 30)
-        .attr("width", (d) => (d.index <= 1 ? d.x1 - d.x0 : 10))
-        .attr("fill", (d) => {
+        .attr("width", (d:any) => (d.index <= 1 ? d.x1 - d.x0 : 10))
+        .attr("fill", (d:any) => {
             if (d.index == 0) {
                 return "#B589BD";
             } else if (d.index == 1) {
@@ -149,7 +169,7 @@ export default function SankeyDiagram(
             return nodeColor;
         });
 
-    rect.append("title").text((d) => d.name);
+    rect.append("title").text((d:any) => d.name);
 
     const link = svg
         .append("g")
@@ -161,12 +181,12 @@ export default function SankeyDiagram(
         .style("mix-blend-mode", "multiply");
 
     link.append("path")
-        .attr("d", sankeyLinkHorizontal())
-        .attr("stroke", (d) => (d.source.index == 0 ? "#DECBE2" : "#E58A9E"))
+        .attr("d", d3Sankey.sankeyLinkHorizontal())
+        .attr("stroke", (d:any) => (d.source.index == 0 ? "#DECBE2" : "#E58A9E"))
         .attr("stroke-width", (d) => d.value * 10);
 
     link.append("title").text(
-        (d) => `${d.source.name} → ${d.target.name}\n${d.value} TWh`,
+        (d:any) => `${d.source.name} → ${d.target.name}\n${d.value} TWh`,
     );
 
     // Adds labels on the nodes.
@@ -174,10 +194,10 @@ export default function SankeyDiagram(
         .selectAll()
         .data(nodes)
         .join("text")
-        .attr("x", (d) => (d.x0 < width / 2 ? d.x1 - 22 : d.x0 + 12))
-        .attr("y", (d) => (d.y1 + d.y0) / 2)
+        .attr("x", (d:any) => (d.x0 < width / 2 ? d.x1 - 22 : d.x0 + 12))
+        .attr("y", (d:any) => (d.y1 + d.y0) / 2)
         .attr("dy", "0.35em")
-        .attr("text-anchor", (d) => (d.x0 < width / 2 ? "end" : "start"))
-        .text((d) => d.name)
+        .attr("text-anchor", (d:any) => (d.x0 < width / 2 ? "end" : "start"))
+        .text((d:any) => d.name)
         .call(wrap, 200); // wrap the text in <= 30 pixels
 }

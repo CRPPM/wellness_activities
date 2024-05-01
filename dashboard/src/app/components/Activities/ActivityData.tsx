@@ -63,7 +63,7 @@ export default function ActivityData({
     });
     const [width, setWidth] = useState(1000);
     const [height, setHeight] = useState(1000);
-    const svgContainer = useRef(null);
+    const svgContainer = useRef<any>();
     const [showBackArrow, setShowBackArrow] = useState(false);
 
     const titleColors: { [key: string]: string } = {
@@ -82,13 +82,17 @@ export default function ActivityData({
         Productivity: "#E8DACE",
         "Social Wellness": "#FFCBB4",
     };
-    const getSvgContainerSize = () => {
-        const newWidth = svgContainer.current.clientWidth - 100;
-        setWidth(newWidth);
 
-        const newHeight = svgContainer.current.clientHeight;
-        setHeight(newHeight);
+    const getSvgContainerSize = () => {
+        if (svgContainer.current) {
+            const newWidth = svgContainer.current.clientWidth - 100;
+            setWidth(newWidth);
+
+            const newHeight = svgContainer.current.clientHeight;
+            setHeight(newHeight);
+        }
     };
+
     const { getRawData } = useData(
         goal,
         ageValue,
@@ -141,7 +145,7 @@ export default function ActivityData({
                     height,
                     width,
                     svgContainer,
-                    colors[barColors[0]],
+                    colors[barColors[0] as keyof typeof colors],
                 );
             }
         }
@@ -160,7 +164,7 @@ export default function ActivityData({
                         <HoverCard width={280} shadow="md">
                             <HoverCard.Target>
                                 <Avatar
-                                    color="cyan"
+                                    // color="cyan"
                                     radius="xl"
                                     size="xs"
                                     color="#2B2927"

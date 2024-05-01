@@ -55,7 +55,7 @@ export default function BarChart(
 
     var groups = Array.from(new Set(rboData.map((item) => item.demographic)));
 
-    var x = d3.scaleBand().domain(groups).range([0, width]).padding([0.2]);
+    var x = d3.scaleBand().domain(groups).range([0, width]).padding(0.2);
     const xAxisGroup = container
         .append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -92,7 +92,7 @@ export default function BarChart(
         .scaleBand()
         .domain(subgroups)
         .range([0, x.bandwidth()])
-        .padding([0.05]);
+        .padding(0.05);
 
     // var color = d3
     //     .scaleOrdinal()
@@ -118,23 +118,25 @@ export default function BarChart(
         .selectAll("rect")
         .data(function (d) {
             return subgroups.map(function (key) {
-                return { key: d.demographic + "_" + key, value: d[key] };
+                return { key: d.demographic + "_" + key, value: d[key  as keyof typeof d] };
             });
         })
         .enter()
         .append("rect")
-        .attr("x", function (d) {
-            return xSubgroup(d.key.split("_")[1]);
+        .attr("x", function (d: any) {
+            let x_val: number = xSubgroup(d.key.split("_")[1]) || 0;
+            return x_val;
+
         })
         .attr("y", function (d) {
-            return y(d.value);
+            return y(Number(d.value));
         })
         .attr("width", xSubgroup.bandwidth())
         .attr("height", function (d) {
-            return height - y(d.value);
+            return height - y(Number(d.value));
         })
         .attr("fill", function (d) {
-            return colors[d.key.split("_")[1]];
+            return colors[d.key.split("_")[1] as keyof typeof colors];
         });
 
     d3.selectAll("rect")
