@@ -363,11 +363,11 @@ export default function ActivityData({
                                 }}
                             />
                         )}
-                        <div
+                        {goal == "All" && (<div
                             id="activity-stack"
                             ref={svgContainer}
                             className="h-[70vh] min-w-[65vw]"
-                        ></div>
+                        ></div>)}
                     </div>
 
                     {activityData.slice(0, 10).map(function (
