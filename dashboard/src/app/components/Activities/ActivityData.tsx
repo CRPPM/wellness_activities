@@ -1,9 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Stack, Button, LoadingOverlay } from "@mantine/core";
+import {
+    Stack,
+    Button,
+    LoadingOverlay,
+    Avatar,
+    HoverCard,
+    Text,
+} from "@mantine/core";
 import ActivityCard from "./ActivityCard";
 import useData from "../Hooks/useData";
 import { QUESTIONS } from "../Hooks/activity_dict";
+import BarChart from "../Graphs/BarChart";
+import SankeyDiagram from "../Graphs/SankeyDiagram";
+import * as d3 from "d3";
 
 interface Props {
     goal: string;
@@ -18,6 +28,8 @@ interface Props {
     phsgValue: number[];
     BFIExtraHiValue: number[];
     setDisabledOptions: Function;
+    graphType: string;
+    setGraphType: Function;
 }
 
 export default function ActivityData({
@@ -33,9 +45,24 @@ export default function ActivityData({
     phsgValue,
     BFIExtraHiValue,
     setDisabledOptions,
+    barColors,
+    setBarColors,
+    graphType,
+    setGraphType,
 }: Props) {
     const [activityData, setActivityData] = useState([]);
     const [visible, setVisible] = useState(false);
+    const [header, setHeader] = useState(() => {
+        if (goal == "All") {
+            return "How much do activities differ by demographic?";
+        } else {
+            return "Actvities";
+        }
+    });
+    const [width, setWidth] = useState(1000);
+    const [height, setHeight] = useState(1000);
+    const svgContainer = useRef(null);
+    const [showBackArrow, setShowBackArrow] = useState(false);
 
     const titleColors: { [key: string]: string } = {
         Sleep: "#51b5a5",
@@ -43,6 +70,22 @@ export default function ActivityData({
         "Emotional Health": "#3b8bff",
         Productivity: "#b78b66",
         "Social Wellness": "#ff611c",
+        All: "#2b2927",
+    };
+
+    var colors = {
+        Sleep: "#B4DFD8",
+        "Physical Health": "#F9F5E3",
+        "Emotional Health": "#E4EFFF",
+        Productivity: "#E8DACE",
+        "Social Wellness": "#FFCBB4",
+    };
+    const getSvgContainerSize = () => {
+        const newWidth = svgContainer.current.clientWidth - 100;
+        setWidth(newWidth);
+
+        const newHeight = svgContainer.current.clientHeight;
+        setHeight(newHeight);
     };
     const { getRawData } = useData(
         goal,
@@ -60,6 +103,105 @@ export default function ActivityData({
         setVisible,
     );
 
+    useEffect(() => {
+        if (goal == "All") {
+            setHeader("How much do activities differ by demographic?");
+
+            // detect 'width' and 'height' on render
+            getSvgContainerSize();
+            // listen for resize changes, and detect dimensions again when they change
+            window.addEventListener("resize", getSvgContainerSize);
+
+            // cleanup event listener
+            return () =>
+                window.removeEventListener("resize", getSvgContainerSize);
+        } else {
+            setHeader("Actvities");
+        }
+    }, [goal]);
+
+    useEffect(() => {
+        if (goal == "All") {
+            if (graphType == "BarChart") {
+                BarChart(
+                    barColors,
+                    setBarColors,
+                    height,
+                    width,
+                    svgContainer,
+                    setShowBackArrow,
+                    setGraphType,
+                );
+            } else {
+                SankeyDiagram(
+                    barColors,
+                    setBarColors,
+                    height,
+                    width,
+                    svgContainer,
+                    colors[barColors[0]],
+                );
+            }
+        }
+    }, [height, width, barColors, goal]);
+
+    function helperText() {
+        if (goal == "All") {
+            return (
+                <div className="">
+                    <div className="inline">
+                        To compare activity preferences of different
+                        demographics, we calculate the Ranked Biased Overlap
+                        (RBO){" "}
+                    </div>
+                    <div className="inline-table align-middle mb-1f">
+                        <HoverCard width={280} shadow="md">
+                            <HoverCard.Target>
+                                <Avatar
+                                    color="cyan"
+                                    radius="xl"
+                                    size="xs"
+                                    color="#2B2927"
+                                    variant="filled"
+                                    className="self-center mr-1"
+                                >
+                                    i
+                                </Avatar>
+                            </HoverCard.Target>
+                            <HoverCard.Dropdown>
+                                <Text size="sm">
+                                    Hover card is revealed when user hovers over
+                                    target element, it will be hidden once mouse
+                                    is not over both target and dropdown
+                                    elements
+                                </Text>
+                            </HoverCard.Dropdown>
+                        </HoverCard>{" "}
+                    </div>
+                    <div className="inline">
+                        between the top ten activity lists of those belonging to
+                        a demographic and those who do not. Click on individual
+                        bars to see a detailed activity comparison.
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="italic pt-2">
+                    Here are the most popular activities for those who excelled
+                    in the{" "}
+                    <span
+                        style={{ color: titleColors[goal] }}
+                        className="font-semibold"
+                    >
+                        {goal.toUpperCase()}
+                    </span>{" "}
+                    goal. Use the filters on the left to see what works for
+                    different people.
+                </div>
+            );
+        }
+    }
     const downloadFile = ({
         data,
         fileName,
@@ -170,7 +312,7 @@ export default function ActivityData({
                     <div>
                         <div className="flex">
                             <h1 className="tracking-widest text-2xl w-full items-center uppercase">
-                                Activities
+                                {header}
                             </h1>
                             <Button
                                 color={titleColors[goal]}
@@ -182,23 +324,46 @@ export default function ActivityData({
                             </Button>
                         </div>
 
-                        <div className="italic pt-2">
-                            Here are the most popular activities for those who
-                            excelled in the{" "}
-                            <span
-                                style={{ color: titleColors[goal] }}
-                                className="font-semibold"
-                            >
-                                {goal.toUpperCase()}
-                            </span>{" "}
-                            goal. Use the filters on the left to see what works
-                            for different people.
-                        </div>
+                        {helperText()}
                     </div>
                     <LoadingOverlay
                         visible={visible}
                         overlayProps={{ radius: "sm", blur: 3 }}
                     />
+                    <div className="flex">
+                        {showBackArrow && (
+                            <Image
+                                src={"/images/back-arrow.png"}
+                                width={30}
+                                height={2}
+                                objectFit="cover"
+                                alt={"Back Arrow"}
+                                className="h-fit cursor-pointer"
+                                onClick={() => {
+                                    setShowBackArrow(false);
+                                    d3.select(svgContainer.current)
+                                        .selectAll("*")
+                                        .remove();
+                                    BarChart(
+                                        barColors,
+                                        setBarColors,
+                                        height,
+                                        width,
+                                        svgContainer,
+                                        setShowBackArrow,
+                                        setGraphType,
+                                    );
+                                    setGraphType("BarChart");
+                                }}
+                            />
+                        )}
+                        <div
+                            id="activity-stack"
+                            ref={svgContainer}
+                            className="h-[70vh] min-w-[65vw]"
+                        ></div>
+                    </div>
+
                     {activityData.slice(0, 10).map(function (
                         ele: {
                             index: [string, number];

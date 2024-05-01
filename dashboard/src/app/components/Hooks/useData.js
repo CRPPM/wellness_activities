@@ -59,7 +59,7 @@ const useData = (
                 }
             });
         });
-    };
+    }; 
 
     useEffect(() => {
         if (goal != "") {
@@ -350,7 +350,9 @@ function prepare_data(
             }
         });
     });
-
+    console.log('Act Data')
+    console.log(act_data)
+    
     let duration_dict = return_avg(data, goalPrefix, "TimeW");
     let freq_dict = return_avg(data, goalPrefix, "FreqW");
 
@@ -370,6 +372,18 @@ function prepare_data(
     });
 
     return [display_data, disabled_options];
+}
+
+function get_top_activities() {
+    console.log('hi')
+}
+
+function calc_rbo_wrapper() {
+    console.log('hi')
+}
+
+function calc_rbo() {
+    console.log('hi')
 }
 
 export default useData;

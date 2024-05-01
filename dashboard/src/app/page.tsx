@@ -18,6 +18,8 @@ export default function Home() {
   const [phsgValue, setPhsgValue] = useState([]);
   const [BFIExtraHiValue, setBFIExtraHiValue] = useState([]);
   const [disabledOptions, setDisabledOptions] = useState<string[]>([]);
+  const [barColors, setBarColors] = useState<string[]>([]);
+  const [graphType, setGraphType] = useState<string>("BarChart");
 
   return (
     <MantineProvider>
@@ -45,6 +47,9 @@ export default function Home() {
           BFIExtraHiValue={BFIExtraHiValue}
           setBFIExtraHiValue={setBFIExtraHiValue}
           disabledOptions={disabledOptions}
+          barColors={barColors}
+          setBarColors={setBarColors}
+          graphType={graphType}
         />
         <ActivityData
           goal={goal}
@@ -59,6 +64,10 @@ export default function Home() {
           phsgValue={phsgValue}
           BFIExtraHiValue={BFIExtraHiValue}
           setDisabledOptions={setDisabledOptions}
+          barColors={barColors}
+          setBarColors={setBarColors}
+          graphType={graphType}
+          setGraphType={setGraphType}
         />
       </div>
     </MantineProvider>
