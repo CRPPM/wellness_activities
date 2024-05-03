@@ -124,7 +124,7 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
   };
 
   let data_A, data_B;
-  if (selectedDemo[0] == "age") {
+  if (selectedDemo == "age") {
     data_A = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 1); // less than 18
     data_B = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 3); // greater than 50
   } else {
@@ -133,10 +133,10 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
     let uniqueDemoValues = [...setDemoValues];
 
     data_A = data.filter(
-      (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[0],
+      (obj) => obj[demos_overall[selectedDemo]] == uniqueDemoValues[0],
     );
     data_B = data.filter(
-      (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[1],
+      (obj) => obj[demos_overall[selectedDemo]] == uniqueDemoValues[1],
     );
   }
   console.log(selectedDemo);
