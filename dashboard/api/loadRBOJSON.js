@@ -128,9 +128,11 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
     data_A = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 1); // less than 18
     data_B = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 3); // greater than 50
   } else {
-    let allDemoValues = data.map((d) => d[demos_overall[selectedDemo]]);
+    let allDemoValues = data.map((d) => d[demos_overall[selectedDemo[0]]]);
     let setDemoValues = new Set(allDemoValues);
     let uniqueDemoValues = [...setDemoValues];
+    console.log("why");
+    console.log(uniqueDemoValues);
 
     data_A = data.filter(
       (obj) => obj[demos_overall[selectedDemo]] == uniqueDemoValues[0],
