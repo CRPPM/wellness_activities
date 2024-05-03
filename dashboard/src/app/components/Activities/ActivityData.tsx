@@ -130,7 +130,7 @@ export default function ActivityData({
     }, [goal]);
 
     useEffect(() => {
-        if (goal == "All" && RBOData != []) {
+        if ((goal == "All") & (RBOData !== [])) {
             console.log(barColors);
             if (graphType == "BarChart") {
                 BarChart(
