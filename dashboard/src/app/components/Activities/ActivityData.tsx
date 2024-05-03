@@ -53,7 +53,16 @@ export default function ActivityData({
     setGraphType,
 }: Props) {
     const [activityData, setActivityData] = useState([]);
-    const [RBOData, setRBOData] = useState([]);
+    const [RBOData, setRBOData] = useState([
+        {
+            demographic: "None",
+            Sleep: 0,
+            "Physical Health": 0,
+            "Emotional Health": 0,
+            Productivity: 0,
+            "Social Wellness": 0,
+        },
+    ]);
     const [visible, setVisible] = useState(false);
     const [header, setHeader] = useState(() => {
         if (goal == "All") {

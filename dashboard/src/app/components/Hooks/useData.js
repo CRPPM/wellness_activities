@@ -78,7 +78,7 @@ const useData = (
                         try {
                             console.log("Calculated RBO!");
                             console.log(data);
-                            setRBOData(data);
+                            setRBOData([data]);
 
                             resolve(true);
                         } catch (err) {
