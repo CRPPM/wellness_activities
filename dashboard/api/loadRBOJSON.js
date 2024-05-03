@@ -4,12 +4,15 @@ import path from "path";
 
 // process data
 function calc_rbo(data, selectedDemo) {
-  let allDemoValues = new Set(data.map((d) => d[selectedDemo]));
-  allDemoValues = [...allDemoValues];
+  let allDemoValues = data.map((d) => d[selectedDemo[0]]);
+  let setDemoValues = new Set(allDemoValues);
+  let uniqueDemoValues = [...allDemoValues];
+
   console.log("hi");
   console.log(allDemoValues);
-  // console.log(data);
-  console.log(selectedDemo);
+  console.log(setDemoValues);
+  console.log(uniqueDemoValues);
+  console.log(selectedDemo[0]);
 }
 
 export default function handler(req, res) {
