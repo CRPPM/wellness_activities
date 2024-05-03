@@ -28,7 +28,7 @@ interface Props {
     phsgValue: number[];
     BFIExtraHiValue: number[];
     setDisabledOptions: Function;
-    barColors:string[];
+    barColors: string[];
     setBarColors: Function;
     graphType: string;
     setGraphType: Function;
@@ -107,6 +107,7 @@ export default function ActivityData({
         setActivityData,
         setDisabledOptions,
         setVisible,
+        barColors,
     );
 
     useEffect(() => {
@@ -128,6 +129,17 @@ export default function ActivityData({
 
     useEffect(() => {
         if (goal == "All") {
+            console.log(barColors);
+            let RBOdata = [
+                {
+                    demographic: "None",
+                    Sleep: 0,
+                    "Physical Health": 0,
+                    "Emotional Health": 0,
+                    Productivity: 0,
+                    "Social Wellness": 0,
+                },
+            ];
             if (graphType == "BarChart") {
                 BarChart(
                     barColors,
@@ -137,6 +149,7 @@ export default function ActivityData({
                     svgContainer,
                     setShowBackArrow,
                     setGraphType,
+                    RBOdata,
                 );
             } else {
                 SankeyDiagram(
@@ -346,6 +359,16 @@ export default function ActivityData({
                                 alt={"Back Arrow"}
                                 className="h-fit cursor-pointer"
                                 onClick={() => {
+                                    let RBOdata = [
+                                        {
+                                            demographic: "None",
+                                            Sleep: 0,
+                                            "Physical Health": 0,
+                                            "Emotional Health": 0,
+                                            Productivity: 0,
+                                            "Social Wellness": 0,
+                                        },
+                                    ];
                                     setShowBackArrow(false);
                                     d3.select(svgContainer.current)
                                         .selectAll("*")
@@ -358,16 +381,19 @@ export default function ActivityData({
                                         svgContainer,
                                         setShowBackArrow,
                                         setGraphType,
+                                        RBOdata,
                                     );
                                     setGraphType("BarChart");
                                 }}
                             />
                         )}
-                        {goal == "All" && (<div
-                            id="activity-stack"
-                            ref={svgContainer}
-                            className="h-[70vh] min-w-[65vw]"
-                        ></div>)}
+                        {goal == "All" && (
+                            <div
+                                id="activity-stack"
+                                ref={svgContainer}
+                                className="h-[70vh] min-w-[65vw]"
+                            ></div>
+                        )}
                     </div>
 
                     {activityData.slice(0, 10).map(function (

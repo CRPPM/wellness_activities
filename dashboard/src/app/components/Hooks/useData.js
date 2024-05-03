@@ -16,6 +16,7 @@ const useData = (
     setActivityData,
     setDisabledOptions,
     setVisible,
+    goals,
 ) => {
     const rawData = useRef([]);
     const loadMetric = async (goal) => {
@@ -25,7 +26,6 @@ const useData = (
                 method: "POST",
                 body: JSON.stringify({
                     goal: goal,
-                    ageValue: ageValue,
                 }),
                 headers: { "Content-Type": "application/json" },
             }).then((res) => {
@@ -59,12 +59,77 @@ const useData = (
                 }
             });
         });
-    }; 
+    };
+
+    const loadRBOData = async (goals, selectedDemo) => {
+        return new Promise((resolve, reject) => {
+            let path = "/api/loadRBOJSON.js";
+            fetch(path, {
+                method: "POST",
+                body: JSON.stringify({
+                    goals: goals,
+                    selectedDemo: selectedDemo,
+                }),
+                headers: { "Content-Type": "application/json" },
+            }).then((res) => {
+                if (res.ok) {
+                    res.json().then((data) => {
+                        try {
+                            let prepped_data = prepare_data(
+                                data,
+                                goal,
+                                ageValue,
+                                genderValue,
+                                raceValue,
+                                incomeValue,
+                                livingValue,
+                                sexualValue,
+                                mhsgValue,
+                                phsgValue,
+                                BFIExtraHiValue,
+                                rawData,
+                            );
+                            setActivityData(prepped_data[0]);
+                            setDisabledOptions(prepped_data[1]);
+
+                            resolve(true);
+                        } catch (err) {
+                            console.log(err);
+                            resolve(false);
+                        }
+                    });
+                }
+            });
+        });
+    };
 
     useEffect(() => {
-        if (goal != "") {
+        let demos = [
+            ageValue,
+            genderValue,
+            raceValue,
+            incomeValue,
+            livingValue,
+            sexualValue,
+            mhsgValue,
+            phsgValue,
+            BFIExtraHiValue,
+        ];
+        if ((goal != "") & (goal != "All")) {
             setVisible(true);
             Promise.all([loadMetric(goal)]).then(() => {
+                console.log("loaded JSON");
+                setVisible(false);
+            });
+        } else if ((goal == "All") & demos.some((arr) => arr.length > 0)) {
+            setVisible(true);
+            let selectedDemo = Object.entries(demos)
+                .filter(
+                    ([name, array]) => Array.isArray(array) && array.length > 0,
+                )
+                .map(([name, array]) => name);
+
+            Promise.all([loadRBOData(goal, selectedDemo)]).then(() => {
                 console.log("loaded JSON");
                 setVisible(false);
             });
@@ -350,9 +415,9 @@ function prepare_data(
             }
         });
     });
-    console.log('Act Data')
-    console.log(act_data)
-    
+    console.log("Act Data");
+    console.log(act_data);
+
     let duration_dict = return_avg(data, goalPrefix, "TimeW");
     let freq_dict = return_avg(data, goalPrefix, "FreqW");
 
@@ -372,18 +437,6 @@ function prepare_data(
     });
 
     return [display_data, disabled_options];
-}
-
-function get_top_activities() {
-    console.log('hi')
-}
-
-function calc_rbo_wrapper() {
-    console.log('hi')
-}
-
-function calc_rbo() {
-    console.log('hi')
 }
 
 export default useData;

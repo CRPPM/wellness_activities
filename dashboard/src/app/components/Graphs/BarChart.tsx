@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
 
+interface RBO {
+    demographic: string;
+    Sleep: number;
+    "Physical Health": number;
+    "Emotional Health": number;
+    Productivity: number;
+    "Social Wellness": number;
+}
+
 export default function BarChart(
     barColors: string[],
     setBarColors: Function,
@@ -9,25 +18,26 @@ export default function BarChart(
     svgContainer: any,
     setShowBackArrow: Function,
     setGraphType: Function,
+    rboData: RBO[],
 ) {
-    const rboData = [
-        {
-            demographic: "Age",
-            Sleep: 0.7,
-            "Physical Health": 0.8,
-            "Emotional Health": 0.85,
-            Productivity: 0.67,
-            "Social Wellness": 0.64,
-        },
-        {
-            demographic: "Gender",
-            Sleep: 0.9,
-            "Physical Health": 0.78,
-            "Emotional Health": 0.82,
-            Productivity: 0.63,
-            "Social Wellness": 0.68,
-        },
-    ];
+    // const rboData = [
+    //     {
+    //         demographic: "Age",
+    //         Sleep: 0.7,
+    //         "Physical Health": 0.8,
+    //         "Emotional Health": 0.85,
+    //         Productivity: 0.67,
+    //         "Social Wellness": 0.64,
+    //     },
+    //     {
+    //         demographic: "Gender",
+    //         Sleep: 0.9,
+    //         "Physical Health": 0.78,
+    //         "Emotional Health": 0.82,
+    //         Productivity: 0.63,
+    //         "Social Wellness": 0.68,
+    //     },
+    // ];
 
     // set the dimensions and margins of the graph
     const margin = { top: 10, right: 30, bottom: 50, left: 70 };
@@ -118,7 +128,10 @@ export default function BarChart(
         .selectAll("rect")
         .data(function (d) {
             return subgroups.map(function (key) {
-                return { key: d.demographic + "_" + key, value: d[key  as keyof typeof d] };
+                return {
+                    key: d.demographic + "_" + key,
+                    value: d[key as keyof typeof d],
+                };
             });
         })
         .enter()
@@ -126,7 +139,6 @@ export default function BarChart(
         .attr("x", function (d: any) {
             let x_val: number = xSubgroup(d.key.split("_")[1]) || 0;
             return x_val;
-
         })
         .attr("y", function (d) {
             return y(Number(d.value));
