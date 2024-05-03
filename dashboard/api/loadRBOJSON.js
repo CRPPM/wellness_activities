@@ -4,25 +4,23 @@ import path from "path";
 
 function get_top_activities(data, demo_cols, goals) {
   // Count cols
-  let prefixes = [];
-  for (g in goals) {
-    switch (g) {
-      case "Sleep":
-        prefixes.push("Sleep");
-        break;
-      case "Physical Health":
-        prefixes.push("Phys");
-        break;
-      case "Emotional Health":
-        prefixes.push("Emo");
-        break;
-      case "Productivity":
-        prefixes.push("Product");
-        break;
-      case "Social Wellness":
-        prefixes.push("Social");
-        break;
-    }
+  let goalPrefix = "";
+  switch (goal) {
+    case "Sleep":
+      goalPrefix = "Sleep";
+      break;
+    case "Physical Health":
+      goalPrefix = "Phys";
+      break;
+    case "Emotional Health":
+      goalPrefix = "Emo";
+      break;
+    case "Productivity":
+      goalPrefix = "Product";
+      break;
+    case "Social Wellness":
+      goalPrefix = "Social";
+      break;
   }
   console.log(Object.keys(data[0]));
   console.log(demo_cols);
@@ -31,7 +29,7 @@ function get_top_activities(data, demo_cols, goals) {
       key.endsWith("TimeW") ||
       key.endsWith("FreqW") ||
       demo_cols.includes(key) ||
-      prefixes.every((prefix) => !key.startsWith(prefix)) ||
+      !key.startsWith(goalPrefix) ||
       (key.endsWith("Goal") && key != "index"),
   );
   console.log("Act Cols");
@@ -76,7 +74,7 @@ function get_top_activities(data, demo_cols, goals) {
   return act_data;
 }
 // process data
-function calc_rbo_wrapper(data, selectedDemo, goals) {
+function calc_rbo_wrapper(data, selectedDemo, goal) {
   let demos_overall = {
     age: "ageG",
     gender: "GenderB",
@@ -106,7 +104,7 @@ function calc_rbo_wrapper(data, selectedDemo, goals) {
     );
   }
   // console.log(data_A);
-  get_top_activities(data_A, Object.keys(demos_overall), goals);
+  get_top_activities(data_A, Object.keys(demos_overall), goal);
 }
 
 export default function handler(req, res) {
@@ -170,6 +168,6 @@ export default function handler(req, res) {
       return include;
     });
   }
-  calc_rbo_wrapper(data, selectedDemo, goals);
+  calc_rbo_wrapper(data, selectedDemo, goals[0]); //temporary, iterate through goals actually
   res.send(data);
 }
