@@ -42,10 +42,6 @@ export default function BarChart(
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     var subgroups = Object.keys(rboData[0]).slice(1);
-    console.log(rboData[0]);
-    console.log(Object.keys(rboData[0]));
-    console.log(Object.keys(rboData[0]).slice(1));
-    console.log(subgroups);
     subgroups = subgroups.filter((sg) => {
         return barColors.includes(sg);
     });
@@ -110,17 +106,11 @@ export default function BarChart(
         .enter()
         .append("g")
         .attr("transform", function (d) {
-            console.log("gets to transform");
-            console.log(d);
             return "translate(" + x(d.demographic) + ",0)";
         })
         .selectAll("rect")
         .data(function (d) {
-            console.log("gets to keys");
-            console.log(d);
-            console.log(subgroups);
             return subgroups.map(function (key) {
-                console.log(key);
                 return {
                     key: d.demographic + "_" + key,
                     value: d[key as keyof typeof d],
@@ -131,21 +121,13 @@ export default function BarChart(
         .append("rect")
         .attr("x", function (d: any) {
             let x_val: number = xSubgroup(d.key.split("_")[1]) || 0;
-            console.log("gets to x?");
-            console.log(d);
             return x_val;
         })
         .attr("y", function (d) {
-            console.log("gets to y?");
-            console.log(d);
             return y(Number(d.value));
         })
         .attr("width", xSubgroup.bandwidth())
         .attr("height", function (d) {
-            console.log("height");
-            console.log(height);
-            console.log(d);
-
             return height - y(Number(d.value));
         })
         .attr("fill", function (d) {

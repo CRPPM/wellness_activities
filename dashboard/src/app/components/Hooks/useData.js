@@ -136,6 +136,7 @@ const useData = (
         mhsgValue,
         phsgValue,
         BFIExtraHiValue,
+        goals,
     ]);
 
     function getRawData() {
