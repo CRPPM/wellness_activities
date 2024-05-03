@@ -2,7 +2,7 @@
 import { readFileSync } from "fs";
 import path from "path";
 
-function get_top_activities(data, demo_cols, goals) {
+function get_top_activities(data, demo_cols, goal) {
   // Count cols
   let goalPrefix = "";
   switch (goal) {
