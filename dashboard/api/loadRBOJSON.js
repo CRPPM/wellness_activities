@@ -45,11 +45,11 @@ function get_top_activities(data, demo_cols, goal) {
   act_data.reduce((previous, current, index, array) => {
     if (index == 1) {
       console.log(current);
-      console.log(current["EmoCook"]);
-      console.log(current["EmoCook"] != null);
-      console.log(current["EmoCook"] !== null);
-      console.log(current["EmoCook"] == null);
-      console.log(current["EmoCook"] === null);
+      console.log(current["EmoDistract"]);
+      console.log(current["EmoDistract"] != null);
+      console.log(current["EmoDistract"] !== null);
+      console.log(current["EmoDistract"] == null);
+      console.log(current["EmoDistract"] === null);
     }
     Object.keys(current).forEach((key) => {
       if (typeof previous !== "undefined") {
@@ -61,6 +61,9 @@ function get_top_activities(data, demo_cols, goal) {
         count_dict[key] += 1;
       }
     });
+    if (index == 1) {
+      console.log(count_dict);
+    }
   });
 
   const sorted_count_dict = Object.fromEntries(
@@ -166,6 +169,6 @@ export default function handler(req, res) {
       return include;
     });
   }
-  calc_rbo_wrapper(data, selectedDemo, goals[0]); //temporary, iterate through goals actually
-  res.send(data);
+  let count_dict = calc_rbo_wrapper(data, selectedDemo, goals[0]); //temporary, iterate through goals actually
+  res.send(count_dict);
 }
