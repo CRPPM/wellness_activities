@@ -41,16 +41,7 @@ function get_top_activities(data, demo_cols, goal) {
   Object.keys(act_data[0]).forEach((key) => {
     count_dict[key] = 0;
   });
-  // console.log(count_dict);
   act_data.reduce((previous, current, index, array) => {
-    // if (index == 1) {
-    //   console.log(current);
-    //   console.log(current["EmoDistract"]);
-    //   console.log(current["EmoDistract"] != null);
-    //   console.log(current["EmoDistract"] !== null);
-    //   console.log(current["EmoDistract"] == null);
-    //   console.log(current["EmoDistract"] === null);
-    // }
     Object.keys(current).forEach((key) => {
       if (typeof previous !== "undefined") {
         if (previous[key] != null) {
@@ -61,19 +52,13 @@ function get_top_activities(data, demo_cols, goal) {
         count_dict[key] += 1;
       }
     });
-    if (count_dict["EmoYoga"] == null) {
-      console.log("Became null!");
-      console.log(count_dict);
-      console.log(current);
-    }
   });
 
   const sorted_count_dict = Object.fromEntries(
     Object.entries(count_dict).sort(([, a], [, b]) => b - a),
   );
 
-  console.log("Act Data");
-  console.log(count_dict);
+  console.log(sorted_count_dict);
   return count_dict;
 }
 // process data
