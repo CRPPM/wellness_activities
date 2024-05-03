@@ -4,8 +4,11 @@ import path from "path";
 
 // process data
 function calc_rbo(data, selectedDemo) {
+  let allDemoValues = new Set(data.map((d) => d[selectedDemo]));
+  allDemoValues = [...allDemoValues];
   console.log("hi");
-  console.log(data);
+  console.log(allDemoValues);
+  // console.log(data);
   console.log(selectedDemo);
 }
 
