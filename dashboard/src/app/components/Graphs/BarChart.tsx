@@ -42,9 +42,10 @@ export default function BarChart(
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     var subgroups = Object.keys(rboData[0]).slice(1);
-    subgroups = subgroups.filter((sg) => {
-        return barColors.includes(sg);
-    });
+    console.log(subgroups);
+    // subgroups = subgroups.filter((sg) => {
+    //     return barColors.includes(sg);
+    // });
 
     var groups = Array.from(new Set(rboData.map((item) => item.demographic)));
 
