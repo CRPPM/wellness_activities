@@ -58,9 +58,57 @@ function get_top_activities(data, demo_cols, goal) {
     Object.entries(count_dict).sort(([, a], [, b]) => b - a),
   );
 
-  console.log(sorted_count_dict);
-  return count_dict;
+  return Object.keys(sorted_count_dict).slice(0, 10);
 }
+
+function calc_rbo(l1, l2, p) {
+  let [sl, ll] = [
+    [l1.length, l1],
+    [l2.length, l2],
+  ].sort((a, b) => a[0] - b[0]);
+  let [s, S] = sl;
+  let [l, L] = ll;
+
+  // Calculate the overlaps at ranks 1 through l
+  // (the longer of the two lists)
+  let ss = new Set();
+  let ls = new Set();
+  let overs = {};
+  for (let i = 0; i < l; i++) {
+    ls.add(L[i]);
+    if (i < s) {
+      ss.add(S[i]);
+    }
+    let X_d = [...ss].filter((item) => ls.has(item)).length;
+    let d = i + 1;
+    overs[d] = X_d;
+  }
+
+  // (1) \sum_{d=1}^l (X_d / d) * p^d
+  let sum1 = 0;
+  for (let i = 0; i < l; i++) {
+    let d = i + 1;
+    sum1 += (overs[d] / d) * Math.pow(p, d);
+  }
+  let X_s = overs[s];
+  let X_l = overs[l];
+
+  // (2) \sum_{d=s+1}^l [(X_s (d - s)) / (sd)] * p^d
+  let sum2 = 0;
+  for (let i = s; i < l; i++) {
+    let d = i + 1;
+    sum2 += ((X_s * (d - s)) / (s * d)) * Math.pow(p, d);
+  }
+
+  // (3) [(X_l - X_s) / l + X_s / s] * p^l
+  let sum3 = ((X_l - X_s) / l + X_s / s) * Math.pow(p, l);
+
+  // Equation 32.
+  let rbo_ext = ((1 - p) / p) * (sum1 + sum2) + sum3;
+
+  return rbo_ext;
+}
+
 // process data
 function calc_rbo_wrapper(data, selectedDemo, goal) {
   let demos_overall = {
@@ -92,7 +140,10 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
     );
   }
 
-  get_top_activities(data_A, Object.values(demos_overall), goal);
+  let A_list = get_top_activities(data_A, Object.values(demos_overall), goal);
+  let B_list = get_top_activities(data_A, Object.values(demos_overall), goal);
+
+  return calc_rbo(A_list, B_list, 0.98);
 }
 
 export default function handler(req, res) {
@@ -156,6 +207,11 @@ export default function handler(req, res) {
       return include;
     });
   }
-  let count_dict = calc_rbo_wrapper(data, selectedDemo, goals[0]); //temporary, iterate through goals actually
-  res.send(count_dict);
+
+  let rbos = {};
+  goals.forEach((g) => {
+    rbos[g] = calc_rbo_wrapper(data, selectedDemo, goals[0]);
+  });
+  console.log(rbos);
+  res.send(rbos);
 }
