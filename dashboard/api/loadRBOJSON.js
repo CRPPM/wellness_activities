@@ -2,10 +2,28 @@
 import { readFileSync } from "fs";
 import path from "path";
 
-function get_top_activities(data, demo_cols) {
+function get_top_activities(data, demo_cols, goals) {
   // Count cols
-  let prefixes = ["Sleep", "Phys", "Emo", "Product", "Social"];
-
+  let prefixes = [];
+  for (g in goals) {
+    switch (g) {
+      case "Sleep":
+        prefixes.push("Sleep");
+        break;
+      case "Physical Health":
+        prefixes.push("Phys");
+        break;
+      case "Emotional Health":
+        prefixes.push("Emo");
+        break;
+      case "Productivity":
+        prefixes.push("Product");
+        break;
+      case "Social Wellness":
+        prefixes.push("Social");
+        break;
+    }
+  }
   console.log(Object.keys(data[0]));
   console.log(demo_cols);
   let act_cols = Object.keys(data[0]).filter(
@@ -14,7 +32,7 @@ function get_top_activities(data, demo_cols) {
       key.endsWith("FreqW") ||
       demo_cols.includes(key) ||
       prefixes.every((prefix) => !key.startsWith(prefix)) ||
-      key.endsWith("Goal"),
+      (key.endsWith("Goal") && key != "index"),
   );
   console.log("Act Cols");
   console.log(act_cols);
@@ -58,7 +76,7 @@ function get_top_activities(data, demo_cols) {
   return act_data;
 }
 // process data
-function calc_rbo_wrapper(data, selectedDemo) {
+function calc_rbo_wrapper(data, selectedDemo, goals) {
   let demos_overall = {
     age: "ageG",
     gender: "GenderB",
@@ -88,7 +106,7 @@ function calc_rbo_wrapper(data, selectedDemo) {
     );
   }
   // console.log(data_A);
-  get_top_activities(data_A, Object.keys(demos_overall));
+  get_top_activities(data_A, Object.keys(demos_overall), goals);
 }
 
 export default function handler(req, res) {
@@ -152,6 +170,6 @@ export default function handler(req, res) {
       return include;
     });
   }
-  calc_rbo_wrapper(data, selectedDemo);
+  calc_rbo_wrapper(data, selectedDemo, goals);
   res.send(data);
 }
