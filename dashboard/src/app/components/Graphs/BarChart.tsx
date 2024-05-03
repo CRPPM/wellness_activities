@@ -20,6 +20,7 @@ export default function BarChart(
     setGraphType: Function,
     rboData: RBO[],
 ) {
+    console.log("ummmmm");
     console.log(rboData);
     // set the dimensions and margins of the graph
     const margin = { top: 10, right: 30, bottom: 50, left: 70 };
@@ -120,9 +121,13 @@ export default function BarChart(
         .append("rect")
         .attr("x", function (d: any) {
             let x_val: number = xSubgroup(d.key.split("_")[1]) || 0;
+            console.log("gets to x?");
+            console.log(d);
             return x_val;
         })
         .attr("y", function (d) {
+            console.log("gets to y?");
+            console.log(d);
             return y(Number(d.value));
         })
         .attr("width", xSubgroup.bandwidth())
