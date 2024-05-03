@@ -115,6 +115,7 @@ export default function BarChart(
             console.log("gets to keys");
             console.log(d);
             return subgroups.map(function (key) {
+                console.log(key);
                 return {
                     key: d.demographic + "_" + key,
                     value: d[key as keyof typeof d],
