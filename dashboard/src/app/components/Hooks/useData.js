@@ -132,7 +132,7 @@ const useData = (
                     ([name, array]) => Array.isArray(array) && array.length > 0,
                 )
                 .map(([name, array]) => name);
-
+            console.log(selectedDemo);
             Promise.all([loadRBOData(goals, selectedDemo)]).then(() => {
                 console.log("loaded JSON");
                 setVisible(false);
