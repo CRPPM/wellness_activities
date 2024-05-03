@@ -52,7 +52,7 @@ function get_top_activities(data, demo_cols) {
   );
 
   console.log("Act Data");
-  console.log(count_dict);
+  console.log(count_dict["EmoCall"]);
   return act_data;
 }
 // process data
