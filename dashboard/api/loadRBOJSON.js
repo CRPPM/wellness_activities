@@ -25,13 +25,8 @@ function get_top_activities(data, demo_cols, goal) {
   console.log(Object.keys(data[0]));
   console.log(demo_cols);
   console.log(goalPrefix);
-  let act_cols = Object.keys(data[0]).filter(
-    (key) =>
-      key.endsWith("TimeW") ||
-      key.endsWith("FreqW") ||
-      demo_cols.includes(key) ||
-      !key.startsWith(goalPrefix),
-    // key.endsWith("Goal"),
+  let act_cols = original_cols.filter(
+    (key) => demo_cols.includes(key) || key.startsWith(goalPrefix),
   );
   console.log("Act Cols");
   console.log(act_cols);
@@ -41,10 +36,8 @@ function get_top_activities(data, demo_cols, goal) {
   });
 
   let count_dict = {};
-  let percent_dict = {};
   Object.keys(act_data[0]).forEach((key) => {
     count_dict[key] = 0;
-    percent_dict[key] = 0;
   });
 
   act_data.reduce((previous, current, index, array) => {
@@ -52,16 +45,10 @@ function get_top_activities(data, demo_cols, goal) {
       if (typeof previous !== "undefined") {
         if (previous[key] != null) {
           count_dict[key] += 1;
-          percent_dict[key] += 1;
         }
       }
       if (current[key] != null) {
         count_dict[key] += 1;
-        percent_dict[key] += 1;
-      }
-      if (index === array.length - 1) {
-        percent_dict[key] /= array.length;
-        percent_dict[key] *= 100;
       }
     });
   });
@@ -104,9 +91,7 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
       (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[1],
     );
   }
-  // console.log(data_A);
-  console.log(Object.values(demos_overall));
-  console.log("hi");
+
   get_top_activities(data_A, Object.values(demos_overall), goal);
 }
 
