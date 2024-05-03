@@ -24,7 +24,12 @@ function get_top_activities(data, demo_cols, goal) {
   }
 
   let act_cols = Object.keys(data[0]).filter(
-    (key) => demo_cols.includes(key) || key.startsWith(goalPrefix),
+    (key) =>
+      key.endsWith("TimeW") ||
+      key.endsWith("FreqW") ||
+      demo_cols.includes(key) ||
+      !key.startsWith(goalPrefix) ||
+      key.endsWith("Goal"),
   );
 
   let act_data = structuredClone(data);
