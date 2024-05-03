@@ -163,7 +163,7 @@ export default function ActivityData({
                 );
             }
         }
-    }, [height, width, barColors, goal]);
+    }, [height, width, barColors, goal, RBOData]);
 
     function helperText() {
         if (goal == "All") {
