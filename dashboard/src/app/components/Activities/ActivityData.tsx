@@ -141,7 +141,7 @@ export default function ActivityData({
                     svgContainer,
                     setShowBackArrow,
                     setGraphType,
-                    RBOdata,
+                    RBOData,
                 );
             } else {
                 SankeyDiagram(
