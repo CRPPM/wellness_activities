@@ -115,6 +115,9 @@ const useData = (
             phsg: phsgValue,
             BFI: BFIExtraHiValue,
         };
+        let selectedDemo = Object.keys(demos).filter(
+            (key) => Array.isArray(demos[key]) && demos[key].length > 0,
+        );
         if ((goal != "") & (goal != "All")) {
             setVisible(true);
             Promise.all([loadMetric(goal)]).then(() => {
@@ -124,12 +127,10 @@ const useData = (
         } else if (
             (goal == "All") &
             (goals.length > 0) &
-            demos.some((arr) => arr.length > 0)
+            (selectedDemo.length > 0)
         ) {
             setVisible(true);
-            let selectedDemo = Object.keys(demos).filter(
-                (key) => Array.isArray(demos[key]) && demos[key].length > 0,
-            );
+
             console.log(selectedDemo);
             Promise.all([loadRBOData(goals, selectedDemo)]).then(() => {
                 console.log("loaded JSON");
