@@ -114,6 +114,7 @@ export default function BarChart(
         .data(function (d) {
             console.log("gets to keys");
             console.log(d);
+            console.log(subgroups);
             return subgroups.map(function (key) {
                 console.log(key);
                 return {
