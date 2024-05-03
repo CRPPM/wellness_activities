@@ -190,7 +190,7 @@ export default function handler(req, res) {
     let rbo = {};
     rbo["demographic"] = d;
     goals.forEach((g) => {
-      let filtered_data = filter_data(data, goal);
+      let filtered_data = filter_data(data, g);
       rbo[g] = calc_rbo_wrapper(filtered_data, d, g);
     });
     rbos.push(rbo);
