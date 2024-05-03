@@ -141,7 +141,7 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
   }
 
   let A_list = get_top_activities(data_A, Object.values(demos_overall), goal);
-  let B_list = get_top_activities(data_A, Object.values(demos_overall), goal);
+  let B_list = get_top_activities(data_B, Object.values(demos_overall), goal);
   console.log("A");
   console.log(A_list);
   console.log("B");
