@@ -58,7 +58,7 @@ function get_top_activities(data, demo_cols, goal) {
   );
 
   console.log("Act Data");
-  console.log(count_dict);
+  // console.log(count_dict);
   return count_dict;
 }
 // process data
