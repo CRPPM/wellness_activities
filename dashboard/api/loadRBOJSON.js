@@ -15,7 +15,7 @@ export default function handler(req, res) {
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
 
-  if ("Sleep" in goals) {
+  if (goals.includes("Sleep")) {
     data = data.filter(function (d) {
       let include = d.SleepGoal == "sleep";
       Object.keys(d).forEach((key) => {
@@ -26,7 +26,7 @@ export default function handler(req, res) {
       return include;
     });
   }
-  if ("Physical Health" in goals) {
+  if (goals.includes("Physical Health")) {
     data = data.filter(function (d) {
       let include = d.PhysGoal == "physical health";
       Object.keys(d).forEach((key) => {
@@ -37,7 +37,7 @@ export default function handler(req, res) {
       return include;
     });
   }
-  if ("Emotional Health" in goals) {
+  if (goals.includes("Emotional Health")) {
     data = data.filter(function (d) {
       let include = d.EmoGoal == "emotional health";
       Object.keys(d).forEach((key) => {
@@ -48,7 +48,7 @@ export default function handler(req, res) {
       return include;
     });
   }
-  if ("Productivity" in goals) {
+  if (goals.includes("Productivity")) {
     data = data.filter(function (d) {
       let include = d.ProductGoal == "productivity";
       Object.keys(d).forEach((key) => {
@@ -59,7 +59,7 @@ export default function handler(req, res) {
       return include;
     });
   }
-  if ("Social Wellness" in goals) {
+  if (goals.includes("Social Wellness")) {
     data = data.filter(function (d) {
       let include = d.SocialGoal == "social wellness";
       Object.keys(d).forEach((key) => {

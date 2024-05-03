@@ -121,7 +121,11 @@ const useData = (
                 console.log("loaded JSON");
                 setVisible(false);
             });
-        } else if ((goal == "All") & demos.some((arr) => arr.length > 0)) {
+        } else if (
+            (goal == "All") &
+            (goals.length > 0) &
+            demos.some((arr) => arr.length > 0)
+        ) {
             setVisible(true);
             let selectedDemo = Object.entries(demos)
                 .filter(
