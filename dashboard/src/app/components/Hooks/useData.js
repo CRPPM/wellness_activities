@@ -62,14 +62,14 @@ const useData = (
         });
     };
 
-    const loadRBOData = async (goals, selectedDemo) => {
+    const loadRBOData = async (goals, selectedDemos) => {
         return new Promise((resolve, reject) => {
             let path = "/api/loadRBOJSON.js";
             fetch(path, {
                 method: "POST",
                 body: JSON.stringify({
                     goals: goals,
-                    selectedDemo: selectedDemo,
+                    selectedDemos: selectedDemos,
                 }),
                 headers: { "Content-Type": "application/json" },
             }).then((res) => {
@@ -103,7 +103,7 @@ const useData = (
             phsg: phsgValue,
             BFI: BFIExtraHiValue,
         };
-        let selectedDemo = Object.keys(demos).filter(
+        let selectedDemos = Object.keys(demos).filter(
             (key) => Array.isArray(demos[key]) && demos[key].length > 0,
         );
         if ((goal != "") & (goal != "All")) {
@@ -115,12 +115,12 @@ const useData = (
         } else if (
             (goal == "All") &
             (goals.length > 0) &
-            (selectedDemo.length > 0)
+            (selectedDemos.length > 0)
         ) {
             setVisible(true);
 
-            console.log(selectedDemo);
-            Promise.all([loadRBOData(goals, selectedDemo)]).then(() => {
+            console.log(selectedDemos);
+            Promise.all([loadRBOData(goals, selectedDemos)]).then(() => {
                 console.log("loaded JSON");
                 setVisible(false);
             });

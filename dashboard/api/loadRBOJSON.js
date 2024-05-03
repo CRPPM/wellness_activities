@@ -151,7 +151,7 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
 }
 
 export default function handler(req, res) {
-  const { goals, selectedDemo } = req.body;
+  const { goals, selectedDemos } = req.body;
   const file = path.join(process.cwd(), "dashboard", "data", "activities.json");
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
@@ -181,11 +181,16 @@ export default function handler(req, res) {
       return d.SocialGoal == "social wellness";
     });
   }
-
-  let rbos = {};
-  goals.forEach((g) => {
-    rbos[g] = calc_rbo_wrapper(data, selectedDemo, g);
+  let rbos = [];
+  selectedDemos.forEach((d) => {
+    let rbo = {};
+    rbo["demographic"] = d;
+    goals.forEach((g) => {
+      rbos[g] = calc_rbo_wrapper(data, d, g);
+    });
+    rbos.push(rbo);
   });
+
   console.log(rbos);
   res.send(rbos);
 }
