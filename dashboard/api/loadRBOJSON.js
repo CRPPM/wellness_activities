@@ -45,6 +45,11 @@ function get_top_activities(data, demo_cols, goal) {
   act_data.reduce((previous, current, index, array) => {
     if (index == 1) {
       console.log(current);
+      console.log(current["EmoCook"]);
+      console.log(current["EmoCook"] != null);
+      console.log(current["EmoCook"] !== null);
+      console.log(current["EmoCook"] == null);
+      console.log(current["EmoCook"] === null);
     }
     Object.keys(current).forEach((key) => {
       if (typeof previous !== "undefined") {
