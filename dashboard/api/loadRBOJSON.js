@@ -45,8 +45,13 @@ function get_top_activities(data, demo_cols) {
       }
     });
   });
+
+  const sorted_count_dict = Object.fromEntries(
+    Object.entries(count_dict).sort(([, a], [, b]) => b - a),
+  );
+
   console.log("Act Data");
-  console.log(act_data);
+  console.log(sorted_count_dict);
   return act_data;
 }
 // process data
@@ -79,7 +84,7 @@ function calc_rbo_wrapper(data, selectedDemo) {
       (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[1],
     );
   }
-  console.log(data_A);
+
   get_top_activities(data_A, Object.keys(demos_overall));
 }
 
