@@ -139,7 +139,8 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
       (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[1],
     );
   }
-
+  console.log(selectedDemo);
+  console.log(uniqueDemoValues);
   let A_list = get_top_activities(data_A, Object.values(demos_overall), goal);
   let B_list = get_top_activities(data_B, Object.values(demos_overall), goal);
   console.log("A");
