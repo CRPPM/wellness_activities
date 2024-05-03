@@ -14,7 +14,8 @@ function get_top_activities(data, demo_cols) {
       prefixes.every((prefix) => !key.startsWith(prefix)) ||
       key.endsWith("Goal"),
   );
-
+  console.log("Act Cols");
+  console.log(act_cols);
   let act_data = structuredClone(data);
   act_data.map(function (obj) {
     return act_cols.forEach((e) => delete obj[e]);
@@ -51,7 +52,7 @@ function get_top_activities(data, demo_cols) {
   );
 
   console.log("Act Data");
-  console.log(sorted_count_dict);
+  console.log(count_dict);
   return act_data;
 }
 // process data
@@ -84,7 +85,7 @@ function calc_rbo_wrapper(data, selectedDemo) {
       (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[1],
     );
   }
-
+  console.log(data_A);
   get_top_activities(data_A, Object.keys(demos_overall));
 }
 
