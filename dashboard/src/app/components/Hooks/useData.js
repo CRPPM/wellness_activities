@@ -104,17 +104,17 @@ const useData = (
     };
 
     useEffect(() => {
-        let demos = [
-            ageValue,
-            genderValue,
-            raceValue,
-            incomeValue,
-            livingValue,
-            sexualValue,
-            mhsgValue,
-            phsgValue,
-            BFIExtraHiValue,
-        ];
+        let demos = {
+            age: ageValue,
+            gender: genderValue,
+            race: raceValue,
+            income: incomeValue,
+            living: livingValue,
+            sexual: sexualValue,
+            mhsg: mhsgValue,
+            phsg: phsgValue,
+            BFI: BFIExtraHiValue,
+        };
         if ((goal != "") & (goal != "All")) {
             setVisible(true);
             Promise.all([loadMetric(goal)]).then(() => {
@@ -127,19 +127,10 @@ const useData = (
             demos.some((arr) => arr.length > 0)
         ) {
             setVisible(true);
-            let selectedDemo = Object.entries(demos)
-                .filter(
-                    ([name, array]) => Array.isArray(array) && array.length > 0,
-                )
-                .map(([name, array]) => name);
-            console.log(Object.entries(demos));
-            console.log(
-                Object.entries(demos).filter(
-                    ([name, array]) => Array.isArray(array) && array.length > 0,
-                ),
+            let selectedDemo = Object.keys(demos).filter(
+                (key) => Array.isArray(demos[key]) && demos[key].length > 0,
             );
             console.log(selectedDemo);
-
             Promise.all([loadRBOData(goals, selectedDemo)]).then(() => {
                 console.log("loaded JSON");
                 setVisible(false);
