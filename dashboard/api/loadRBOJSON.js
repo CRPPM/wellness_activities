@@ -22,14 +22,11 @@ function get_top_activities(data, demo_cols, goal) {
       goalPrefix = "Social";
       break;
   }
-  console.log(Object.keys(data[0]));
-  console.log(demo_cols);
-  console.log(goalPrefix);
+
   let act_cols = Object.keys(data[0]).filter(
     (key) => demo_cols.includes(key) || key.startsWith(goalPrefix),
   );
-  console.log("Act Cols");
-  console.log(act_cols);
+
   let act_data = structuredClone(data);
   act_data.map(function (obj) {
     return act_cols.forEach((e) => delete obj[e]);
@@ -39,8 +36,11 @@ function get_top_activities(data, demo_cols, goal) {
   Object.keys(act_data[0]).forEach((key) => {
     count_dict[key] = 0;
   });
-
+  console.log(count_dict);
   act_data.reduce((previous, current, index, array) => {
+    if (index == 1) {
+      console.log(current);
+    }
     Object.keys(current).forEach((key) => {
       if (typeof previous !== "undefined") {
         if (previous[key] != null) {
@@ -58,8 +58,8 @@ function get_top_activities(data, demo_cols, goal) {
   );
 
   console.log("Act Data");
-  console.log(count_dict["EmoCall"]);
-  return act_data;
+  console.log(count_dict);
+  return count_dict;
 }
 // process data
 function calc_rbo_wrapper(data, selectedDemo, goal) {
