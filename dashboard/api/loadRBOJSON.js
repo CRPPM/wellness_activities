@@ -6,6 +6,8 @@ function get_top_activities(data, demo_cols) {
   // Count cols
   let prefixes = ["Sleep", "Phys", "Emo", "Product", "Social"];
 
+  console.log(Object.keys(data[0]));
+  console.log(demo_cols);
   let act_cols = Object.keys(data[0]).filter(
     (key) =>
       key.endsWith("TimeW") ||
