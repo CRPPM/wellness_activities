@@ -27,8 +27,10 @@ function get_top_activities(data, demo_cols, goal) {
   console.log(goalPrefix);
   let act_cols = Object.keys(data[0]).filter(
     (key) =>
-      key.endsWith("TimeW") || key.endsWith("FreqW") || demo_cols.includes(key),
-    // !key.startsWith(goalPrefix) ||
+      key.endsWith("TimeW") ||
+      key.endsWith("FreqW") ||
+      demo_cols.includes(key) ||
+      !key.startsWith(goalPrefix),
     // key.endsWith("Goal"),
   );
   console.log("Act Cols");
@@ -103,7 +105,7 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
     );
   }
   // console.log(data_A);
-  get_top_activities(data_A, Object.keys(demos_overall), goal);
+  get_top_activities(data_A, Object.values(demos_overall), goal);
 }
 
 export default function handler(req, res) {
