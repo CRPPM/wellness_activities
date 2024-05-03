@@ -25,7 +25,7 @@ function get_top_activities(data, demo_cols, goal) {
   console.log(Object.keys(data[0]));
   console.log(demo_cols);
   console.log(goalPrefix);
-  let act_cols = original_cols.filter(
+  let act_cols = Object.keys(data[0]).filter(
     (key) => demo_cols.includes(key) || key.startsWith(goalPrefix),
   );
   console.log("Act Cols");
