@@ -4,7 +4,7 @@ import path from "path";
 
 function get_top_activities(data, demo_cols) {
   // Count cols
-  prefixes = ["Sleep", "Phys", "Emo", "Product", "Social"];
+  let prefixes = ["Sleep", "Phys", "Emo", "Product", "Social"];
 
   let act_cols = Object.keys(data[0]).filter(
     (key) =>
