@@ -17,6 +17,7 @@ const useData = (
     setDisabledOptions,
     setVisible,
     goals,
+    setRBOData,
 ) => {
     const rawData = useRef([]);
     const loadMetric = async (goal) => {
@@ -75,22 +76,9 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         try {
-                            let prepped_data = prepare_data(
-                                data,
-                                goal,
-                                ageValue,
-                                genderValue,
-                                raceValue,
-                                incomeValue,
-                                livingValue,
-                                sexualValue,
-                                mhsgValue,
-                                phsgValue,
-                                BFIExtraHiValue,
-                                rawData,
-                            );
-                            setActivityData(prepped_data[0]);
-                            setDisabledOptions(prepped_data[1]);
+                            console.log("Calculated RBO!");
+                            console.log(data);
+                            setRBOData(data);
 
                             resolve(true);
                         } catch (err) {

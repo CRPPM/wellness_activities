@@ -53,6 +53,7 @@ export default function ActivityData({
     setGraphType,
 }: Props) {
     const [activityData, setActivityData] = useState([]);
+    const [RBOData, setRBOData] = useState([]);
     const [visible, setVisible] = useState(false);
     const [header, setHeader] = useState(() => {
         if (goal == "All") {
@@ -108,6 +109,7 @@ export default function ActivityData({
         setDisabledOptions,
         setVisible,
         barColors,
+        setRBOData,
     );
 
     useEffect(() => {
@@ -130,16 +132,6 @@ export default function ActivityData({
     useEffect(() => {
         if (goal == "All") {
             console.log(barColors);
-            let RBOdata = [
-                {
-                    demographic: "None",
-                    Sleep: 0,
-                    "Physical Health": 0,
-                    "Emotional Health": 0,
-                    Productivity: 0,
-                    "Social Wellness": 0,
-                },
-            ];
             if (graphType == "BarChart") {
                 BarChart(
                     barColors,

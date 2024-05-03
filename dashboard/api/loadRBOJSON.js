@@ -158,63 +158,33 @@ export default function handler(req, res) {
 
   if (goals.includes("Sleep")) {
     data = data.filter(function (d) {
-      let include = d.SleepGoal == "sleep";
-      // Object.keys(d).forEach((key) => {
-      //   if (d[key] === null) {
-      //     delete d[key];
-      //   }
-      // });
-      return include;
+      return d.SleepGoal == "sleep";
     });
   }
   if (goals.includes("Physical Health")) {
     data = data.filter(function (d) {
-      let include = d.PhysGoal == "physical health";
-      // Object.keys(d).forEach((key) => {
-      //   if (d[key] === null) {
-      //     delete d[key];
-      //   }
-      // });
-      return include;
+      return d.PhysGoal == "physical health";
     });
   }
   if (goals.includes("Emotional Health")) {
     data = data.filter(function (d) {
-      let include = d.EmoGoal == "emotional health";
-      // Object.keys(d).forEach((key) => {
-      //   if (d[key] === null) {
-      //     delete d[key];
-      //   }
-      // });
-      return include;
+      return d.EmoGoal == "emotional health";
     });
   }
   if (goals.includes("Productivity")) {
     data = data.filter(function (d) {
-      let include = d.ProductGoal == "productivity";
-      // Object.keys(d).forEach((key) => {
-      //   if (d[key] === null) {
-      //     delete d[key];
-      //   }
-      // });
-      return include;
+      return d.ProductGoal == "productivity";
     });
   }
   if (goals.includes("Social Wellness")) {
     data = data.filter(function (d) {
-      let include = d.SocialGoal == "social wellness";
-      // Object.keys(d).forEach((key) => {
-      //   if (d[key] === null) {
-      //     delete d[key];
-      //   }
-      // });
-      return include;
+      return d.SocialGoal == "social wellness";
     });
   }
 
   let rbos = {};
   goals.forEach((g) => {
-    rbos[g] = calc_rbo_wrapper(data, selectedDemo, goals[0]);
+    rbos[g] = calc_rbo_wrapper(data, selectedDemo, g);
   });
   console.log(rbos);
   res.send(rbos);
