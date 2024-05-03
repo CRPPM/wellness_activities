@@ -105,6 +105,8 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
     );
   }
   // console.log(data_A);
+  console.log(Object.values(demos_overall));
+  console.log("hi");
   get_top_activities(data_A, Object.values(demos_overall), goal);
 }
 
