@@ -141,10 +141,6 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
   }
   let A_list = get_top_activities(data_A, Object.values(demos_overall), goal);
   let B_list = get_top_activities(data_B, Object.values(demos_overall), goal);
-  console.log("A");
-  console.log(A_list);
-  console.log("B");
-  console.log(B_list);
 
   return calc_rbo(A_list, B_list, 0.98);
 }
@@ -196,6 +192,5 @@ export default function handler(req, res) {
     rbos.push(rbo);
   });
 
-  console.log(rbos);
   res.send(rbos);
 }

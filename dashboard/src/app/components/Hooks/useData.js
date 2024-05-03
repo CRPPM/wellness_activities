@@ -76,8 +76,6 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         try {
-                            console.log("Calculated RBO!");
-                            console.log(data);
                             setRBOData(data);
 
                             resolve(true);
@@ -118,8 +116,6 @@ const useData = (
             (selectedDemos.length > 0)
         ) {
             setVisible(true);
-            console.log(goals);
-            console.log(selectedDemos);
             Promise.all([loadRBOData(goals, selectedDemos)]).then(() => {
                 console.log("loaded JSON");
                 setVisible(false);
@@ -407,8 +403,6 @@ function prepare_data(
             }
         });
     });
-    console.log("Act Data");
-    console.log(act_data);
 
     let duration_dict = return_avg(data, goalPrefix, "TimeW");
     let freq_dict = return_avg(data, goalPrefix, "FreqW");
