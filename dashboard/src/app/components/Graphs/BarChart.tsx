@@ -106,10 +106,14 @@ export default function BarChart(
         .enter()
         .append("g")
         .attr("transform", function (d) {
+            console.log("gets to transform");
+            console.log(d);
             return "translate(" + x(d.demographic) + ",0)";
         })
         .selectAll("rect")
         .data(function (d) {
+            console.log("gets to keys");
+            console.log(d);
             return subgroups.map(function (key) {
                 return {
                     key: d.demographic + "_" + key,
