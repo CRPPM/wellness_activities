@@ -2,8 +2,53 @@
 import { readFileSync } from "fs";
 import path from "path";
 
+function get_top_activities(data, demo_cols) {
+  // Count cols
+  let act_cols = Object.keys(data[0]).filter(
+    (key) =>
+      key.endsWith("TimeW") ||
+      key.endsWith("FreqW") ||
+      demo_cols.includes(key) ||
+      !key.startsWith(goalPrefix) ||
+      key.endsWith("Goal"),
+  );
+
+  let act_data = structuredClone(data);
+  act_data.map(function (obj) {
+    return act_cols.forEach((e) => delete obj[e]);
+  });
+
+  let count_dict = {};
+  let percent_dict = {};
+  Object.keys(act_data[0]).forEach((key) => {
+    count_dict[key] = 0;
+    percent_dict[key] = 0;
+  });
+
+  act_data.reduce((previous, current, index, array) => {
+    Object.keys(current).forEach((key) => {
+      if (typeof previous !== "undefined") {
+        if (previous[key] != null) {
+          count_dict[key] += 1;
+          percent_dict[key] += 1;
+        }
+      }
+      if (current[key] != null) {
+        count_dict[key] += 1;
+        percent_dict[key] += 1;
+      }
+      if (index === array.length - 1) {
+        percent_dict[key] /= array.length;
+        percent_dict[key] *= 100;
+      }
+    });
+  });
+  console.log("Act Data");
+  console.log(act_data);
+  return act_data;
+}
 // process data
-function calc_rbo(data, selectedDemo) {
+function calc_rbo_wrapper(data, selectedDemo) {
   let demos_overall = {
     age: "ageG",
     gender: "GenderB",
@@ -16,15 +61,24 @@ function calc_rbo(data, selectedDemo) {
     bfi: "BFIExtraHi",
   };
 
-  let allDemoValues = data.map((d) => d[demos_overall[selectedDemo[0]]]);
-  let setDemoValues = new Set(allDemoValues);
-  let uniqueDemoValues = [...allDemoValues];
+  let data_A, data_B;
+  if (selectedDemo[0] == "age") {
+    data_A = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 1); // less than 18
+    data_B = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 3); // greater than 50
+  } else {
+    let allDemoValues = data.map((d) => d[demos_overall[selectedDemo[0]]]);
+    let setDemoValues = new Set(allDemoValues);
+    let uniqueDemoValues = [...setDemoValues];
 
-  console.log("hi");
-  console.log(allDemoValues);
-  console.log(setDemoValues);
-  console.log(uniqueDemoValues);
-  console.log(selectedDemo[0]);
+    data_A = data.filter(
+      (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[0],
+    );
+    data_B = data.filter(
+      (obj) => obj[demos_overall[selectedDemo[0]]] == uniqueDemoValues[1],
+    );
+  }
+  console.log(data_A);
+  get_top_activities(data_A, Object.keys(demos_overall));
 }
 
 export default function handler(req, res) {
@@ -88,6 +142,6 @@ export default function handler(req, res) {
       return include;
     });
   }
-  calc_rbo(data, selectedDemo);
+  calc_rbo_wrapper(data, selectedDemo);
   res.send(data);
 }
