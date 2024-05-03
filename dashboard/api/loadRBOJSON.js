@@ -149,43 +149,49 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
   return calc_rbo(A_list, B_list, 0.98);
 }
 
+function filter_data(data, goal) {
+  switch (goal) {
+    case "Sleep":
+      data = data.filter(function (d) {
+        return d.SleepGoal == "sleep";
+      });
+      break;
+    case "Physical Health":
+      data = data.filter(function (d) {
+        return d.PhysGoal == "physical health";
+      });
+      break;
+    case "Emotional Health":
+      data = data.filter(function (d) {
+        return d.EmoGoal == "emotional health";
+      });
+      break;
+    case "Productivity":
+      data = data.filter(function (d) {
+        return d.ProductGoal == "productivity";
+      });
+      break;
+    case "Social Wellness":
+      data = data.filter(function (d) {
+        return d.SocialGoal == "social wellness";
+      });
+      break;
+  }
+  return data;
+}
 export default function handler(req, res) {
   const { goals, selectedDemos } = req.body;
   const file = path.join(process.cwd(), "dashboard", "data", "activities.json");
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
 
-  if (goals.includes("Sleep")) {
-    data = data.filter(function (d) {
-      return d.SleepGoal == "sleep";
-    });
-  }
-  if (goals.includes("Physical Health")) {
-    data = data.filter(function (d) {
-      return d.PhysGoal == "physical health";
-    });
-  }
-  if (goals.includes("Emotional Health")) {
-    data = data.filter(function (d) {
-      return d.EmoGoal == "emotional health";
-    });
-  }
-  if (goals.includes("Productivity")) {
-    data = data.filter(function (d) {
-      return d.ProductGoal == "productivity";
-    });
-  }
-  if (goals.includes("Social Wellness")) {
-    data = data.filter(function (d) {
-      return d.SocialGoal == "social wellness";
-    });
-  }
   let rbos = [];
   selectedDemos.forEach((d) => {
     let rbo = {};
     rbo["demographic"] = d;
     goals.forEach((g) => {
-      rbo[g] = calc_rbo_wrapper(data, d, g);
+      let filtered_data = filter_data(data, goal);
+      rbo[g] = calc_rbo_wrapper(filtered_data, d, g);
     });
     rbos.push(rbo);
   });
