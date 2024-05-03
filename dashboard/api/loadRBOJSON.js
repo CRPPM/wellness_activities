@@ -4,7 +4,19 @@ import path from "path";
 
 // process data
 function calc_rbo(data, selectedDemo) {
-  let allDemoValues = data.map((d) => d[selectedDemo[0]]);
+  let demos_overall = {
+    age: "ageG",
+    gender: "GenderB",
+    race: "raceB",
+    income: "incomeB",
+    living: "locationB",
+    sexual: "sexorB",
+    mhsg: "MHSG",
+    phsg: "PHSG",
+    bfi: "BFIExtraHi",
+  };
+
+  let allDemoValues = data.map((d) => d[demos_overall[selectedDemo[0]]]);
   let setDemoValues = new Set(allDemoValues);
   let uniqueDemoValues = [...allDemoValues];
 
