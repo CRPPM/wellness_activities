@@ -212,6 +212,7 @@ export default function handler(req, res) {
 
   let rbo_wrapper = [];
   selectedDemos.forEach((d) => {
+    let rbo = {};
     rbo["demographic"] = d;
 
     rbo_info = [];

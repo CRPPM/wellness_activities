@@ -50,9 +50,6 @@ export default function SankeyDiagram(
     rboData: RBO_wrapper[],
 ) {
     function wrap(text: any, width: number) {
-        // console.log(typeof text)
-        console.log("Sankey");
-        console.log(rboData);
         text.each(function (this: any) {
             var text = d3.select(this),
                 words = text.text().split(/\s+/).reverse(),
@@ -93,6 +90,9 @@ export default function SankeyDiagram(
             }
         });
     }
+
+    console.log("Sankey");
+    console.log(rboData);
 
     const graph: DAG = {
         nodes: [
