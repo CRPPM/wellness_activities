@@ -215,7 +215,7 @@ export default function handler(req, res) {
     let rbo = {};
     rbo["demographic"] = d;
 
-    rbo_info = [];
+    let rbo_info = [];
 
     goals.forEach((g) => {
       let rbo_goal = {};
