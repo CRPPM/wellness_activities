@@ -143,13 +143,15 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
   };
 
   let data_A, data_B;
+  let uniqueDemoValues = [];
   if (selectedDemo == "age") {
     data_A = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 1); // less than 18
     data_B = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 3); // greater than 50
+    uniqueDemoValues = [1, 3];
   } else {
     let allDemoValues = data.map((d) => d[demos_overall[selectedDemo]]);
     let setDemoValues = new Set(allDemoValues.filter((item) => item !== null));
-    let uniqueDemoValues = [...setDemoValues];
+    uniqueDemoValues = [...setDemoValues];
 
     data_A = data.filter(
       (obj) => obj[demos_overall[selectedDemo]] == uniqueDemoValues[0],
