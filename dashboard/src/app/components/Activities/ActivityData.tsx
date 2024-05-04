@@ -142,6 +142,7 @@ export default function ActivityData({
                     setShowBackArrow,
                     setGraphType,
                     RBOData,
+                    setRBOData,
                 );
             } else {
                 SankeyDiagram(
@@ -151,6 +152,7 @@ export default function ActivityData({
                     width,
                     svgContainer,
                     colors[barColors[0] as keyof typeof colors],
+                    RBOData,
                 );
             }
         }
@@ -351,16 +353,6 @@ export default function ActivityData({
                                 alt={"Back Arrow"}
                                 className="h-fit cursor-pointer"
                                 onClick={() => {
-                                    let RBOdata = [
-                                        {
-                                            demographic: "None",
-                                            Sleep: 0,
-                                            "Physical Health": 0,
-                                            "Emotional Health": 0,
-                                            Productivity: 0,
-                                            "Social Wellness": 0,
-                                        },
-                                    ];
                                     setShowBackArrow(false);
                                     d3.select(svgContainer.current)
                                         .selectAll("*")
@@ -373,7 +365,8 @@ export default function ActivityData({
                                         svgContainer,
                                         setShowBackArrow,
                                         setGraphType,
-                                        RBOdata,
+                                        RBOData,
+                                        setRBOData,
                                     );
                                     setGraphType("BarChart");
                                 }}

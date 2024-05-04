@@ -2,7 +2,7 @@
 import { readFileSync } from "fs";
 import path from "path";
 
-function get_top_activities(data, demo_cols, goal) {
+function get_top_activities(data, demo_cols, goal, demo_value) {
   // Count cols
   let goalPrefix = "";
   switch (goal) {
@@ -38,18 +38,26 @@ function get_top_activities(data, demo_cols, goal) {
   });
 
   let count_dict = {};
+  let percent_dict = {};
   Object.keys(act_data[0]).forEach((key) => {
     count_dict[key] = 0;
+    percent_dict[key] = 0;
   });
   act_data.reduce((previous, current, index, array) => {
     Object.keys(current).forEach((key) => {
       if (typeof previous !== "undefined") {
         if (previous[key] != null) {
           count_dict[key] += 1;
+          percent_dict[key] += 1;
         }
       }
       if (current[key] != null) {
         count_dict[key] += 1;
+        percent_dict[key] += 1;
+      }
+      if (index === array.length - 1) {
+        percent_dict[key] /= array.length;
+        percent_dict[key] *= 100;
       }
     });
   });
@@ -58,7 +66,18 @@ function get_top_activities(data, demo_cols, goal) {
     Object.entries(count_dict).sort(([, a], [, b]) => b - a),
   );
 
-  return Object.keys(sorted_count_dict).slice(0, 10);
+  let rankings = [];
+  Object.keys(sorted_count_dict)
+    .slice(0, 10)
+    .map(function (obj) {
+      rankings.push({
+        activity: obj,
+        Percentage: percent_dict[obj],
+        demo: demo_value,
+      });
+    });
+
+  return rankings;
 }
 
 function calc_rbo(l1, l2, p) {
@@ -110,7 +129,7 @@ function calc_rbo(l1, l2, p) {
 }
 
 // process data
-function calc_rbo_wrapper(data, selectedDemo, goal) {
+function get_top_activities_wrapper(data, selectedDemo, goal) {
   let demos_overall = {
     age: "ageG",
     gender: "GenderB",
@@ -139,10 +158,20 @@ function calc_rbo_wrapper(data, selectedDemo, goal) {
       (obj) => obj[demos_overall[selectedDemo]] == uniqueDemoValues[1],
     );
   }
-  let A_list = get_top_activities(data_A, Object.values(demos_overall), goal);
-  let B_list = get_top_activities(data_B, Object.values(demos_overall), goal);
+  let A_rankings = get_top_activities(
+    data_A,
+    Object.values(demos_overall),
+    goal,
+    uniqueDemoValues[0],
+  );
+  let B_rankings = get_top_activities(
+    data_B,
+    Object.values(demos_overall),
+    goal,
+    uniqueDemoValues[1],
+  );
 
-  return calc_rbo(A_list, B_list, 0.98);
+  return [A_rankings, B_rankings];
 }
 
 function filter_data(data, goal) {
@@ -181,16 +210,36 @@ export default function handler(req, res) {
   const stringified = readFileSync(file, "utf8");
   let data = JSON.parse(stringified)["data"];
 
-  let rbos = [];
+  let rbo_wrapper = [];
   selectedDemos.forEach((d) => {
-    let rbo = {};
     rbo["demographic"] = d;
+
+    rbo_info = [];
+
     goals.forEach((g) => {
+      let rbo_goal = {};
+      rbo_goal["goal"] = g;
       let filtered_data = filter_data(data, g);
-      rbo[g] = calc_rbo_wrapper(filtered_data, d, g);
+
+      let [A_rankings, B_rankings] = get_top_activities_wrapper(
+        filtered_data,
+        d,
+        g,
+      );
+
+      rbo_goal["rbo"] = calc_rbo(
+        A_rankings.map((r) => r.activity),
+        B_rankings.map((r) => r.activity),
+        0.98,
+      );
+
+      rbo_goal["rankings"] = A_rankings.concat(B_rankings);
+      rbo_info.push(rbo_goal);
     });
-    rbos.push(rbo);
+    rbo["rbo_info"] = rbo_info;
+
+    rbos_wrapper.push(rbo);
   });
 
-  res.send(rbos);
+  res.send(rbo_wrapper);
 }

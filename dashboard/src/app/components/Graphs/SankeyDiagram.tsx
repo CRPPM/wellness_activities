@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
-import * as d3Sankey from 'd3-sankey';
+import * as d3Sankey from "d3-sankey";
 import BarChart from "./BarChart";
 
 interface SNodeExtra {
@@ -22,6 +22,24 @@ interface DAG {
     nodes: SNode[];
     links: SLink[];
 }
+
+interface ranking {
+    activity: string;
+    percentage: number;
+    demo: string;
+}
+
+interface RBO_goal {
+    goal: string;
+    rbo: number;
+    rankings: ranking[];
+}
+
+interface RBO_wrapper {
+    demographic: string;
+    rbo_info: RBO_goal[];
+}
+
 export default function SankeyDiagram(
     barColors: string[],
     setBarColors: Function,
@@ -29,10 +47,12 @@ export default function SankeyDiagram(
     width: number,
     svgContainer: any,
     nodeColor: string,
+    rboData: RBO_wrapper[],
 ) {
     function wrap(text: any, width: number) {
         // console.log(typeof text)
-        // console.log(text)
+        console.log("Sankey");
+        console.log(rboData);
         text.each(function (this: any) {
             var text = d3.select(this),
                 words = text.text().split(/\s+/).reverse(),
@@ -58,7 +78,7 @@ export default function SankeyDiagram(
                 line.push(word);
                 tspan.text(line.join(" "));
 
-                var tspan_copy:any = tspan // absolutely not the way to do this, but typescript is stupid
+                var tspan_copy: any = tspan; // absolutely not the way to do this, but typescript is stupid
                 if (tspan_copy.node().getComputedTextLength() > width) {
                     line.pop();
                     tspan.text(line.join(" "));
@@ -70,7 +90,6 @@ export default function SankeyDiagram(
                         .attr("dy", ++lineNumber * lineHeight + dy + "em")
                         .text(word);
                 }
-                
             }
         });
     }
@@ -141,7 +160,8 @@ export default function SankeyDiagram(
     // var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     // Set the sankey diagram properties
-    var sankey = d3Sankey.sankey()
+    var sankey = d3Sankey
+        .sankey()
         // .nodeId((d) => d.name);
         .nodeWidth(20)
         .nodePadding(290)
@@ -156,11 +176,11 @@ export default function SankeyDiagram(
         .selectAll()
         .data(nodes)
         .join("rect")
-        .attr("x", (d:any) => d.x0)
-        .attr("y", (d:any) => d.y0 - 15)
+        .attr("x", (d: any) => d.x0)
+        .attr("y", (d: any) => d.y0 - 15)
         .attr("height", 30)
-        .attr("width", (d:any) => (d.index <= 1 ? d.x1 - d.x0 : 10))
-        .attr("fill", (d:any) => {
+        .attr("width", (d: any) => (d.index <= 1 ? d.x1 - d.x0 : 10))
+        .attr("fill", (d: any) => {
             if (d.index == 0) {
                 return "#B589BD";
             } else if (d.index == 1) {
@@ -169,7 +189,7 @@ export default function SankeyDiagram(
             return nodeColor;
         });
 
-    rect.append("title").text((d:any) => d.name);
+    rect.append("title").text((d: any) => d.name);
 
     const link = svg
         .append("g")
@@ -182,11 +202,13 @@ export default function SankeyDiagram(
 
     link.append("path")
         .attr("d", d3Sankey.sankeyLinkHorizontal())
-        .attr("stroke", (d:any) => (d.source.index == 0 ? "#DECBE2" : "#E58A9E"))
+        .attr("stroke", (d: any) =>
+            d.source.index == 0 ? "#DECBE2" : "#E58A9E",
+        )
         .attr("stroke-width", (d) => d.value * 10);
 
     link.append("title").text(
-        (d:any) => `${d.source.name} → ${d.target.name}\n${d.value} TWh`,
+        (d: any) => `${d.source.name} → ${d.target.name}\n${d.value} TWh`,
     );
 
     // Adds labels on the nodes.
@@ -194,10 +216,10 @@ export default function SankeyDiagram(
         .selectAll()
         .data(nodes)
         .join("text")
-        .attr("x", (d:any) => (d.x0 < width / 2 ? d.x1 - 22 : d.x0 + 12))
-        .attr("y", (d:any) => (d.y1 + d.y0) / 2)
+        .attr("x", (d: any) => (d.x0 < width / 2 ? d.x1 - 22 : d.x0 + 12))
+        .attr("y", (d: any) => (d.y1 + d.y0) / 2)
         .attr("dy", "0.35em")
-        .attr("text-anchor", (d:any) => (d.x0 < width / 2 ? "end" : "start"))
-        .text((d:any) => d.name)
+        .attr("text-anchor", (d: any) => (d.x0 < width / 2 ? "end" : "start"))
+        .text((d: any) => d.name)
         .call(wrap, 200); // wrap the text in <= 30 pixels
 }

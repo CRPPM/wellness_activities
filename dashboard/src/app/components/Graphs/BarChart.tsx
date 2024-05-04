@@ -1,13 +1,20 @@
-import { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-interface RBO {
+interface ranking {
+    activity: string;
+    percentage: number;
+    demo: string;
+}
+
+interface RBO_goal {
+    goal: string;
+    rbo: number;
+    rankings: ranking[];
+}
+
+interface RBO_wrapper {
     demographic: string;
-    Sleep?: number;
-    "Physical Health"?: number;
-    "Emotional Health"?: number;
-    Productivity?: number;
-    "Social Wellness"?: number;
+    rbo_info: RBO_goal[];
 }
 
 export default function BarChart(
@@ -18,18 +25,23 @@ export default function BarChart(
     svgContainer: any,
     setShowBackArrow: Function,
     setGraphType: Function,
-    rboData: RBO[],
+    rboData: RBO_wrapper[],
+    setRBOData: Function,
 ) {
-    console.log("ummmmm");
     console.log(rboData);
-    // set the dimensions and margins of the graph
+    let graph_rbos: any = [];
+    rboData.forEach(function (r) {
+        let rbo: any = { demographic: r.demographic };
+        r.rbo_info.forEach(function (i) {
+            rbo[i.goal] = i.rbo;
+        });
+        graph_rbos.push(rbo);
+    });
+
     const margin = { top: 10, right: 30, bottom: 50, left: 70 };
-    // width = 1000 - margin.left - margin.right,
-    // height = 500 - margin.top - margin.bottom;
 
     const everything = d3.select(svgContainer.current).selectAll("*");
     everything.remove();
-    // append the svg object to the body of the page
 
     const svg = d3
         .select(svgContainer.current)
@@ -41,7 +53,7 @@ export default function BarChart(
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    var subgroups = Object.keys(rboData[0]).slice(1);
+    var subgroups = Object.keys(graph_rbos[0]).slice(1);
     subgroups = subgroups.filter((sg) => {
         return barColors.includes(sg);
     });
@@ -102,14 +114,14 @@ export default function BarChart(
     container
         .append("g")
         .selectAll("g")
-        .data(rboData)
+        .data(graph_rbos)
         .enter()
         .append("g")
-        .attr("transform", function (d) {
+        .attr("transform", function (d: any) {
             return "translate(" + x(d.demographic) + ",0)";
         })
         .selectAll("rect")
-        .data(function (d) {
+        .data(function (d: any) {
             return subgroups.map(function (key) {
                 return {
                     key: d.demographic + "_" + key,
@@ -139,6 +151,13 @@ export default function BarChart(
         .on("click", (e) => {
             // console.log(e.srcElement.__data__.key);
             let goal = e.srcElement.__data__.key.split("_")[1];
+            let tempRBOData = rboData.filter(
+                (obj) =>
+                    obj.demographic === e.srcElement.__data__.key.split("_")[0],
+            );
+            setRBOData(
+                tempRBOData[0].rbo_info.filter((obj) => obj.goal === goal),
+            );
             d3.select(svgContainer.current).selectAll("*").remove();
             setShowBackArrow(true);
             setBarColors([goal]);
