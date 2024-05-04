@@ -241,7 +241,7 @@ export default function handler(req, res) {
     });
     rbo["rbo_info"] = rbo_info;
 
-    rbos_wrapper.push(rbo);
+    rbo_wrapper.push(rbo);
   });
 
   res.send(rbo_wrapper);
