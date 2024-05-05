@@ -124,6 +124,7 @@ export default function SankeyDiagram(
             target: current_node_id,
             value: r.percentage / 10,
         });
+        current_node_id += 1;
     });
     console.log(graph);
     // const graph: DAG = {
