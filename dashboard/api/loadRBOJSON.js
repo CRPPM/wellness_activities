@@ -72,7 +72,7 @@ function get_top_activities(data, demo_cols, goal, demo_value) {
     .map(function (obj) {
       rankings.push({
         activity: obj,
-        Percentage: percent_dict[obj],
+        percentage: percent_dict[obj],
         demo: demo_value,
       });
     });

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import * as d3 from "d3";
 import * as d3Sankey from "d3-sankey";
 import BarChart from "./BarChart";
+import { QUESTIONS } from "../Hooks/activity_dict";
 
 interface SNodeExtra {
     nodeId: number;
@@ -94,50 +95,81 @@ export default function SankeyDiagram(
     console.log("Sankey");
     console.log(rboData);
 
+    let allDemoValues = rboData[0].rbo_info[0].rankings.map((d) => d.demo);
+    let setDemoValues = new Set(allDemoValues.filter((item) => item !== null));
+    let uniqueDemoValues = [...setDemoValues];
+
     const graph: DAG = {
         nodes: [
-            { nodeId: 0, name: "Depressed" },
-            { nodeId: 1, name: "No Mental Health Conditions" },
-            { nodeId: 2, name: "Music" },
-            { nodeId: 3, name: "Praying" },
-            { nodeId: 4, name: "Meditating" },
-            { nodeId: 5, name: "Cooking" },
-            { nodeId: 6, name: "Eating healthy" },
-            { nodeId: 7, name: "Spending time in nature" },
-            { nodeId: 8, name: "Watching TV" },
-            { nodeId: 9, name: "Playing with Pets" },
-            { nodeId: 10, name: "Exercising moderately" },
-            { nodeId: 11, name: "Spending in-person time with friends" },
-            { nodeId: 12, name: "Cleaning" },
-            { nodeId: 13, name: "Changing into comfortable clothing" },
-            { nodeId: 14, name: "Talking to a therapist" },
-            { nodeId: 15, name: "taking some deep breaths" },
-            { nodeId: 16, name: "Texting/Calling loved ones" },
+            { nodeId: 0, name: uniqueDemoValues[0] },
+            { nodeId: 1, name: uniqueDemoValues[1] },
         ],
-        links: [
-            { source: 0, target: 2, value: 2 },
-            { source: 0, target: 3, value: 1 },
-            { source: 0, target: 4, value: 1 },
-            { source: 0, target: 5, value: 1 },
-            { source: 0, target: 6, value: 1 },
-            { source: 0, target: 7, value: 2 },
-            { source: 0, target: 8, value: 3 },
-            { source: 0, target: 9, value: 1 },
-            { source: 0, target: 10, value: 2 },
-            { source: 0, target: 11, value: 2 },
-
-            { source: 1, target: 7, value: 1 },
-            { source: 1, target: 8, value: 2 },
-            { source: 1, target: 9, value: 1 },
-            { source: 1, target: 10, value: 2 },
-            { source: 1, target: 11, value: 3 },
-            { source: 1, target: 12, value: 1 },
-            { source: 1, target: 13, value: 1 },
-            { source: 1, target: 14, value: 1 },
-            { source: 1, target: 15, value: 1 },
-            { source: 1, target: 16, value: 1 },
-        ],
+        links: [],
     };
+    let current_node_id = 2;
+    rboData[0].rbo_info[0].rankings.forEach(function (r) {
+        graph.nodes.push({
+            nodeId: current_node_id,
+            name: QUESTIONS[r.activity as keyof typeof QUESTIONS][0] as string,
+        });
+        let source_node;
+        if (r.demo === uniqueDemoValues[0]) {
+            source_node = 0;
+        } else {
+            source_node = 1;
+        }
+
+        graph.links.push({
+            source: source_node,
+            target: current_node_id,
+            value: r.percentage / 10,
+        });
+    });
+    console.log(graph);
+    // const graph: DAG = {
+    //     nodes: [
+    //         { nodeId: 0, name: "Depressed" },
+    //         { nodeId: 1, name: "No Mental Health Conditions" },
+    //         { nodeId: 2, name: "Music" },
+    //         { nodeId: 3, name: "Praying" },
+    //         { nodeId: 4, name: "Meditating" },
+    //         { nodeId: 5, name: "Cooking" },
+    //         { nodeId: 6, name: "Eating healthy" },
+    //         { nodeId: 7, name: "Spending time in nature" },
+    //         { nodeId: 8, name: "Watching TV" },
+    //         { nodeId: 9, name: "Playing with Pets" },
+    //         { nodeId: 10, name: "Exercising moderately" },
+    //         { nodeId: 11, name: "Spending in-person time with friends" },
+    //         { nodeId: 12, name: "Cleaning" },
+    //         { nodeId: 13, name: "Changing into comfortable clothing" },
+    //         { nodeId: 14, name: "Talking to a therapist" },
+    //         { nodeId: 15, name: "taking some deep breaths" },
+    //         { nodeId: 16, name: "Texting/Calling loved ones" },
+    //     ],
+    //     links: [
+    //         { source: 0, target: 2, value: 2 },
+    //         { source: 0, target: 3, value: 1 },
+    //         { source: 0, target: 4, value: 1 },
+    //         { source: 0, target: 5, value: 1 },
+    //         { source: 0, target: 6, value: 1 },
+    //         { source: 0, target: 7, value: 2 },
+    //         { source: 0, target: 8, value: 3 },
+    //         { source: 0, target: 9, value: 1 },
+    //         { source: 0, target: 10, value: 2 },
+    //         { source: 0, target: 11, value: 2 },
+
+    //         { source: 1, target: 7, value: 1 },
+    //         { source: 1, target: 8, value: 2 },
+    //         { source: 1, target: 9, value: 1 },
+    //         { source: 1, target: 10, value: 2 },
+    //         { source: 1, target: 11, value: 3 },
+    //         { source: 1, target: 12, value: 1 },
+    //         { source: 1, target: 13, value: 1 },
+    //         { source: 1, target: 14, value: 1 },
+    //         { source: 1, target: 15, value: 1 },
+    //         { source: 1, target: 16, value: 1 },
+    //     ],
+    // };
 
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 50, left: 110 };
