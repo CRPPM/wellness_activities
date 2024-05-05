@@ -236,7 +236,8 @@ export default function handler(req, res) {
         0.98,
       );
 
-      rbo_goal["rankings"] = A_rankings.concat(B_rankings);
+      let reversed_A_rankings = [...A_rankings].reverse();
+      rbo_goal["rankings"] = reversed_A_rankings.concat(B_rankings);
       rbo_info.push(rbo_goal);
     });
     rbo["rbo_info"] = rbo_info;
