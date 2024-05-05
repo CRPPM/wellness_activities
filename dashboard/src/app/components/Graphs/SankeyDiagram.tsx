@@ -135,54 +135,10 @@ export default function SankeyDiagram(
         graph.links.push({
             source: source_node,
             target: target_node,
-            value: r.percentage / 10,
+            value: r.percentage / 15,
         });
     });
     console.log(graph);
-    // const graph: DAG = {
-    //     nodes: [
-    //         { nodeId: 0, name: "Depressed" },
-    //         { nodeId: 1, name: "No Mental Health Conditions" },
-    //         { nodeId: 2, name: "Music" },
-    //         { nodeId: 3, name: "Praying" },
-    //         { nodeId: 4, name: "Meditating" },
-    //         { nodeId: 5, name: "Cooking" },
-    //         { nodeId: 6, name: "Eating healthy" },
-    //         { nodeId: 7, name: "Spending time in nature" },
-    //         { nodeId: 8, name: "Watching TV" },
-    //         { nodeId: 9, name: "Playing with Pets" },
-    //         { nodeId: 10, name: "Exercising moderately" },
-    //         { nodeId: 11, name: "Spending in-person time with friends" },
-    //         { nodeId: 12, name: "Cleaning" },
-    //         { nodeId: 13, name: "Changing into comfortable clothing" },
-    //         { nodeId: 14, name: "Talking to a therapist" },
-    //         { nodeId: 15, name: "taking some deep breaths" },
-    //         { nodeId: 16, name: "Texting/Calling loved ones" },
-    //     ],
-    //     links: [
-    //         { source: 0, target: 2, value: 2 },
-    //         { source: 0, target: 3, value: 1 },
-    //         { source: 0, target: 4, value: 1 },
-    //         { source: 0, target: 5, value: 1 },
-    //         { source: 0, target: 6, value: 1 },
-    //         { source: 0, target: 7, value: 2 },
-    //         { source: 0, target: 8, value: 3 },
-    //         { source: 0, target: 9, value: 1 },
-    //         { source: 0, target: 10, value: 2 },
-    //         { source: 0, target: 11, value: 2 },
-
-    //         { source: 1, target: 7, value: 1 },
-    //         { source: 1, target: 8, value: 2 },
-    //         { source: 1, target: 9, value: 1 },
-    //         { source: 1, target: 10, value: 2 },
-    //         { source: 1, target: 11, value: 3 },
-    //         { source: 1, target: 12, value: 1 },
-    //         { source: 1, target: 13, value: 1 },
-    //         { source: 1, target: 14, value: 1 },
-    //         { source: 1, target: 15, value: 1 },
-    //         { source: 1, target: 16, value: 1 },
-    //     ],
-    // };
 
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 50, left: 110 };
