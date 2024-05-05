@@ -122,6 +122,7 @@ export default function SankeyDiagram(
                 name: node_name,
             });
             target_node = current_node_id;
+            current_node_id += 1;
         }
 
         let source_node;
@@ -136,7 +137,6 @@ export default function SankeyDiagram(
             target: target_node,
             value: r.percentage / 10,
         });
-        current_node_id += 1;
     });
     console.log(graph);
     // const graph: DAG = {
