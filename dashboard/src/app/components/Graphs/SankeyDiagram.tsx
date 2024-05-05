@@ -108,10 +108,22 @@ export default function SankeyDiagram(
     };
     let current_node_id = 2;
     rboData[0].rbo_info[0].rankings.forEach(function (r) {
-        graph.nodes.push({
-            nodeId: current_node_id,
-            name: QUESTIONS[r.activity as keyof typeof QUESTIONS][0] as string,
-        });
+        let node_name = QUESTIONS[
+            r.activity as keyof typeof QUESTIONS
+        ][0] as string;
+        let node_exists = graph.nodes.find((n) => n.name === node_name);
+        let target_node;
+
+        if (node_exists) {
+            target_node = node_exists.nodeId;
+        } else {
+            graph.nodes.push({
+                nodeId: current_node_id,
+                name: node_name,
+            });
+            target_node = current_node_id;
+        }
+
         let source_node;
         if (r.demo === uniqueDemoValues[0]) {
             source_node = 0;
@@ -121,7 +133,7 @@ export default function SankeyDiagram(
 
         graph.links.push({
             source: source_node,
-            target: current_node_id,
+            target: target_node,
             value: r.percentage / 10,
         });
         current_node_id += 1;
