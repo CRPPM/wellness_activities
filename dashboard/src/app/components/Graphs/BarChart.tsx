@@ -155,9 +155,14 @@ export default function BarChart(
                 (obj) =>
                     obj.demographic === e.srcElement.__data__.key.split("_")[0],
             );
-            setRBOData(
+            console.log("Updating RBO data");
+            console.log(tempRBOData);
+            console.log(
                 tempRBOData[0].rbo_info.filter((obj) => obj.goal === goal),
             );
+            // setRBOData(
+            //     tempRBOData[0].rbo_info.filter((obj) => obj.goal === goal),
+            // );
             d3.select(svgContainer.current).selectAll("*").remove();
             setShowBackArrow(true);
             setBarColors([goal]);
