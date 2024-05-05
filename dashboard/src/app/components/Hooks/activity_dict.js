@@ -131,10 +131,7 @@ export const QUESTIONS = {
     SocialFriend: ["spending in-person time with loved ones or friends", 0],
     SocialMeal: ["sharing a meal with friend or family", 0],
     SocialAskHelp: ["asking for help from your support network", 1],
-    SocialDistance: [
-        "distancing yourself from someone toxic (unfollowing them on social media, saying no to an invite)",
-        1,
-    ],
+    SocialDistance: ["distancing yourself from someone toxic", 1],
     SocialGreet: ["greeting and introducing yourself to strangers", 1],
     SocialPets: ["taking your dog to the park", 0],
     SocialSleep: ["sticking to consistent sleep and wake times", 1],
@@ -144,7 +141,10 @@ export const QUESTIONS = {
         "routinely visiting a public space (coffee shop, park, farmer's market)",
         0,
     ],
-    SocialWorries: ["telling someone your worries or expressing your feelings", 0],
+    SocialWorries: [
+        "telling someone your worries or expressing your feelings",
+        0,
+    ],
     SocialMeditate: ["meditating or practicing mindfulness", 0],
     SocialEat: ["eating a healthy, balanced meal", 0],
     SocialConfide: ["confiding in a friend and expressing your feelings", 0],
@@ -163,8 +163,5 @@ export const QUESTIONS = {
         0,
     ],
     SocialSchedule: ["planning free time in your schedule", 0],
-    SocialJoinOnline: [
-        "joining an online community (Facebook groups, virtual book club)",
-        0,
-    ],
+    SocialJoinOnline: ["joining an online community", 0],
 };
