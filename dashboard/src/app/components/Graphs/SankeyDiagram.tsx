@@ -179,7 +179,7 @@ export default function SankeyDiagram(
         .join("rect")
         .attr("x", (d: any) => d.x0)
         .attr("y", (d: any) => d.y0 - 15)
-        .attr("height", 30)
+        .attr("height", 40)
         .attr("width", (d: any) => (d.index <= 1 ? d.x1 - d.x0 : 10))
         .attr("fill", (d: any) => {
             if (d.index == 0) {
