@@ -139,7 +139,7 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     sexual: "sexorB",
     mhsg: "MHSG",
     phsg: "PHSG",
-    bfi: "BFIExtraHi",
+    BFI: "BFIExtraHi",
   };
 
   let data_A, data_B;
@@ -162,7 +162,7 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     );
     console.log("debug");
     console.log(uniqueDemoValues);
-    console.log(data[0]);
+    console.log(selectedDemo);
     console.log(data_A.length);
     console.log(data_B.length);
   }
