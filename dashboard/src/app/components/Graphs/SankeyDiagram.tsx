@@ -99,10 +99,22 @@ export default function SankeyDiagram(
     let setDemoValues = new Set(allDemoValues.filter((item) => item !== null));
     let uniqueDemoValues = [...setDemoValues];
 
+    const demo_dict = {
+        age: ["<18", ">50"],
+        gender: ["Man", "Woman"],
+        race: ["Minority", "White"],
+        income: ["> $50,000", "< $49,000"],
+        living: ["Suburban/City", "Rural"],
+        sexual: ["Heterosexual", "LGBTQAI+"],
+        mhsg: ["No Mental Health Condition", "Mental Health Condition"],
+        phsg: ["No Physical Health Condition", "Physical Health Condition"],
+        BFI: ["low", "high"],
+    };
+
     const graph: DAG = {
         nodes: [
-            { nodeId: 0, name: uniqueDemoValues[0] },
-            { nodeId: 1, name: uniqueDemoValues[1] },
+            { nodeId: 0, name: demo_dict[0] },
+            { nodeId: 1, name: demo_dict[1] },
         ],
         links: [],
     };
