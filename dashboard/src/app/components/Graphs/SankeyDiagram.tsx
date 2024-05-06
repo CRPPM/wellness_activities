@@ -200,7 +200,15 @@ export default function SankeyDiagram(
         .data(nodes)
         .join("rect")
         .attr("x", (d: any) => d.x0)
-        .attr("y", (d: any) => d.y0 - 15)
+        .attr("y", (d: any) => {
+            if (d.index == 0) {
+                return height / 2 + 15;
+            } else if (d.index == 1) {
+                return height / 2 - 15;
+            } else {
+                return d.y0 - 15;
+            }
+        })
         .attr("height", 40)
         .attr("width", (d: any) => (d.index <= 1 ? d.x1 - d.x0 : 10))
         .attr("fill", (d: any) => {
