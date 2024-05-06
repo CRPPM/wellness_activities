@@ -113,8 +113,18 @@ export default function SankeyDiagram(
 
     const graph: DAG = {
         nodes: [
-            { nodeId: 0, name: demo_dict[0] },
-            { nodeId: 1, name: demo_dict[1] },
+            {
+                nodeId: 0,
+                name: demo_dict[
+                    rboData[0].demographic as keyof typeof demo_dict
+                ][0],
+            },
+            {
+                nodeId: 1,
+                name: demo_dict[
+                    rboData[0].demographic as keyof typeof demo_dict
+                ][1],
+            },
         ],
         links: [],
     };
