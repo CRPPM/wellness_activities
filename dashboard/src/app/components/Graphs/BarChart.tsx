@@ -76,8 +76,12 @@ export default function BarChart(
         .append("g")
         .attr("transform", "translate(0," + height + ")")
         .style("font-size", "16px")
-        .call(d3.axisBottom(x).tickSize(0))
-        .tickFormat((d) => demo_dict[d]);
+        .call(
+            d3
+                .axisBottom(x)
+                .tickSize(0)
+                .tickFormat((d) => demo_dict[d as keyof typeof demo_dict]),
+        );
 
     xAxisGroup
         .append("text")
