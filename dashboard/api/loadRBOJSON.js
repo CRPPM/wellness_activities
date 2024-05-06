@@ -148,14 +148,6 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     data_A = data.filter((obj) => obj[demos_overall[selectedDemo]] == 1); // less than 18
     data_B = data.filter((obj) => obj[demos_overall[selectedDemo]] == 3); // greater than 50
 
-    let allDemoValues = data.map((d) => d[demos_overall[selectedDemo]]);
-    let setDemoValues = new Set(allDemoValues.filter((item) => item !== null));
-    uniqueDemoValues = [...setDemoValues];
-    console.log("debug");
-    console.log(uniqueDemoValues);
-    console.log(typeof uniqueDemoValues[0]);
-    console.log(data_A.length);
-    console.log(data_B.length);
     uniqueDemoValues = [1, 3];
   } else {
     let allDemoValues = data.map((d) => d[demos_overall[selectedDemo]]);
@@ -168,6 +160,11 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     data_B = data.filter(
       (obj) => obj[demos_overall[selectedDemo]] == uniqueDemoValues[1],
     );
+    console.log("debug");
+    console.log(uniqueDemoValues);
+    console.log(typeof uniqueDemoValues[0]);
+    console.log(data_A.length);
+    console.log(data_B.length);
   }
   let A_rankings = get_top_activities(
     data_A,
