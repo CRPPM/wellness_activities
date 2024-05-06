@@ -238,11 +238,11 @@ export default function SankeyDiagram(
             if (d.index == 0) {
                 console.log("hey!");
                 console.log(d);
-                d.source.y = height / 2 - 80;
+                d.y0 = height / 2 - 80;
                 console.log(d);
                 console.log("");
             } else if (d.index == 1) {
-                d.source.y = height / 2 + 80;
+                d.y0 = height / 2 + 80;
             }
 
             return path(d);
