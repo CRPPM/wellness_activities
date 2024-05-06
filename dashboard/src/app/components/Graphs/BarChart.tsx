@@ -29,6 +29,17 @@ export default function BarChart(
     setRBOData: Function,
 ) {
     console.log(rboData);
+    const demo_dict = {
+        age: "Age Range",
+        gender: "Gender",
+        race: "Race/Ethnicity",
+        income: "Income",
+        living: "Location",
+        sexual: "Sexual Orientation",
+        mhsg: "MHSG",
+        phsg: "PHSG",
+        BFI: "BFIExtraHi",
+    };
     let graph_rbos: any = [];
     rboData.forEach(function (r) {
         let rbo: any = { demographic: r.demographic };
@@ -65,7 +76,7 @@ export default function BarChart(
         .append("g")
         .attr("transform", "translate(0," + height + ")")
         .style("font-size", "16px")
-        .call(d3.axisBottom(x).tickSize(0));
+        .call(d3.axisBottom(demo_dict[x]).tickSize(0));
 
     xAxisGroup
         .append("text")
