@@ -69,20 +69,15 @@ export default function BarChart(
         return barColors.includes(sg);
     });
 
-    var groups = Array.from(
-        new Set(
-            rboData.map(
-                (item) => demo_dict[item.demographic as keyof typeof demo_dict],
-            ),
-        ),
-    );
+    var groups = Array.from(new Set(rboData.map((item) => item.demographic)));
 
     var x = d3.scaleBand().domain(groups).range([0, width]).padding(0.2);
     const xAxisGroup = container
         .append("g")
         .attr("transform", "translate(0," + height + ")")
         .style("font-size", "16px")
-        .call(d3.axisBottom(x).tickSize(0));
+        .call(d3.axisBottom(x).tickSize(0))
+        .tickFormat((d) => demo_dict[d]);
 
     xAxisGroup
         .append("text")
