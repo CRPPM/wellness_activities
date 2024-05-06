@@ -234,11 +234,14 @@ export default function SankeyDiagram(
     let path = d3Sankey.sankeyLinkHorizontal();
     link.append("path")
         .attr("d", (d: any) => {
+            console.log(d);
             if (d.index == 0) {
                 d.source.y = height / 2 - 80;
             } else if (d.index == 1) {
                 d.source.y = height / 2 + 80;
             }
+            console.log(d);
+            console.log("");
             return path(d);
         })
         .attr("stroke", (d: any) =>
