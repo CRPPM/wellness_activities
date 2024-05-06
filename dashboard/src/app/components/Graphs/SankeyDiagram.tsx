@@ -236,12 +236,15 @@ export default function SankeyDiagram(
         .attr("d", (d: any) => {
             console.log(d);
             if (d.index == 0) {
+                console.log("hey!");
+                console.log(d);
                 d.source.y = height / 2 - 80;
+                console.log(d);
+                console.log("");
             } else if (d.index == 1) {
                 d.source.y = height / 2 + 80;
             }
-            console.log(d);
-            console.log("");
+
             return path(d);
         })
         .attr("stroke", (d: any) =>
