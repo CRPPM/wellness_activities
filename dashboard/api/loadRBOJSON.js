@@ -162,7 +162,7 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     );
     console.log("debug");
     console.log(uniqueDemoValues);
-    console.log(typeof uniqueDemoValues[0]);
+    console.log(data[0]);
     console.log(data_A.length);
     console.log(data_B.length);
   }
