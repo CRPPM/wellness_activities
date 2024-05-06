@@ -145,14 +145,15 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
   let data_A, data_B;
   let uniqueDemoValues = [];
   if (selectedDemo == "age") {
-    data_A = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 1); // less than 18
-    data_B = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == 3); // greater than 50
+    data_A = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == "1"); // less than 18
+    data_B = data.filter((obj) => obj[demos_overall[selectedDemo[0]]] == "3"); // greater than 50
 
     let allDemoValues = data.map((d) => d[demos_overall[selectedDemo]]);
     let setDemoValues = new Set(allDemoValues.filter((item) => item !== null));
     uniqueDemoValues = [...setDemoValues];
     console.log("debug");
     console.log(uniqueDemoValues);
+    console.log(typeof uniqueDemoValues[0]);
     console.log(data_A.length);
     console.log(data_B.length);
     uniqueDemoValues = [1, 3];
