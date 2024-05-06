@@ -202,9 +202,9 @@ export default function SankeyDiagram(
         .attr("x", (d: any) => d.x0)
         .attr("y", (d: any) => {
             if (d.index == 0) {
-                return height / 2 + 15;
+                return height / 2 - 80;
             } else if (d.index == 1) {
-                return height / 2 - 15;
+                return height / 2 + 80;
             } else {
                 return d.y0 - 15;
             }
@@ -231,8 +231,16 @@ export default function SankeyDiagram(
         .join("g")
         .style("mix-blend-mode", "multiply");
 
+    let path = d3Sankey.sankeyLinkHorizontal();
     link.append("path")
-        .attr("d", d3Sankey.sankeyLinkHorizontal())
+        .attr("d", (d: any) => {
+            if (d.index == 0) {
+                d.source.y = height / 2 - 80;
+            } else if (d.index == 1) {
+                d.source.y = height / 2 + 80;
+            }
+            return path(d);
+        })
         .attr("stroke", (d: any) =>
             d.source.index == 0 ? "#DECBE2" : "#E58A9E",
         )
