@@ -293,7 +293,7 @@ export default function SideNav({
             if (goal == "All" && graphType == "Sankey Diagram") {
                 if (demoInfo !== undefined) {
                     console.log(demoInfo);
-                    demoInfo.groupValue.splice(groupIndex, 1);
+                    demoInfo.groupValue.splice(0, 1);
                     demoInfo.changeGroupValue([...demoInfo.groupValue]);
                     demoInfo.changeGroupValue([fil.split("=")[1]]);
 
