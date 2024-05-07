@@ -90,7 +90,7 @@ export default function ActivityData({
             const newWidth = svgContainer.current.clientWidth - 100;
             setWidth(newWidth);
 
-            const newHeight = svgContainer.current.clientHeight;
+            const newHeight = svgContainer.current.clientHeight - 50;
             setHeight(newHeight);
         }
     };
