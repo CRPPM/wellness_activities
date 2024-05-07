@@ -100,7 +100,7 @@ export default function SankeyDiagram(
     let uniqueDemoValues = [...setDemoValues];
 
     const demo_dict = {
-        age: ["<18", ">50"],
+        age: ["<18 years old", ">50 years old"],
         gender: ["Man", "Woman"],
         race: ["Minority", "White"],
         income: ["> $50,000", "< $49,000"],

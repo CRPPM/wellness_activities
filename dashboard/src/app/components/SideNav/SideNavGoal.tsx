@@ -113,7 +113,7 @@ export default function SideNavGoal({
                             );
                             clickedGoal = clickedGoal.replace(
                                 /(^\w{1})|(\s+\w{1})/g,
-                                (letter:any) => letter.toUpperCase(),
+                                (letter: any) => letter.toUpperCase(),
                             );
                         }
 
@@ -130,10 +130,15 @@ export default function SideNavGoal({
                                 setBarColors([clickedGoal]);
                             }
                         } else {
-                            setAllGoalColor("");
-                            setBarColors(
-                                barColors.filter((b) => b !== clickedGoal),
-                            );
+                            if (
+                                barColors.length > 1 ||
+                                graphType == "BarChart"
+                            ) {
+                                setAllGoalColor("");
+                                setBarColors(
+                                    barColors.filter((b) => b !== clickedGoal),
+                                );
+                            }
                         }
                     }
                 }}
