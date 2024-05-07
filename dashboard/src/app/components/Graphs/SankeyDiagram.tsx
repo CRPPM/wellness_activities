@@ -201,13 +201,13 @@ export default function SankeyDiagram(
         .join("rect")
         .attr("x", (d: any) => d.x0)
         .attr("y", (d: any) => {
-            // if (d.index == 0) {
-            // return height / 2 - 80;
-            // } else if (d.index == 1) {
-            // return height / 2 + 80;
-            // } else {
-            return d.y0 - 15;
-            // }
+            if (d.index == 0) {
+                return height / 2 - 80;
+            } else if (d.index == 1) {
+                return height / 2 + 80;
+            } else {
+                return d.y0 - 15;
+            }
         })
         .attr("height", 40)
         .attr("width", (d: any) => (d.index <= 1 ? d.x1 - d.x0 : 10))
@@ -234,14 +234,9 @@ export default function SankeyDiagram(
     let path = d3Sankey.sankeyLinkHorizontal();
     link.append("path")
         .attr("d", (d: any) => {
-            console.log(d);
-            if (d.index == 0) {
-                console.log("hey!");
-                console.log(d);
+            if (d.source.index == 0) {
                 d.y0 = height / 2 - 80;
-                console.log(d);
-                console.log("");
-            } else if (d.index == 1) {
+            } else if (d.source.index == 1) {
                 d.y0 = height / 2 + 80;
             }
 
