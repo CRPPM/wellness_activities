@@ -8,6 +8,7 @@ import {
     HoverCard,
     Text,
 } from "@mantine/core";
+import { MathJax } from "better-react-mathjax";
 import ActivityCard from "./ActivityCard";
 import useData from "../Hooks/useData";
 import { QUESTIONS } from "../Hooks/activity_dict";
@@ -168,7 +169,7 @@ export default function ActivityData({
                         (RBO){" "}
                     </div>
                     <div className="inline-table align-middle mb-1f">
-                        <HoverCard width={280} shadow="md">
+                        <HoverCard width={400} shadow="md">
                             <HoverCard.Target>
                                 <Avatar
                                     // color="cyan"
@@ -182,19 +183,56 @@ export default function ActivityData({
                                 </Avatar>
                             </HoverCard.Target>
                             <HoverCard.Dropdown>
-                                <Text size="sm">
-                                    Hover card is revealed when user hovers over
-                                    target element, it will be hidden once mouse
-                                    is not over both target and dropdown
-                                    elements
-                                </Text>
+                                <MathJax className="text-sm">
+                                    {`\\(RBO\\)`} [
+                                    <a
+                                        href="https://doi.org/10.1145/1852102.1852106"
+                                        target="_blank"
+                                    >
+                                        1
+                                    </a>
+                                    ] is a similarity measure that falls between
+                                    0-1, where an {`\\(RBO\\)`} of 0 means that
+                                    the lists are disjoint and an {`\\(RBO\\)`}{" "}
+                                    of 1 means the lists are identical.
+                                </MathJax>
+                                <MathJax
+                                    style={{ marginTop: "1vh" }}
+                                    className="text-sm"
+                                >
+                                    {`\\(RBO\\)`} is given by the following
+                                    formula:
+                                </MathJax>
+                                <MathJax className="flex justify-center text-xs">
+                                    {`\\[RBO(S, T, p) = (1-p)\\sum_{d = 1}^{\\infty}p^\\left(d-1\\right)\\cdot A_d\\]`}
+                                </MathJax>
+                                <MathJax className="text-sm">
+                                    where {`\\(S\\)`} and {`\\(T\\)`} are two
+                                    ranked lists being compared, {`\\(d\\)`}{" "}
+                                    denotes the position in the list,{" "}
+                                    {`\\(p\\)`} is a tunable parameter between
+                                    0-1 that indicates how much the top-ranked
+                                    items contribute to the metric, and{" "}
+                                    {`\\(A_d\\)`} is the agreement at position{" "}
+                                    {`\\(d\\)`} in the list (the ratio between
+                                    the size of the intersection between the two
+                                    lists up to position {`\\(d\\)`}). We set{" "}
+                                    {`\\(p=0.98\\)`}, meaning that all the items
+                                    in the list contributed almost evenly to the
+                                    metric calculation.
+                                </MathJax>
                             </HoverCard.Dropdown>
                         </HoverCard>{" "}
                     </div>
                     <div className="inline">
                         between the top ten activity lists of those belonging to
-                        a demographic and those who do not. Click on individual
-                        bars to see a detailed activity comparison.
+                        a demographic and those who do not.
+                    </div>
+                    <div className="mt-3">
+                        Select goals and demographics to view a bar graph of the
+                        RBO scores. Click on individual bars to view a Sankey
+                        diagram that shows the activities chosen for the
+                        selected goal separated by the selected demographic.
                     </div>
                 </div>
             );

@@ -1,5 +1,6 @@
 "use client";
 import { MantineProvider } from "@mantine/core";
+import { MathJaxContext } from "better-react-mathjax";
 import "@mantine/core/styles.css";
 import { useState } from "react";
 import SideNav from "./components/SideNav/SideNav";
@@ -21,55 +22,72 @@ export default function Home() {
   const [barColors, setBarColors] = useState<string[]>([]);
   const [graphType, setGraphType] = useState<string>("BarChart");
 
+  const config = {
+    loader: { load: ["[tex]/html"] },
+    tex: {
+      packages: { "[+]": ["html"] },
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"],
+      ],
+      displayMath: [
+        ["$$", "$$"],
+        ["\\[", "\\]"],
+      ],
+    },
+  };
+
   return (
     <MantineProvider>
-      <div className={"flex " + bgColor}>
-        <SideNav
-          goal={goal}
-          setGoal={setGoal}
-          setBgColor={setBgColor}
-          ageValue={ageValue}
-          setAgeValue={setAgeValue}
-          genderValue={genderValue}
-          setGenderValue={setGenderValue}
-          raceValue={raceValue}
-          setRaceValue={setRaceValue}
-          incomeValue={incomeValue}
-          setIncomeValue={setIncomeValue}
-          livingValue={livingValue}
-          setLivingValue={setLivingValue}
-          sexualValue={sexualValue}
-          setSexualValue={setSexualValue}
-          mhsgValue={mhsgValue}
-          setMhsgValue={setMhsgValue}
-          phsgValue={phsgValue}
-          setPhsgValue={setPhsgValue}
-          BFIExtraHiValue={BFIExtraHiValue}
-          setBFIExtraHiValue={setBFIExtraHiValue}
-          disabledOptions={disabledOptions}
-          barColors={barColors}
-          setBarColors={setBarColors}
-          graphType={graphType}
-        />
-        <ActivityData
-          goal={goal}
-          setGoal={setGoal}
-          ageValue={ageValue}
-          genderValue={genderValue}
-          raceValue={raceValue}
-          incomeValue={incomeValue}
-          livingValue={livingValue}
-          sexualValue={sexualValue}
-          mhsgValue={mhsgValue}
-          phsgValue={phsgValue}
-          BFIExtraHiValue={BFIExtraHiValue}
-          setDisabledOptions={setDisabledOptions}
-          barColors={barColors}
-          setBarColors={setBarColors}
-          graphType={graphType}
-          setGraphType={setGraphType}
-        />
-      </div>
+      <MathJaxContext config={config}>
+        <div className={"flex " + bgColor}>
+          <SideNav
+            goal={goal}
+            setGoal={setGoal}
+            setBgColor={setBgColor}
+            ageValue={ageValue}
+            setAgeValue={setAgeValue}
+            genderValue={genderValue}
+            setGenderValue={setGenderValue}
+            raceValue={raceValue}
+            setRaceValue={setRaceValue}
+            incomeValue={incomeValue}
+            setIncomeValue={setIncomeValue}
+            livingValue={livingValue}
+            setLivingValue={setLivingValue}
+            sexualValue={sexualValue}
+            setSexualValue={setSexualValue}
+            mhsgValue={mhsgValue}
+            setMhsgValue={setMhsgValue}
+            phsgValue={phsgValue}
+            setPhsgValue={setPhsgValue}
+            BFIExtraHiValue={BFIExtraHiValue}
+            setBFIExtraHiValue={setBFIExtraHiValue}
+            disabledOptions={disabledOptions}
+            barColors={barColors}
+            setBarColors={setBarColors}
+            graphType={graphType}
+          />
+          <ActivityData
+            goal={goal}
+            setGoal={setGoal}
+            ageValue={ageValue}
+            genderValue={genderValue}
+            raceValue={raceValue}
+            incomeValue={incomeValue}
+            livingValue={livingValue}
+            sexualValue={sexualValue}
+            mhsgValue={mhsgValue}
+            phsgValue={phsgValue}
+            BFIExtraHiValue={BFIExtraHiValue}
+            setDisabledOptions={setDisabledOptions}
+            barColors={barColors}
+            setBarColors={setBarColors}
+            graphType={graphType}
+            setGraphType={setGraphType}
+          />
+        </div>
+      </MathJaxContext>
     </MantineProvider>
   );
 }
