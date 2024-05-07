@@ -235,9 +235,9 @@ export default function SankeyDiagram(
     link.append("path")
         .attr("d", (d: any) => {
             if (d.source.index == 0) {
-                d.y0 = height / 2 - 80;
+                d.y0 = height / 2 - 70;
             } else if (d.source.index == 1) {
-                d.y0 = height / 2 + 80;
+                d.y0 = height / 2 + 70;
             }
 
             return path(d);
@@ -257,7 +257,14 @@ export default function SankeyDiagram(
         .data(nodes)
         .join("text")
         .attr("x", (d: any) => (d.x0 < width / 2 ? d.x1 - 22 : d.x0 + 12))
-        .attr("y", (d: any) => (d.y1 + d.y0) / 2)
+        .attr("y", (d: any) => {
+            if (d.index == 0) {
+                return height / 2 - 70;
+            } else if (d.index == 1) {
+                return height / 2 + 70;
+            }
+            return (d.y1 + d.y0) / 2;
+        })
         .attr("dy", "0.35em")
         .attr("text-anchor", (d: any) => (d.x0 < width / 2 ? "end" : "start"))
         .text((d: any) => d.name)
