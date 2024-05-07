@@ -291,10 +291,13 @@ export default function SideNav({
         } else {
             // add filter
             if (goal == "All" && graphType == "Sankey Diagram") {
+                console.log(demoInfo);
+                demoInfo.groupValue.splice(groupIndex, 1);
+                demoInfo.changeGroupValue([...demoInfo.groupValue]);
+                demoInfo.changeGroupValue([fil.split("=")[1]]);
+
+                console.log(demoInfo);
                 setFilters([fil]);
-                if (demoInfo !== undefined) {
-                    demoInfo.changeGroupValue([fil.split("=")[1]]);
-                }
             } else {
                 setFilters([...filters, fil]);
 
