@@ -292,6 +292,9 @@ export default function SideNav({
             // add filter
             if (goal == "All" && graphType == "Sankey Diagram") {
                 setFilters([fil]);
+                if (demoInfo !== undefined) {
+                    demoInfo.changeGroupValue([fil.split("=")[1]]);
+                }
             } else {
                 setFilters([...filters, fil]);
 
