@@ -269,22 +269,38 @@ export default function SideNav({
         let index = filters.indexOf(fil);
         let demoInfo = demoValues.find((x) => x.title === fil.split(":")[0]);
         if (index > -1) {
-            filters.splice(index, 1);
-            setFilters([...filters]);
+            // remove filter
+            if (
+                !(
+                    goal == "All" &&
+                    graphType == "Sankey Diagram" &&
+                    filters.length == 1
+                )
+            ) {
+                filters.splice(index, 1);
+                setFilters([...filters]);
 
-            if (demoInfo !== undefined) {
-                let groupIndex = demoInfo.groupValue.indexOf(fil.split("=")[1]);
-                demoInfo.groupValue.splice(groupIndex, 1);
-                demoInfo.changeGroupValue([...demoInfo.groupValue]);
+                if (demoInfo !== undefined) {
+                    let groupIndex = demoInfo.groupValue.indexOf(
+                        fil.split("=")[1],
+                    );
+                    demoInfo.groupValue.splice(groupIndex, 1);
+                    demoInfo.changeGroupValue([...demoInfo.groupValue]);
+                }
             }
         } else {
-            setFilters([...filters, fil]);
+            // add filter
+            if (goal == "All" && graphType == "Sankey Diagram") {
+                setFilters([fil]);
+            } else {
+                setFilters([...filters, fil]);
 
-            if (demoInfo !== undefined) {
-                demoInfo.changeGroupValue([
-                    ...demoInfo.groupValue,
-                    fil.split("=")[1],
-                ]);
+                if (demoInfo !== undefined) {
+                    demoInfo.changeGroupValue([
+                        ...demoInfo.groupValue,
+                        fil.split("=")[1],
+                    ]);
+                }
             }
         }
     }
