@@ -292,6 +292,7 @@ export default function SideNav({
             // add filter
             if (goal == "All" && graphType == "Sankey Diagram") {
                 if (demoInfo !== undefined) {
+                    console.log("hey");
                     console.log(demoInfo);
                     demoInfo.groupValue.splice(0, 1);
                     demoInfo.changeGroupValue([...demoInfo.groupValue]);
