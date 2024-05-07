@@ -101,6 +101,7 @@ const useData = (
             phsg: phsgValue,
             BFI: BFIExtraHiValue,
         };
+        console.log("Triggers");
         let selectedDemos = Object.keys(demos).filter(
             (key) => Array.isArray(demos[key]) && demos[key].length > 0,
         );

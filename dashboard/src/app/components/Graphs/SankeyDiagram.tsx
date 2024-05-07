@@ -92,9 +92,6 @@ export default function SankeyDiagram(
         });
     }
 
-    console.log("Sankey");
-    console.log(rboData);
-
     let allDemoValues = rboData[0].rbo_info[0].rankings.map((d) => d.demo);
     let setDemoValues = new Set(allDemoValues.filter((item) => item !== null));
     let uniqueDemoValues = [...setDemoValues];
