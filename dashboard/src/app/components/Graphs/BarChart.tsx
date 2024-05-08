@@ -37,8 +37,6 @@ export default function BarChart(
     setPhsgValue: Function,
     setBFIExtraHiValue: Function,
     setFilters: Function,
-    tooltip: number,
-    setTooltip: Function,
 ) {
     const demo_dict = {
         age: "Age Range",
@@ -171,13 +169,6 @@ export default function BarChart(
         })
         .attr("fill", function (d) {
             return colors[d.key.split("_")[1] as keyof typeof colors];
-        })
-        .on("mouseover", function (e, d) {
-            d3.select(this).transition().duration(50).attr("opacity", ".85");
-            setTooltip(Number(d.value));
-        })
-        .on("mouseout", function (e, d) {
-            d3.select(this).transition().duration(50).attr("opacity", "1");
         });
 
     d3.selectAll("rect")

@@ -7,7 +7,6 @@ import {
     Avatar,
     HoverCard,
     Text,
-    Tooltip,
 } from "@mantine/core";
 import { MathJax } from "better-react-mathjax";
 import ActivityCard from "./ActivityCard";
@@ -106,8 +105,6 @@ export default function ActivityData({
         "Social Wellness": "#FFCBB4",
     };
 
-    const [tooltip, setTooltip] = useState(0);
-
     const getSvgContainerSize = () => {
         if (svgContainer.current) {
             const newWidth = svgContainer.current.clientWidth - 100;
@@ -178,8 +175,6 @@ export default function ActivityData({
                     setPhsgValue,
                     setBFIExtraHiValue,
                     setFilters,
-                    tooltip,
-                    setTooltip,
                 );
             } else {
                 SankeyDiagram(
@@ -451,23 +446,17 @@ export default function ActivityData({
                                         setPhsgValue,
                                         setBFIExtraHiValue,
                                         setFilters,
-                                        tooltip,
-                                        setTooltip,
                                     );
                                     setGraphType("BarChart");
                                 }}
                             />
                         )}
                         {goal == "All" && (
-                            <Tooltip.Floating
-                                label={"RBO: " + tooltip.toFixed(2)}
-                            >
-                                <div
-                                    id="activity-stack"
-                                    ref={svgContainer}
-                                    className="h-[70vh] min-w-[65vw]"
-                                ></div>
-                            </Tooltip.Floating>
+                            <div
+                                id="activity-stack"
+                                ref={svgContainer}
+                                className="h-[70vh] min-w-[65vw]"
+                            ></div>
                         )}
                     </div>
 
