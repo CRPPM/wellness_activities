@@ -132,7 +132,8 @@ export default function ActivityData({
 
     useEffect(() => {
         if (goal == "All" && RBOData.length > 0) {
-            console.log(barColors);
+            console.log("Updated RBOData?");
+            console.log(RBOData);
             if (graphType == "BarChart") {
                 BarChart(
                     barColors,

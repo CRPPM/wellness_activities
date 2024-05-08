@@ -176,7 +176,9 @@ export default function BarChart(
             tempRBOData[0].rbo_info = tempRBOData[0].rbo_info.filter(
                 (obj) => obj.goal === goal,
             );
+            console.log(tempRBOData);
             setRBOData([...tempRBOData]);
+            console.log("done");
 
             d3.select(svgContainer.current).selectAll("*").remove();
             setShowBackArrow(true);
