@@ -189,7 +189,7 @@ export default function BarChart(
 
             Object.keys(demo_functions).forEach((d) => {
                 if (d !== demographic) {
-                    demo_functions[d]([]);
+                    demo_functions[d as keyof typeof demo_functions]([]);
                 }
             });
 

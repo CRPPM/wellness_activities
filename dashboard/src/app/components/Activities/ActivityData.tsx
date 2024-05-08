@@ -36,6 +36,7 @@ interface Props {
     phsgValue: number[];
     setPhsgValue: Function;
     BFIExtraHiValue: number[];
+    setBFIExtraHiValue: Function;
     setDisabledOptions: Function;
     barColors: string[];
     setBarColors: Function;
@@ -47,14 +48,23 @@ export default function ActivityData({
     goal,
     setGoal,
     ageValue,
+    setAgeValue,
     genderValue,
+    setGenderValue,
     raceValue,
+    setRaceValue,
     incomeValue,
+    setIncomeValue,
     livingValue,
+    setLivingValue,
     sexualValue,
+    setSexualValue,
     mhsgValue,
+    setMhsgValue,
     phsgValue,
+    setPhsgValue,
     BFIExtraHiValue,
+    setBFIExtraHiValue,
     setDisabledOptions,
     barColors,
     setBarColors,
@@ -153,6 +163,15 @@ export default function ActivityData({
                     setGraphType,
                     RBOData,
                     setRBOData,
+                    setAgeValue,
+                    setGenderValue,
+                    setRaceValue,
+                    setIncomeValue,
+                    setLivingValue,
+                    setSexualValue,
+                    setMhsgValue,
+                    setPhsgValue,
+                    setBFIExtraHiValue,
                 );
             } else {
                 SankeyDiagram(
@@ -414,6 +433,15 @@ export default function ActivityData({
                                         setGraphType,
                                         RBOData,
                                         setRBOData,
+                                        setAgeValue,
+                                        setGenderValue,
+                                        setRaceValue,
+                                        setIncomeValue,
+                                        setLivingValue,
+                                        setSexualValue,
+                                        setMhsgValue,
+                                        setPhsgValue,
+                                        setBFIExtraHiValue,
                                     );
                                     setGraphType("BarChart");
                                 }}
