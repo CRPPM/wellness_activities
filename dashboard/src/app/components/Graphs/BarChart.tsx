@@ -27,6 +27,15 @@ export default function BarChart(
     setGraphType: Function,
     rboData: RBO_wrapper[],
     setRBOData: Function,
+    setAgeValue: Function,
+    setGenderValue: Function,
+    setRaceValue: Function,
+    setIncomeValue: Function,
+    setLivingValue: Function,
+    setSexualValue: Function,
+    setMhsgValue: Function,
+    setPhsgValue: Function,
+    setBFIExtraHiValue: Function,
 ) {
     const demo_dict = {
         age: "Age Range",
@@ -165,6 +174,24 @@ export default function BarChart(
         .style("cursor", "pointer")
         .on("click", (e) => {
             let goal = e.srcElement.__data__.key.split("_")[1];
+            let demographic = e.srcElement.__data__.key.split("_")[0];
+            let demo_functions = {
+                age: setAgeValue,
+                gender: setGenderValue,
+                race: setRaceValue,
+                income: setIncomeValue,
+                living: setLivingValue,
+                sexual: setSexualValue,
+                mhsg: setMhsgValue,
+                phsg: setPhsgValue,
+                BFI: setBFIExtraHiValue,
+            };
+
+            Object.keys(demo_functions).forEach((d) => {
+                if (d !== demographic) {
+                    demo_functions[d]([]);
+                }
+            });
 
             d3.select(svgContainer.current).selectAll("*").remove();
             setShowBackArrow(true);

@@ -101,11 +101,11 @@ const useData = (
             phsg: phsgValue,
             BFI: BFIExtraHiValue,
         };
-        console.log("hey");
-        console.log(genderValue);
+
         let selectedDemos = Object.keys(demos).filter(
             (key) => Array.isArray(demos[key]) && demos[key].length > 0,
         );
+
         if ((goal != "") & (goal != "All")) {
             setVisible(true);
             Promise.all([loadMetric(goal)]).then(() => {
