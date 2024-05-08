@@ -28,7 +28,6 @@ export default function BarChart(
     rboData: RBO_wrapper[],
     setRBOData: Function,
 ) {
-    console.log(rboData);
     const demo_dict = {
         age: "Age Range",
         gender: "Gender",
@@ -165,20 +164,7 @@ export default function BarChart(
     d3.selectAll("rect")
         .style("cursor", "pointer")
         .on("click", (e) => {
-            // console.log(e.srcElement.__data__.key);
             let goal = e.srcElement.__data__.key.split("_")[1];
-            let tempRBOData = rboData.filter(
-                (obj) =>
-                    obj.demographic === e.srcElement.__data__.key.split("_")[0],
-            );
-            console.log("Updating RBO data");
-            console.log(tempRBOData);
-            tempRBOData[0].rbo_info = tempRBOData[0].rbo_info.filter(
-                (obj) => obj.goal === goal,
-            );
-            console.log(tempRBOData);
-            setRBOData([...tempRBOData]);
-            console.log("done");
 
             d3.select(svgContainer.current).selectAll("*").remove();
             setShowBackArrow(true);

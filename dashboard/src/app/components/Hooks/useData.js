@@ -254,6 +254,7 @@ function filter_by_demographics(
         phsgValue,
         BFIExtraHiValue,
     ];
+    console.log(genderValue);
     demos.forEach((demo, i) => {
         data = data.filter(function (d) {
             if (demo.length == 0) return true;
