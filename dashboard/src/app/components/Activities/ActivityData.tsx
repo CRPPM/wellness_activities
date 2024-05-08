@@ -459,13 +459,15 @@ export default function ActivityData({
                             />
                         )}
                         {goal == "All" && (
-                            <Tooltip label={"RBO:" + tooltip}>
+                            <Tooltip.Floating
+                                label={"RBO: " + tooltip.toFixed(2)}
+                            >
                                 <div
                                     id="activity-stack"
                                     ref={svgContainer}
                                     className="h-[70vh] min-w-[65vw]"
                                 ></div>
-                            </Tooltip>
+                            </Tooltip.Floating>
                         )}
                     </div>
 
