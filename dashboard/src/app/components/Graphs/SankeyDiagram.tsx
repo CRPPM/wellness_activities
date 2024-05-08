@@ -13,7 +13,6 @@ interface SLinkExtra {
     source: number;
     target: number;
     value: number;
-    // uom: string;
 }
 
 type SNode = d3Sankey.SankeyNode<SNodeExtra, SLinkExtra>;
@@ -245,7 +244,8 @@ export default function SankeyDiagram(
         .attr("stroke-width", (d) => d.value * 10);
 
     link.append("title").text(
-        (d: any) => `${d.source.name} → ${d.target.name}\n${d.value} TWh`,
+        (d: any) =>
+            `${d.source.name} → ${d.target.name}\nChosen by ${d.value * 15} % of individuals`,
     );
 
     // Adds labels on the nodes.

@@ -16,6 +16,12 @@ interface RBO_wrapper {
     demographic: string;
     rbo_info: RBO_goal[];
 }
+interface tooltip {
+    display: boolean;
+    x: number;
+    y: number;
+    value: number;
+}
 
 export default function BarChart(
     barColors: string[],
@@ -37,6 +43,8 @@ export default function BarChart(
     setPhsgValue: Function,
     setBFIExtraHiValue: Function,
     setFilters: Function,
+    tooltip: tooltip,
+    setTooltip: Function,
 ) {
     const demo_dict = {
         age: "Age Range",
@@ -199,5 +207,19 @@ export default function BarChart(
             setBarColors([goal]);
             setFilters([demo_dict[demographic as keyof typeof demo_dict]]);
             setGraphType("Sankey Diagram");
+        })
+        .on("mouseover", function (e) {
+            console.log(e);
+            const { clientX, clientY } = e;
+            setTooltip({
+                display: true,
+                x: clientX,
+                y: clientY,
+                value: 5,
+            });
+        })
+        .on("mouseout", function () {
+            // Hide tooltip on mouseout
+            setTooltip({ ...tooltip, display: false });
         });
 }

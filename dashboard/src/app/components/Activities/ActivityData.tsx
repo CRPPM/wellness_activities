@@ -105,6 +105,13 @@ export default function ActivityData({
         "Social Wellness": "#FFCBB4",
     };
 
+    const [tooltip, setTooltip] = useState({
+        display: false,
+        x: 0,
+        y: 0,
+        value: 0,
+    });
+
     const getSvgContainerSize = () => {
         if (svgContainer.current) {
             const newWidth = svgContainer.current.clientWidth - 100;
@@ -175,6 +182,8 @@ export default function ActivityData({
                     setPhsgValue,
                     setBFIExtraHiValue,
                     setFilters,
+                    tooltip,
+                    setTooltip,
                 );
             } else {
                 SankeyDiagram(
@@ -446,17 +455,32 @@ export default function ActivityData({
                                         setPhsgValue,
                                         setBFIExtraHiValue,
                                         setFilters,
+                                        tooltip,
+                                        setTooltip,
                                     );
                                     setGraphType("BarChart");
                                 }}
                             />
                         )}
                         {goal == "All" && (
-                            <div
-                                id="activity-stack"
-                                ref={svgContainer}
-                                className="h-[70vh] min-w-[65vw]"
-                            ></div>
+                            <div>
+                                <div
+                                    id="activity-stack"
+                                    ref={svgContainer}
+                                    className="h-[70vh] min-w-[65vw]"
+                                ></div>
+                                {tooltip.display && (
+                                    <div
+                                        className="tooltip"
+                                        style={{
+                                            left: tooltip.x + 10,
+                                            top: tooltip.y - 20,
+                                        }}
+                                    >
+                                        RBO: {tooltip.value}
+                                    </div>
+                                )}
+                            </div>
                         )}
                     </div>
 
