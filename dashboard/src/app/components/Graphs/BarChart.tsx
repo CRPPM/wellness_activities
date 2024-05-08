@@ -16,12 +16,6 @@ interface RBO_wrapper {
     demographic: string;
     rbo_info: RBO_goal[];
 }
-interface tooltip {
-    display: boolean;
-    x: number;
-    y: number;
-    value: number;
-}
 
 export default function BarChart(
     barColors: string[],
@@ -43,7 +37,7 @@ export default function BarChart(
     setPhsgValue: Function,
     setBFIExtraHiValue: Function,
     setFilters: Function,
-    tooltip: tooltip,
+    tooltip: number,
     setTooltip: Function,
 ) {
     const demo_dict = {
@@ -180,16 +174,10 @@ export default function BarChart(
         })
         .on("mouseover", function (e, d) {
             d3.select(this).transition().duration(50).attr("opacity", ".85");
-            setTooltip({
-                display: true,
-                x: e.pageX,
-                y: e.pageY,
-                value: y(Number(d.value)),
-            });
+            setTooltip(Number(d.value));
         })
         .on("mouseout", function (e, d) {
             d3.select(this).transition().duration(50).attr("opacity", "1");
-            setTooltip({ ...tooltip, display: false });
         });
 
     d3.selectAll("rect")

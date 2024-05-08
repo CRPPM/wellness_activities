@@ -7,6 +7,7 @@ import {
     Avatar,
     HoverCard,
     Text,
+    Tooltip,
 } from "@mantine/core";
 import { MathJax } from "better-react-mathjax";
 import ActivityCard from "./ActivityCard";
@@ -105,12 +106,7 @@ export default function ActivityData({
         "Social Wellness": "#FFCBB4",
     };
 
-    const [tooltip, setTooltip] = useState({
-        display: false,
-        x: 0,
-        y: 0,
-        value: 0,
-    });
+    const [tooltip, setTooltip] = useState(0);
 
     const getSvgContainerSize = () => {
         if (svgContainer.current) {
@@ -463,24 +459,13 @@ export default function ActivityData({
                             />
                         )}
                         {goal == "All" && (
-                            <div>
+                            <Tooltip label={"RBO:" + tooltip}>
                                 <div
                                     id="activity-stack"
                                     ref={svgContainer}
                                     className="h-[70vh] min-w-[65vw]"
                                 ></div>
-                                {tooltip.display && (
-                                    <div
-                                        className="tooltip"
-                                        style={{
-                                            left: tooltip.x + 10 + "px",
-                                            top: tooltip.y - 20 + "px",
-                                        }}
-                                    >
-                                        RBO: {tooltip.value}
-                                    </div>
-                                )}
-                            </div>
+                            </Tooltip>
                         )}
                     </div>
 

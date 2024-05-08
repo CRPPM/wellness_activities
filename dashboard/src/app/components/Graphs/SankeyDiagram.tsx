@@ -245,7 +245,7 @@ export default function SankeyDiagram(
 
     link.append("title").text(
         (d: any) =>
-            `${d.source.name} → ${d.target.name}\nChosen by ${(d.value * 15).toFixed(2)} % of individuals`,
+            `${d.source.name} → ${d.target.name}\nChosen by ${(d.value * 15).toFixed(2)}% of individuals`,
     );
 
     // Adds labels on the nodes.
