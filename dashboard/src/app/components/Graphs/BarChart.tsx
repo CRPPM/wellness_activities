@@ -177,6 +177,19 @@ export default function BarChart(
         })
         .attr("fill", function (d) {
             return colors[d.key.split("_")[1] as keyof typeof colors];
+        })
+        .on("mouseover", function (e, d) {
+            d3.select(this).transition().duration(50).attr("opacity", ".85");
+            setTooltip({
+                display: true,
+                x: e.pageX,
+                y: e.pageY,
+                value: y(Number(d.value)),
+            });
+        })
+        .on("mouseout", function (e, d) {
+            d3.select(this).transition().duration(50).attr("opacity", "1");
+            setTooltip({ ...tooltip, display: false });
         });
 
     d3.selectAll("rect")
@@ -207,19 +220,5 @@ export default function BarChart(
             setBarColors([goal]);
             setFilters([demo_dict[demographic as keyof typeof demo_dict]]);
             setGraphType("Sankey Diagram");
-        })
-        .on("mouseover", function (e) {
-            console.log(e);
-            const { clientX, clientY } = e;
-            setTooltip({
-                display: true,
-                x: clientX,
-                y: clientY,
-                value: 5,
-            });
-        })
-        .on("mouseout", function () {
-            // Hide tooltip on mouseout
-            setTooltip({ ...tooltip, display: false });
         });
 }

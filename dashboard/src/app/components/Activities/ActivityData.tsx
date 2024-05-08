@@ -473,8 +473,8 @@ export default function ActivityData({
                                     <div
                                         className="tooltip"
                                         style={{
-                                            left: tooltip.x + 10,
-                                            top: tooltip.y - 20,
+                                            left: tooltip.x + 10 + "px",
+                                            top: tooltip.y - 20 + "px",
                                         }}
                                     >
                                         RBO: {tooltip.value}
