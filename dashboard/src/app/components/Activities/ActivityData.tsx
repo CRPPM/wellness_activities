@@ -42,6 +42,7 @@ interface Props {
     setBarColors: Function;
     graphType: string;
     setGraphType: Function;
+    setFilters: Function;
 }
 
 export default function ActivityData({
@@ -70,6 +71,7 @@ export default function ActivityData({
     setBarColors,
     graphType,
     setGraphType,
+    setFilters,
 }: Props) {
     const [activityData, setActivityData] = useState([]);
     const [RBOData, setRBOData] = useState([]);
@@ -172,6 +174,7 @@ export default function ActivityData({
                     setMhsgValue,
                     setPhsgValue,
                     setBFIExtraHiValue,
+                    setFilters,
                 );
             } else {
                 SankeyDiagram(
@@ -442,6 +445,7 @@ export default function ActivityData({
                                         setMhsgValue,
                                         setPhsgValue,
                                         setBFIExtraHiValue,
+                                        setFilters,
                                     );
                                     setGraphType("BarChart");
                                 }}

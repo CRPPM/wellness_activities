@@ -21,6 +21,7 @@ export default function Home() {
   const [disabledOptions, setDisabledOptions] = useState<string[]>([]);
   const [barColors, setBarColors] = useState<string[]>([]);
   const [graphType, setGraphType] = useState<string>("BarChart");
+  const [filters, setFilters] = useState<string[]>([]);
 
   const config = {
     loader: { load: ["[tex]/html"] },
@@ -67,6 +68,8 @@ export default function Home() {
             barColors={barColors}
             setBarColors={setBarColors}
             graphType={graphType}
+            filters={filters}
+            setFilters={setFilters}
           />
           <ActivityData
             goal={goal}
@@ -94,6 +97,7 @@ export default function Home() {
             setBarColors={setBarColors}
             graphType={graphType}
             setGraphType={setGraphType}
+            setFilters={setFilters}
           />
         </div>
       </MathJaxContext>

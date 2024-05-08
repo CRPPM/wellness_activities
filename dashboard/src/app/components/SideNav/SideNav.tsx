@@ -37,6 +37,8 @@ interface Props {
     barColors: string[];
     setBarColors: Function;
     graphType: string;
+    filters: string[];
+    setFilters: Function;
 }
 
 export default function SideNav({
@@ -65,6 +67,8 @@ export default function SideNav({
     barColors,
     setBarColors,
     graphType,
+    filters,
+    setFilters,
 }: Props) {
     const [centerText, setCenterText] = useState("mt-3 ml-5");
     const [allcenterText, setAllCenterText] = useState("mt-3 ml-5");
@@ -83,7 +87,7 @@ export default function SideNav({
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
     });
-    const [filters, setFilters] = useState<string[]>([]);
+
     const [selectAnotherGoal, setSelectAnotherGoal] = useState<string>(
         "Select another goal",
     );

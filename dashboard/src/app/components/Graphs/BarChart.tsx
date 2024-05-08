@@ -36,6 +36,7 @@ export default function BarChart(
     setMhsgValue: Function,
     setPhsgValue: Function,
     setBFIExtraHiValue: Function,
+    setFilters: Function,
 ) {
     const demo_dict = {
         age: "Age Range",
@@ -196,6 +197,7 @@ export default function BarChart(
             d3.select(svgContainer.current).selectAll("*").remove();
             setShowBackArrow(true);
             setBarColors([goal]);
+            setFilters([demo_dict[demographic as keyof typeof demo_dict]]);
             setGraphType("Sankey Diagram");
         });
 }
