@@ -101,6 +101,8 @@ const useData = (
             phsg: phsgValue,
             BFI: BFIExtraHiValue,
         };
+        console.log("hey");
+        console.log(genderValue);
         let selectedDemos = Object.keys(demos).filter(
             (key) => Array.isArray(demos[key]) && demos[key].length > 0,
         );
@@ -254,7 +256,7 @@ function filter_by_demographics(
         phsgValue,
         BFIExtraHiValue,
     ];
-    console.log(genderValue);
+
     demos.forEach((demo, i) => {
         data = data.filter(function (d) {
             if (demo.length == 0) return true;
