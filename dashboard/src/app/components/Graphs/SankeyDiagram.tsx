@@ -60,7 +60,7 @@ export default function SankeyDiagram(
                 x = text.attr("x"),
                 y = text.attr("y");
 
-            var dy = 0.35; //parseFloat(text.attr("dy")),
+            var dy = 0.35;
             if (text.text().length > 26) {
                 dy = -0.28;
             }
@@ -156,16 +156,11 @@ export default function SankeyDiagram(
             value: r.percentage / 15,
         });
     });
-    console.log(graph);
 
-    // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 50, left: 110 };
-    // width = 1000 - margin.left - margin.right,
-    // height = 500 - margin.top - margin.bottom;
 
     const everything = d3.select(svgContainer.current).selectAll("*");
     everything.remove();
-    // append the svg object to the body of the page
 
     var svg = d3
         .select(svgContainer.current)
@@ -175,13 +170,9 @@ export default function SankeyDiagram(
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Color scale used
-    // var color = d3.scaleOrdinal(d3.schemeCategory20);
-
     // Set the sankey diagram properties
     var sankey = d3Sankey
         .sankey()
-        // .nodeId((d) => d.name);
         .nodeWidth(20)
         .nodePadding(290)
         .size([width - 250, height]);

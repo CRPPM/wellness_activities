@@ -152,8 +152,6 @@ export default function ActivityData({
 
     useEffect(() => {
         if (goal == "All" && RBOData.length > 0) {
-            console.log("Updated RBOData?");
-            console.log(RBOData);
             if (graphType == "BarChart") {
                 BarChart(
                     barColors,
@@ -460,34 +458,35 @@ export default function ActivityData({
                         )}
                     </div>
 
-                    {activityData.slice(0, 10).map(function (
-                        ele: {
-                            index: [string, number];
-                            Count: number;
-                            Percentage: number;
-                            Duration: number;
-                            Frequency: number;
-                        },
-                        i: number,
-                    ) {
-                        if (ele.Percentage > 0) {
-                            return (
-                                <ActivityCard
-                                    order={i + 1}
-                                    activity={ele.index[0]}
-                                    include_time={ele.index[1]}
-                                    percentage={ele.Percentage.toFixed(0)}
-                                    avgDuration={ele.Duration.toFixed(0)}
-                                    avgFrequency={ele.Frequency.toFixed(0)}
-                                    altImage={
-                                        "writing a schedule in a notebook"
-                                    }
-                                    goal={goal}
-                                    key={i}
-                                />
-                            );
-                        }
-                    })}
+                    {goal != "All" &&
+                        activityData.slice(0, 10).map(function (
+                            ele: {
+                                index: [string, number];
+                                Count: number;
+                                Percentage: number;
+                                Duration: number;
+                                Frequency: number;
+                            },
+                            i: number,
+                        ) {
+                            if (ele.Percentage > 0) {
+                                return (
+                                    <ActivityCard
+                                        order={i + 1}
+                                        activity={ele.index[0]}
+                                        include_time={ele.index[1]}
+                                        percentage={ele.Percentage.toFixed(0)}
+                                        avgDuration={ele.Duration.toFixed(0)}
+                                        avgFrequency={ele.Frequency.toFixed(0)}
+                                        altImage={
+                                            "writing a schedule in a notebook"
+                                        }
+                                        goal={goal}
+                                        key={i}
+                                    />
+                                );
+                            }
+                        })}
                 </Stack>
             )}
         </div>
