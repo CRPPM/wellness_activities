@@ -15,15 +15,18 @@ sns.set_palette(sns.color_palette(colors))
 df = pd.read_spss("../Raw Data/WellnessActivities 3.12.24_JEH_4.sav")
 df = df[df['StartDate'].notna()]
 
-df['ageG'] = df['age'].apply(lambda x: 1 if x >= 18 and x <= 29 else (2 if x >= 30 and x <= 49 else 3))
-df['Per'] = pd.Categorical(df['SRP'].apply(lambda x: 'high' if x >= 10.3 else 'low'))
+df['ageG'] = df['age'].apply(
+    lambda x: 1 if x >= 18 and x <= 29 else (2 if x >= 30 and x <= 49 else 3))
+df['Per'] = pd.Categorical(df['SRP'].apply(
+    lambda x: 'high' if x >= 10.3 else 'low'))
 
-goals = {'Sleep': 'Sleep', 'Phys': 'Physical Health', 'Emo': 'Emotional Health', 'Product':'Productivity', 'Social': 'Social Wellness'}
+goals = {'Sleep': 'Sleep', 'Phys': 'Physical Health', 'Emo': 'Emotional Health',
+         'Product': 'Productivity', 'Social': 'Social Wellness'}
 demos_overall = {'GenderB': 'Gender', 'sexorB': 'Sexual Orientation',
                  'incomeB': 'Income', 'ageG': 'Age',
                  'MHSG': 'Mental Health Diagnosis', 'PHSG': 'Physical Health Diagnosis',
                  'WearYN': 'Wearable Use', 'WellnessAppG': 'Meditation App Use',
-                 'BFIExtraHi': 'Extroversion', 'Per': 'Perseverance'}
+                 'BFIExtraHi': 'Extraversion', 'Per': 'Perseverance'}
 
 demos_PHSG = {'MedWeightSelf': 'Unhealthy Weight', 'MedMuscleSelf': 'Musculoskeletal Disorder',
               'MedGastroSelf': 'Gastrointestinal Disorder', 'MedCancerSelf': 'Cancer',
@@ -33,13 +36,15 @@ demos_MHSG = {'MedDepSelf': 'Depression', 'MedPTSDSelf': 'PTSD', 'MedAnxSelf': '
               'MedBipolarSelf': 'Bipolar', 'MedAutismSelf': 'Autism', 'MedSocialSelf': 'Social',
               'MedOCDSelf': 'OCD', 'MedPanicSelf': 'Panic Attacks'}
 
+
 def minmax(val_list):
     min_val = round(min(val_list), 3)
     max_val = round(max(val_list), 3)
 
     return (min_val, max_val)
 
-def calc_rbo(l1,l2,p):
+
+def calc_rbo(l1, l2, p):
     """ 
     Returns RBO indefinite rank similarity metric, as described in:
     Webber, W., Moffat, A., & Zobel, J. (2010). 
@@ -47,50 +52,53 @@ def calc_rbo(l1,l2,p):
     ACM Transactions on Information Systems.
     doi:10.1145/1852102.1852106.
     """
-    sl,ll = sorted([(len(l1), l1),(len(l2),l2)])
+    sl, ll = sorted([(len(l1), l1), (len(l2), l2)])
     s, S = sl
     l, L = ll
-    
-    # Calculate the overlaps at ranks 1 through l 
+
+    # Calculate the overlaps at ranks 1 through l
     # (the longer of the two lists)
     ss = set([])
     ls = set([])
     overs = {}
     for i in range(l):
         ls.add(L[i])
-        if i<s:
-           ss.add(S[i])
+        if i < s:
+            ss.add(S[i])
         X_d = len(ss.intersection(ls))
         d = i+1
         overs[d] = float(X_d)
-    
+
     # (1) \sum_{d=1}^l (X_d / d) * p^d
     sum1 = 0
     for i in range(l):
-        d=i+1
-        sum1+=overs[d]/d*pow(p,d)
+        d = i+1
+        sum1 += overs[d]/d*pow(p, d)
     X_s = overs[s]
     X_l = overs[l]
 
     # (2) \sum_{d=s+1}^l [(X_s (d - s)) / (sd)] * p^d
     sum2 = 0
-    for i in range(s,l):
-        d=i+1
-        sum2+=(X_s*(d-s)/(s*d))*pow(p,d)
+    for i in range(s, l):
+        d = i+1
+        sum2 += (X_s*(d-s)/(s*d))*pow(p, d)
 
     # (3) [(X_l - X_s) / l + X_s / s] * p^l
-    sum3 = ((X_l-X_s)/l+X_s/s)*pow(p,l)
-    
-    # Equation 32. 
+    sum3 = ((X_l-X_s)/l+X_s/s)*pow(p, l)
+
+    # Equation 32.
     rbo_ext = (1-p)/p*(sum1+sum2)+sum3
     return rbo_ext
 
+
 def get_top_activities(df_goal, goal):
-    act_cols = [col for col in df_goal if col.startswith(goal) and '_' not in col and col != goal + 'Goal']
+    act_cols = [col for col in df_goal if col.startswith(
+        goal) and '_' not in col and col != goal + 'Goal']
     act_cols = act_cols[0:25]
 
     df_acts = df_goal[act_cols]
-    df_acts = df_acts.loc[:,~df_acts.columns.str.contains('26|27|28|29|30')]  # remove write-ins
+    df_acts = df_acts.loc[:, ~df_acts.columns.str.contains(
+        '26|27|28|29|30')]  # remove write-ins
     df_acts.replace(0, np.nan, inplace=True)
 
     return list(df_acts.count().sort_values(ascending=False).index.values[0:10])
@@ -135,13 +143,14 @@ def plot_RBO(demos, remove_other_demos=False):
 
             A_list = get_top_activities(df_A, g)
             B_list = get_top_activities(df_B, g)
-            
+
             rbo = calc_rbo(A_list, B_list, 0.98)
             rbos[goals[g]].append(rbo)
             max_RBO = max(max_RBO, rbo)
             min_RBO = min(min_RBO, rbo)
-            
-            new_record = pd.DataFrame([{'Goal':goals[g], 'Demo':demos[d], 'RBO':rbo, 'Label': len(df_B)}])
+
+            new_record = pd.DataFrame(
+                [{'Goal': goals[g], 'Demo':demos[d], 'RBO':rbo, 'Label': len(df_B)}])
             df_graph = pd.concat([df_graph, new_record], ignore_index=True)
 
     print('')
@@ -152,7 +161,6 @@ def plot_RBO(demos, remove_other_demos=False):
         print(r, 'Stdev:', round(stdev(rbos[r]), 3), 'Range:', minmax(rbos[r]))
         print('')
 
-
     ax = sns.barplot(x='Demo', y='RBO', hue='Goal', data=df_graph)
     if remove_other_demos:
         for i, bar in enumerate(ax.patches[0:len(df_graph)]):
@@ -160,16 +168,17 @@ def plot_RBO(demos, remove_other_demos=False):
             text_x = bar.get_x() + bar.get_width() / 2
             text_y = bar.get_y() + bar.get_height()
 
-            ax.text(text_x, text_y, bar_value, ha='center', va='bottom', size=10)
+            ax.text(text_x, text_y, bar_value,
+                    ha='center', va='bottom', size=10)
 
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
     plt.xlabel('Demographics')
-    plt.ylim([0, 1])
+    plt.ylim([0.5, 1])
     sns.despine()
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.25), ncol=5)
     plt.show()
 
+
 if __name__ == "__main__":
     # remove_other_demos should be True if MHSG or PHSG, otherwise False
     plot_RBO(demos_overall, remove_other_demos=False)
-
