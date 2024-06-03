@@ -76,6 +76,7 @@ const useData = (
                 if (res.ok) {
                     res.json().then((data) => {
                         try {
+                            console.log(data)
                             setRBOData(data);
 
                             resolve(true);

@@ -250,6 +250,5 @@ export default function handler(req, res) {
 
     rbo_wrapper.push(rbo);
   });
-  console.log(rbo_wrapper)
   res.send(rbo_wrapper);
 }
