@@ -63,7 +63,16 @@ function get_top_activities(data, demo_cols, goal, demo_value) {
   });
 
   const sorted_count_dict = Object.fromEntries(
-    Object.entries(count_dict).sort(([, a], [, b]) => b - a),
+    Object.entries(count_dict).sort((a, b) => {
+      if (a[1] > b[1]) return -1;
+      if (a[1] < b[1]) return 1;
+
+
+      if (a[0] < b[0]) return -1;
+      if (a[0] > b[0]) return 1;
+
+      return 0;
+    }),
   );
 
   let rankings = [];
