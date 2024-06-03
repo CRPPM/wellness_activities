@@ -178,6 +178,8 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     goal,
     uniqueDemoValues[1],
   );
+  console.log(A_rankings)
+  console.log(B_rankings)
 
   return [A_rankings, B_rankings];
 }
