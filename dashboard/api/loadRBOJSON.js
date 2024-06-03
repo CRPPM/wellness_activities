@@ -169,11 +169,6 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     data_B = data.filter(
       (obj) => obj[demos_overall[selectedDemo]] == uniqueDemoValues[1],
     );
-    console.log("debug");
-    console.log(uniqueDemoValues);
-    console.log(selectedDemo);
-    console.log(data_A.length);
-    console.log(data_B.length);
   }
   let A_rankings = get_top_activities(
     data_A,
@@ -187,8 +182,6 @@ function get_top_activities_wrapper(data, selectedDemo, goal) {
     goal,
     uniqueDemoValues[1],
   );
-  console.log(A_rankings)
-  console.log(B_rankings)
 
   return [A_rankings, B_rankings];
 }
