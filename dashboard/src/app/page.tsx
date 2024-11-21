@@ -100,10 +100,7 @@ export default function Home() {
             setFilters={setFilters}
           />
 
-          <Accordion
-            varriant="filled"
-            className="absolute top-2 right-2 w-4/6 text-right"
-          >
+          <Accordion className="absolute top-2 right-2 w-4/6 text-right">
             <Accordion.Item key={"see_work"} value={"see_work"}>
               <Accordion.Control>
                 {"You can find a complete description of this work here"}
