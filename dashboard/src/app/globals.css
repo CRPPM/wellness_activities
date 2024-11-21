@@ -85,3 +85,20 @@ body {
   height: 2px;
   bottom: 1px;
 }
+
+.mantine-Accordion-control {
+  width: fit-content !important;
+  justify-self: end;
+}
+
+.mantine-Accordion-content {
+  padding-top: 0px !important;
+}
+
+.mantine-Accordion-item {
+  border-bottom: 0px !important;
+}
+
+.mantine-Accordion-label {
+  padding-right: 5px;
+}

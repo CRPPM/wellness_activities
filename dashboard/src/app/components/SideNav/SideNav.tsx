@@ -602,7 +602,6 @@ export default function SideNav({
                     </div>
                 </div>
             </div>
-
             {goal == "" && (
                 <div className="ml-2 my-3 text-gray-800 text-xl text-center">
                     Alternatively, compare all goals{" "}

@@ -1,5 +1,5 @@
 "use client";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, Accordion } from "@mantine/core";
 import { MathJaxContext } from "better-react-mathjax";
 import "@mantine/core/styles.css";
 import { useState } from "react";
@@ -99,6 +99,32 @@ export default function Home() {
             setGraphType={setGraphType}
             setFilters={setFilters}
           />
+
+          <Accordion
+            varriant="filled"
+            className="absolute top-2 right-2 w-4/6 text-right"
+          >
+            <Accordion.Item key={"see_work"} value={"see_work"}>
+              <Accordion.Control>
+                {"You can find a complete description of this work here"}
+              </Accordion.Control>
+              <Accordion.Panel>
+                <div className="font-bold text-lg underline">
+                  <a href="https://doi.org/10.1371/journal.pdig.0000650">
+                    Meeting people where they are: Crowdsourcing goal-specific
+                    personalized wellness practices
+                  </a>
+                </div>
+                <div className="italic text-sm">
+                  Johanna E Hidalgo, Julia Kim, Jordan Llorin, Kathryn Stanton,
+                  Dr. Josh Cherian, Dr. Laura Bloomfield, Dr. Mikaela Fudolig,
+                  Dr. Matthew Price, Jennifer Ha, Natalie Noble, Dr. Christopher
+                  M Danforth, Dr. Peter S Dodds, Dr. Jason Fanning, Dr. Ryan S
+                  McGinnis, Dr. Ellen W McGinnis
+                </div>
+              </Accordion.Panel>
+            </Accordion.Item>
+          </Accordion>
         </div>
       </MathJaxContext>
     </MantineProvider>
