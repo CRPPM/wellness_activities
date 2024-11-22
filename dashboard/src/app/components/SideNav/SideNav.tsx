@@ -194,14 +194,14 @@ export default function SideNav({
         },
         {
             value: "MHSG",
-            title: "MHSG",
+            title: "Mental Health Diagnosis",
             groupValue: mhsgValue,
             changeGroupValue: setMhsgValue,
             options: ["No Mental Health Diagnoses", "Mental Health Diagnoses"],
         },
         {
             value: "PHSG",
-            title: "PHSG",
+            title: "Physical Health Diagnosis",
             groupValue: phsgValue,
             changeGroupValue: setPhsgValue,
             options: [
@@ -211,7 +211,7 @@ export default function SideNav({
         },
         {
             value: "BFIExtraHi",
-            title: "BFIExtraHi",
+            title: "Extraversion",
             groupValue: BFIExtraHiValue,
             changeGroupValue: setBFIExtraHiValue,
             options: ["Low Extroversion", "High Extroversion"],

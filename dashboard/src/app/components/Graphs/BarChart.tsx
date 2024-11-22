@@ -45,9 +45,9 @@ export default function BarChart(
         income: "Income",
         living: "Location",
         sexual: "Sexual Orientation",
-        mhsg: "MHSG",
-        phsg: "PHSG",
-        BFI: "BFIExtraHi",
+        mhsg: "Mental Health Diagnosis",
+        phsg: "Physical Health Diagnosis",
+        BFI: "Extraversion",
     };
     let graph_rbos: any = [];
     rboData.forEach(function (r) {
